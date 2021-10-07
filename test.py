@@ -42,8 +42,7 @@ def estimate_entropies(prob, outcomes, N, iterations):
     print(f"Running {iterations} iterations, sampling {N}.")
 
     funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen,
-        entropy.miller_madow, entropy.jackknife, entropy.wolpert_wolf,
-        entropy.nsb]
+        entropy.miller_madow, entropy.jackknife, entropy.wolpert_wolf]
     entropies = [0] * len(funcs)
     true_entropy = -sum([x * math.log(x) for x in prob])
 
@@ -65,7 +64,7 @@ def estimate_entropies(prob, outcomes, N, iterations):
 
 def main():
     prob = generate_dist(outcomes, 1)
-    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "Wolpert-Wolf", "NSB"]
+    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "Wolpert-Wolf"]
 
     y = []
     x = list(range(outcomes + 1, max_sample, 10))
