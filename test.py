@@ -5,12 +5,31 @@ import matplotlib.pyplot as plt
 import entropy
 
 outcomes = 20
-iterations = 100
+iterations = 400
 max_sample = 1000
 
 def generate_dist(n, total):
     dividers = sorted(numpy.random.uniform(0, total, size=(n - 1)))
     return [a - b for a, b in zip(dividers + [total], [0] + dividers)]
+
+def test_wolpert():
+    labels = ["1", "1/K", "1/2", "0", "True"]
+    res = []
+    ct = 10
+    for i in range(ct + 1):
+        sample = [0] * i + [1] * (ct - i)
+        res.append([
+            entropy.wolpert_wolf(sample),
+            entropy.wolpert_wolf(sample, 1/2),
+            entropy.wolpert_wolf(sample, 1/2),
+            entropy.wolpert_wolf(sample, 0),
+            entropy.mle(sample)
+        ])
+    for i in range(len(labels)):
+        plt.plot(list(range(ct + 1)), [z[i] for z in res])
+    plt.legend(labels)
+    plt.show()
+
 
 def estimate_entropies(prob, outcomes, N, iterations):
     tot = [prob[0]] * outcomes
@@ -23,9 +42,10 @@ def estimate_entropies(prob, outcomes, N, iterations):
     print(f"Running {iterations} iterations, sampling {N}.")
 
     funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen,
-        entropy.miller_madow, entropy.jackknife]
+        entropy.miller_madow, entropy.jackknife, entropy.wolpert_wolf,
+        entropy.nsb]
     entropies = [0] * len(funcs)
-    true_entropy = -sum([x * math.log(x, 2) for x in prob])
+    true_entropy = -sum([x * math.log(x) for x in prob])
 
     for _ in range(iterations):
         sample = []
@@ -45,7 +65,7 @@ def estimate_entropies(prob, outcomes, N, iterations):
 
 def main():
     prob = generate_dist(outcomes, 1)
-    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife"]
+    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "Wolpert-Wolf", "NSB"]
 
     y = []
     x = list(range(outcomes + 1, max_sample, 10))
@@ -56,7 +76,7 @@ def main():
 
     plt.legend(estimators)
     plt.xlabel("Sample size")
-    plt.ylabel("(Estimated) Entropy (in bits)")
+    plt.ylabel("(Estimated) Entropy (in nats)")
     plt.title(f"Entropy estimations for random probability distribution, {outcomes} outcomes")
     plt.show()
     
