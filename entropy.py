@@ -47,10 +47,3 @@ def wolpert_wolf(sample, α=1):
     for i in counts:
         res -= ((counts[i] + α) / (N + K * α)) * ψ(counts[i] + α + 1)
     return res
-
-def nsb(sample):
-    S, N, counts = prob(sample)
-    res = ψ(N + 1)
-    for i in counts:
-        res -= (counts[i] / N) * ψ(counts[i] + 1)
-    return res
