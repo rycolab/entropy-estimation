@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import entropy
 
 outcomes = 20
-iterations = 400
+iterations = 10
 max_sample = 1000
 
 def generate_dist(n, total):
@@ -36,13 +36,13 @@ def estimate_entropies(prob, outcomes, N, iterations):
     for i in range(1, outcomes):
         tot[i] = tot[i - 1] + prob[i]
 
-    print(prob)
-    print(tot)
+    # print(prob)
+    # print(tot)
 
     print(f"Running {iterations} iterations, sampling {N}.")
 
     funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen,
-        entropy.miller_madow, entropy.jackknife, entropy.wolpert_wolf]
+        entropy.miller_madow, entropy.jackknife, entropy.wolpert_wolf, entropy.nsb]
     entropies = [0] * len(funcs)
     true_entropy = -sum([x * math.log(x) for x in prob])
 
@@ -64,7 +64,7 @@ def estimate_entropies(prob, outcomes, N, iterations):
 
 def main():
     prob = generate_dist(outcomes, 1)
-    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "Wolpert-Wolf"]
+    estimators = ["True", "MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "Wolpert-Wolf", "NSB"]
 
     y = []
     x = list(range(outcomes + 1, max_sample, 10))

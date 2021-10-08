@@ -1,6 +1,9 @@
 import math
 from collections import Counter
-from scipy.special import digamma as ψ
+from scipy.special import digamma, polygamma
+from scipy import integrate
+import numpy as np
+import nsb as nsbhelp
 
 # all entropies are calculated in nats
 
@@ -43,7 +46,13 @@ def chao_shen(sample):
 def wolpert_wolf(sample, α=1):
     S, N, counts = prob(sample)
     K = len(counts)
-    res = ψ(N + K * α + 1)
+    res = digamma(N + K * α + 1)
     for i in counts:
-        res -= ((counts[i] + α) / (N + K * α)) * ψ(counts[i] + α + 1)
+        res -= ((counts[i] + α) / (N + K * α)) * digamma(counts[i] + α + 1)
     return res
+
+def nsb(sample):
+    S, N, counts = prob(sample)
+    K = len(counts)
+    # print("woah")
+    return nsbhelp.S(nsbhelp.make_nxkx(np.array(list(counts.values())), K), N, K)

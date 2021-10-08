@@ -6,5 +6,5 @@ List of estimators to implement:
 - :white_check_mark: Efron and Stein (1981) "Jackknife"
 - :white_check_mark: [Wolpert and Wolf (1994)](https://arxiv.org/abs/comp-gas/9403001)
 - [Archer, et al. (2013)](https://arxiv.org/abs/1302.0328)
-- NSB (N = Nemenman)
+- :white_check_mark: NSB (N = Nemenman)
 - Infinite NSB
