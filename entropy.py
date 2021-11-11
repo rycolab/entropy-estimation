@@ -11,20 +11,17 @@ def prob(sample):
     counts = Counter(sample)
     return [counts[x] / len(sample) for x in counts], len(sample), counts
 
-def mle(sample):
-    S, N, counts = prob(sample)
+def mle(S, N, counts):
     return -sum([x * math.log(x) if x else 0 for x in S])
 
-def miller_madow(sample):
+def miller_madow(S, N, counts):
     # N is the number of values sampled, m is the number of non-zero classes
-    S, N, counts = prob(sample)
     m = len(S)
     res = -sum([x * math.log(x) if x else 0 for x in S])
     return res + (m - 1) / (2 * N)
 
-def jackknife(sample):
-    S, N, counts = prob(sample)
-    res = N * mle(sample)
+def jackknife(S, N, counts):
+    res = N * mle(S, N, counts)
     for i in counts:
         counts[i] -= 1
         S = [counts[x] / (N - 1) for x in counts]
@@ -33,20 +30,17 @@ def jackknife(sample):
         counts[i] += 1
     return res
 
-def horvitz_thompson(sample):
-    S, N, counts = prob(sample)
+def horvitz_thompson(S, N, counts):
     return -sum([x * math.log(x) / (1 - (1 - x)**N) if x else 0 for x in S])
 
-def chao_shen(sample):
-    S, N, counts = prob(sample)
+def chao_shen(S, N, counts):
     C = 1 - (list(counts.values()).count(1) / N)
     if C == 0:
         C = 1
     return -sum([C * x * math.log(C * x) / (1 - (1 - C * x)**N) if x else 0 for x in S])
 
 # http://www.nowozin.net/sebastian/blog/estimating-discrete-entropy-part-3.html
-def wolpert_wolf(sample, α=1):
-    S, N, counts = prob(sample)
+def wolpert_wolf(S, N, counts, α=1):
     K = len(counts)
     α = 1
     res = digamma(N + K * α + 1)
@@ -65,8 +59,7 @@ def wolpert_wolf(sample, α=1):
 #     print(res, integrate.quad(p, 0, res))
 #     return res
 
-def nsb(sample):
-    S, N, counts = prob(sample)
+def nsb(S, N, counts):
     return ndd.entropy(counts)
 
 # α / Kα = 1 / K
