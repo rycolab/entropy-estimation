@@ -78,10 +78,10 @@ def permutation_test(p, q, true, num1, num2, perms=10000):
         if (mse1 - mse2) / n >= mse:
             greater_mse += 1
 
-    plt.hist(mabs)
-    plt.axvline(x=mab)
-    plt.title(f'{estimators[num1]} vs {estimators[num2]}')
-    plt.show()
+    # plt.hist(mabs)
+    # plt.axvline(x=mab)
+    # plt.title(f'{estimators[num1]} vs {estimators[num2]}')
+    # plt.show()
 
     if greater_mab / perms < 0.5:
         greater_mab += 1
@@ -258,10 +258,8 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     alpha = 0.05 / (((len(estimators) - 1) * len(estimators)) / 2)
     print(f'alpha = {alpha}')
     fout.write(f'alpha = {alpha}\n')
-    tot = 0
     for n in X:
-        tot += n
-        fout.write(f'N={tot}, K={K}\n')
+        fout.write(f'N={n}, K={K}\n')
         for num in range(len(funcs)):
             bias = get_bias(biases[num][n])
             mab = get_mab(biases[num][n])
@@ -281,6 +279,7 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
                 a, b = [x[0] for x in biases[num1][n]], [x[0] for x in biases[num2][n]]
                 true = [x[1] for x in biases[num1][n]]
                 mab, mse = permutation_test(a, b, true, num1, num2)
+                print(f'{estimators[num1]} vs. {estimators[num2]}: greater mab <{mab}> ({mab < alpha or mab > (1- alpha)}), greater mse <{mse}> ({mse < alpha or mse > (1- alpha)})')
                 fout.write(f'{estimators[num1]} vs. {estimators[num2]}: greater mab <{mab}> ({mab < alpha or mab > (1- alpha)}), greater mse <{mse}> ({mse < alpha or mse > (1- alpha)})\n')
 
         fout.write('\n\n')
@@ -295,21 +294,21 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     # plt.legend(estimators)
     # plt.show()
 
-    dat = []
-    for i in range(len(funcs)):
-        data = list([[(y[0] - y[1]) for y in x] for x in biases[i].values()])
-        data = list(zip(biases[i].keys(), data))
-        data = [[[a, z, estimators[i]] for z in b] for a, b in data]
-        data = sum(data, [])
-        dat.extend(data)
-    df = pd.DataFrame(dat, columns=['Samples', 'Bias (nats)', 'Estimator'])
-    graph = (p9.ggplot(data=df, mapping=p9.aes(x='Samples', y='Bias (nats)', group='Samples', fill='factor(Estimator)'))
-        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.1)
-        + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
-        + p9.labels.ggtitle('MLE Bias'))
-    graph.draw()
-    graph.save(f'figures/mle_bias_{K}.pdf', width=7, height=4)
-    plt.show()
+    # dat = []
+    # for i in range(len(funcs)):
+    #     data = list([[(y[0] - y[1]) for y in x] for x in biases[i].values()])
+    #     data = list(zip(biases[i].keys(), data))
+    #     data = [[[a, z, estimators[i]] for z in b] for a, b in data]
+    #     data = sum(data, [])
+    #     dat.extend(data)
+    # df = pd.DataFrame(dat, columns=['Samples', 'Bias (nats)', 'Estimator'])
+    # graph = (p9.ggplot(data=df, mapping=p9.aes(x='Samples', y='Bias (nats)', group='Samples', fill='factor(Estimator)'))
+    #     + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.1)
+    #     + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
+    #     + p9.labels.ggtitle('MLE Bias'))
+    # graph.draw()
+    # graph.save(f'figures/mle_bias_{K}.pdf', width=7, height=4)
+    # plt.show()
 
 if __name__ == '__main__':
     # mle_performance()
@@ -317,4 +316,4 @@ if __name__ == '__main__':
     #     gigaword(fout)
     with open('logs/symmetric.txt', 'w') as fout:
         for K in [2, 5, 10, 100, 1000]:
-            symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=10000, K=K)
+            symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
