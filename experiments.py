@@ -22,40 +22,72 @@ plt.rcParams.update({
     "font.serif": ["Times New Roman"],
 })
 
-# root mean squared error
-def rmse(samples):
+# mean squared error
+def get_mse(samples):
     res = sum([(x[0] - x[1])**2 for x in samples])
-    res = math.sqrt(res / len(samples))
+    res = res / len(samples)
     return res
 
-def avgbias(samples):
+def get_bias(samples):
     res = sum([(x[0] - x[1]) for x in samples])
     res = res / len(samples)
     return res
 
-def permutation_test(p, q, perms=10000, rmse=False):
+def get_mab(samples):
+    res = sum([abs(x[0] - x[1]) for x in samples])
+    res = res / len(samples)
+    return res
+
+def permutation_test(p, q, true, num1, num2, perms=10000):
     n = len(p)
-    l = list(zip(p, q))
-    diff = sum([(x[0] - x[1])**(2 if rmse else 1) for x in l]) / n
+    l = list(zip(p, q, true))
+    l = [[x[0] - x[2], x[1] - x[2], x[2]] for x in l]
+    # bias of p, bias of q, true
+    
+    # difference in MAB = 1/n Σ abs(pᵢ - trueᵢ) - 1/n Σ abs(qᵢ - trueᵢ)
+    mab = sum([abs(x[0]) for x in l]) / n - sum([abs(x[1]) for x in l]) / n
+    # difference in MSE = 1/n Σ (pᵢ - trueᵢ)² - 1/n Σ (qᵢ - trueᵢ)²
+    mse = sum([x[0]**2 for x in l]) / n - sum([x[1]**2 for x in l]) / n
+
     print('Running permutation test')
-    greater = 0
-    diffs = []
-    for i in tqdm(range(perms)):
+    greater_mab = 0
+    greater_mse = 0
+
+    mabs = []
+    for i in tqdm(range(perms - 1)):
+        # swap or not, binary array
         assign = [0 if x <= 0.5 else 1 for x in np.random.rand(len(p))]
-        res = 0
+        # get new mab and mse differences
+        mab1, mab2 = 0, 0
+        mse1, mse2 = 0, 0
         for pos, val in enumerate(assign):
             if val == 0:
-                res += (l[pos][0] - l[pos][1])**(2 if rmse else 1)
+                mab1 += abs(l[pos][0])
+                mab2 += abs(l[pos][1])
+                mse1 += l[pos][0]**2
+                mse2 += l[pos][1]**2
             else:
-                res += (l[pos][1] - l[pos][0])**(2 if rmse else 1)
-        res /= n
-        diffs.append(res)
-        if res >= diff:
-            greater += 1
-    # plt.hist(diffs)
-    # plt.axvline(x=diff)
-    # plt.show()
-    return greater / perms, diff
+                mab1 += abs(l[pos][1])
+                mab2 += abs(l[pos][0])
+                mse1 += l[pos][1]**2
+                mse2 += l[pos][0]**2
+        # check if diff in mabs/mses is greater than true
+        mabs.append((mab1 - mab2) / n)
+        if (mab1 - mab2) / n >= mab:
+            greater_mab += 1
+        if (mse1 - mse2) / n >= mse:
+            greater_mse += 1
+
+    plt.hist(mabs)
+    plt.axvline(x=mab)
+    plt.title(f'{estimators[num1]} vs {estimators[num2]}')
+    plt.show()
+
+    if greater_mab / perms < 0.5:
+        greater_mab += 1
+    if greater_mse / perms < 0.5:
+        greater_mse += 1
+    return greater_mab / perms, greater_mse / perms
 
 # figure out which class was sampled using O(log K) binary search
 def get_sample(arr, val):
@@ -79,7 +111,7 @@ def zipf(K=100):
         res.append(1 / (i * s))
     return res
 
-def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100, zipf=False):
+def mle_performance(epochs=10, sample_size=20, distrib_count=10000, K=100, zipf=False):
     funcs = [entropy.mle]
     # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     biases = [defaultdict(list) for x in range(len(funcs))]
@@ -129,42 +161,42 @@ def gigaword(fout):
 
     X = []
     counts = Counter()
-    pos = Counter()
     N = 0
     
     # parse gigaword
-    with open('gigaword/gigaword.txt') as files:
-        for file in tqdm(files):
-            file = file.strip()
-            os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
-            data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter pos ../{file}').read()
-            # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter pos ../cna_eng_200307.xml.gz').read()
-            for sentence in data.split('\n'):
-                for word in sentence.split(' '):
-                    if '/' not in word: continue
-                    token, pos = word.split('/')
-                    counts[token] += 1
-                    pos[token] += 1
-                    N += 1
-                    if N % 100000 == 0:
-                        print(N)
-                        X.append(N)
-                        S = entropy.prob_counts(counts, N)
-                        POS = entropy.prob_counts(pos, N)
-                        for num, func in enumerate(funcs):
-                            calc = func(S, N, counts)
-                            calc2 = func(POS, N, pos)
-                            biases[num][N].append((calc, calc2))
-            os.remove(f'{file}')
+    try:
+        os.system('ls')
+        with open('gigaword/gigaword.txt') as files:
+            for file in tqdm(files):
+                file = file.strip()
+                os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
+                data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../{file}').read()
+                # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../cna_eng_200307.xml.gz').read()
+                for sentence in data.split('\n'):
+                    for word in sentence.split(' '):
+                        if word == '': continue
+                        counts[word] += 1
+                        N += 1
+                        if N % 10000 == 0:
+                            print(N)
+                            X.append(N)
+                            S = entropy.prob_counts(counts, N)
+                            for num, func in enumerate(funcs):
+                                calc = func(S, N, counts)
+                                biases[num][N].append(calc)
+                os.remove(f'{file}')
 
-        X.append(N)
-        S = entropy.prob_counts(counts, N)
-        POS = entropy.prob_counts(pos, N)
-        for num, func in enumerate(funcs):
-            calc = func(S, N, counts)
-            calc2 = func(POS, N, pos)
-            biases[num][N].append((calc, calc2))
-            print(estimators[num], calc, calc2)
+            X.append(N)
+            S = entropy.prob_counts(counts, N)
+            for num, func in enumerate(funcs):
+                calc = func(S, N, counts)
+                biases[num][N].append(calc)
+                print(estimators[num], calc)
+                
+    except Exception as e:
+        print(e)
+        with open('gigaword/entropies.pickle', 'wb') as handle:
+            pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     with open('gigaword/entropies.pickle', 'wb') as handle:
         pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
@@ -213,7 +245,7 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     #     print(estimators[num])
     #     n = list(biases[num].keys())[-1]
     #     # print([x[0] for x in biases[num][n]], [x[1] for x in biases[num][n]])
-    #     bias = avgbias(biases[num][n])
+    #     bias = get_bias(biases[num][n])
     #     dists.append([x[0] - x[1] for x in biases[num][n]])
     #     ttest = ttest_rel([x[0] for x in biases[num][n]], [x[1] for x in biases[num][n]])
     #     print(n, bias, ttest)
@@ -222,30 +254,36 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     # plt.clf()
 
     # average bias
+    # https://en.wikipedia.org/wiki/Bonferroni_correction
+    alpha = 0.05 / (((len(estimators) - 1) * len(estimators)) / 2)
+    print(f'alpha = {alpha}')
+    fout.write(f'alpha = {alpha}\n')
     tot = 0
     for n in X:
         tot += n
         fout.write(f'N={tot}, K={K}\n')
         for num in range(len(funcs)):
-            bias = avgbias(biases[num][n])
-            bias2 = rmse(biases[num][n])
-            print(f'{estimators[num]}: bias <{bias}>, rmse <{bias2}>')
-            fout.write(f'{estimators[num]}: bias <{bias}>, rmse <{bias2}>\n')
+            bias = get_bias(biases[num][n])
+            mab = get_mab(biases[num][n])
+            mse = get_mse(biases[num][n])
+            print(f'{estimators[num]}: bias <{bias}>, mab <{mab}, mse <{mse}>')
+            fout.write(f'{estimators[num]}: bias <{bias}>, mab <{mab}, mse <{mse}>\n')
 
-        # permutation test against true
-        for num in range(len(funcs)):
-            a, b = [x[0] for x in biases[num][n]], [x[1] for x in biases[num][n]]
-            res, diff = permutation_test(a, b, rmse=True)
-            fout.write(f'{estimators[num]} vs. True: greater <{res}>, diff <{diff}>\n')
+        # # permutation test against true
+        # for num in range(len(funcs)):
+        #     a, b = [x[0] for x in biases[num][n]], [x[1] for x in biases[num][n]]
+        #     mab, mse = permutation_test(a, b, rmse=True)
+        #     fout.write(f'{estimators[num]} vs. True: greater <{res}> ({greater}), diff <{diff}>, significant <{res < alpha or res > (1- alpha)}>\n')
 
         # permutation test pairwise
         for num1 in range(len(funcs)):
             for num2 in range(num1 + 1, len(funcs)):
-                n = list(biases[num1].keys())[-1]
                 a, b = [x[0] for x in biases[num1][n]], [x[0] for x in biases[num2][n]]
-                res, diff = permutation_test(a, b, rmse=True)
-                fout.write(f'{estimators[num1]} vs. {estimators[num2]}: greater <{res}>, diff <{diff}>\n')
+                true = [x[1] for x in biases[num1][n]]
+                mab, mse = permutation_test(a, b, true, num1, num2)
+                fout.write(f'{estimators[num1]} vs. {estimators[num2]}: greater mab <{mab}> ({mab < alpha or mab > (1- alpha)}), greater mse <{mse}> ({mse < alpha or mse > (1- alpha)})\n')
 
+        fout.write('\n\n')
     # plot bias curve
     # if epochs != 1:
     # l = len(biases[0].values())
@@ -253,7 +291,7 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     # plt.rcParams.update({'font.size': 15})
     # for num in range(len(funcs)):
     #     print(num)
-    #     plt.plot(list(biases[num].keys()), [avgbias(x) for x in biases[num].values()])
+    #     plt.plot(list(biases[num].keys()), [get_bias(x) for x in biases[num].values()])
     # plt.legend(estimators)
     # plt.show()
 
@@ -270,13 +308,13 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
         + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
         + p9.labels.ggtitle('MLE Bias'))
     graph.draw()
-    graph.save('figures/mle_bias.pdf', width=7, height=4)
+    graph.save(f'figures/mle_bias_{K}.pdf', width=7, height=4)
     plt.show()
 
 if __name__ == '__main__':
     # mle_performance()
-    with open('logs/gigaword.txt', 'w') as fout:
-        gigaword(fout)
-    # with open('logs/symmetric.txt', 'w') as fout:
-    #     for K in [2, 5, 10, 100, 1000]:
-    #         symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
+    # with open('logs/gigaword.txt', 'w') as fout:
+    #     gigaword(fout)
+    with open('logs/symmetric.txt', 'w') as fout:
+        for K in [2, 5, 10, 100, 1000]:
+            symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=10000, K=K)
