@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /tools/agiga_1.0/src/edu/jhu/agiga</title>
+ </head>
+ <body>
+<h1>Index of /tools/agiga_1.0/src/edu/jhu/agiga</h1>
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=A">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/tools/agiga_1.0/src/edu/jhu/">Parent Directory</a></td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="StreamingVtdXmlReader.java">StreamingVtdXmlReader.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">4.5K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="StreamingSentenceReader.java">StreamingSentenceReader.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">1.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="StreamingDocumentReader.java">StreamingDocumentReader.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">1.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="StanfordAgigaSentence.java">StanfordAgigaSentence.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">4.9K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="BasicAgigaSentence.java">BasicAgigaSentence.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right"> 12K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaTypedDependency.java">AgigaTypedDependency.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">779 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaToken.java">AgigaToken.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">2.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaSentenceReader.java">AgigaSentenceReader.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right"> 13K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaSentence.java">AgigaSentence.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">2.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaPrinter.java">AgigaPrinter.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right"> 13K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaPrefs.java">AgigaPrefs.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">2.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaMention.java">AgigaMention.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">2.2K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaDocumentReader.java">AgigaDocumentReader.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">7.8K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaDocument.java">AgigaDocument.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">6.5K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaCoref.java">AgigaCoref.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">656 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="AgigaConstants.java">AgigaConstants.java</a></td><td align="right">2012-07-26 06:23  </td><td align="right">2.3K</td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>

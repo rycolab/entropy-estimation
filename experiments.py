@@ -9,6 +9,8 @@ from tqdm import tqdm
 import plotnine as p9
 import pandas as pd
 from collections import Counter
+import os
+import pickle
 
 estimators = ["MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "NSB"]
 
@@ -121,6 +123,52 @@ def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100, zipf=F
     graph.save('figures/mle_bias.pdf', width=3.5, height=2.75)
     plt.show()
 
+def gigaword(fout):
+    funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
+    biases = [defaultdict(list) for x in range(len(funcs))]
+
+    X = []
+    counts = Counter()
+    pos = Counter()
+    N = 0
+    
+    # parse gigaword
+    with open('gigaword/gigaword.txt') as files:
+        for file in tqdm(files):
+            file = file.strip()
+            os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
+            data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter pos ../{file}').read()
+            # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter pos ../cna_eng_200307.xml.gz').read()
+            for sentence in data.split('\n'):
+                for word in sentence.split(' '):
+                    if '/' not in word: continue
+                    token, pos = word.split('/')
+                    counts[token] += 1
+                    pos[token] += 1
+                    N += 1
+                    if N % 100000 == 0:
+                        print(N)
+                        X.append(N)
+                        S = entropy.prob_counts(counts, N)
+                        POS = entropy.prob_counts(pos, N)
+                        for num, func in enumerate(funcs):
+                            calc = func(S, N, counts)
+                            calc2 = func(POS, N, pos)
+                            biases[num][N].append((calc, calc2))
+            os.remove(f'{file}')
+
+        X.append(N)
+        S = entropy.prob_counts(counts, N)
+        POS = entropy.prob_counts(pos, N)
+        for num, func in enumerate(funcs):
+            calc = func(S, N, counts)
+            calc2 = func(POS, N, pos)
+            biases[num][N].append((calc, calc2))
+            print(estimators[num], calc, calc2)
+
+    with open('gigaword/entropies.pickle', 'wb') as handle:
+        pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
 # symmetric dirichlet
 def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, samples=None):
     if not samples:
@@ -199,18 +247,36 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
                 fout.write(f'{estimators[num1]} vs. {estimators[num2]}: greater <{res}>, diff <{diff}>\n')
 
     # plot bias curve
-    if epochs != 1:
-        l = len(biases[0].values())
-        plt.rcParams['figure.figsize'] = (10,7)
-        plt.rcParams.update({'font.size': 15})
-        for num in range(len(funcs)):
-            print(num)
-            plt.plot(list(biases[num].keys()), [avgbias(x) for x in biases[num].values()])
-        plt.legend(estimators)
-        plt.show()
+    # if epochs != 1:
+    # l = len(biases[0].values())
+    # plt.rcParams['figure.figsize'] = (10,7)
+    # plt.rcParams.update({'font.size': 15})
+    # for num in range(len(funcs)):
+    #     print(num)
+    #     plt.plot(list(biases[num].keys()), [avgbias(x) for x in biases[num].values()])
+    # plt.legend(estimators)
+    # plt.show()
+
+    dat = []
+    for i in range(len(funcs)):
+        data = list([[(y[0] - y[1]) for y in x] for x in biases[i].values()])
+        data = list(zip(biases[i].keys(), data))
+        data = [[[a, z, estimators[i]] for z in b] for a, b in data]
+        data = sum(data, [])
+        dat.extend(data)
+    df = pd.DataFrame(dat, columns=['Samples', 'Bias (nats)', 'Estimator'])
+    graph = (p9.ggplot(data=df, mapping=p9.aes(x='Samples', y='Bias (nats)', group='Samples', fill='factor(Estimator)'))
+        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.1)
+        + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
+        + p9.labels.ggtitle('MLE Bias'))
+    graph.draw()
+    graph.save('figures/mle_bias.pdf', width=7, height=4)
+    plt.show()
 
 if __name__ == '__main__':
     # mle_performance()
-    with open('logs/symmetric.txt', 'w') as fout:
-        for K in [2, 5, 10, 100, 1000]:
-            symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
+    with open('logs/gigaword.txt', 'w') as fout:
+        gigaword(fout)
+    # with open('logs/symmetric.txt', 'w') as fout:
+    #     for K in [2, 5, 10, 100, 1000]:
+    #         symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
