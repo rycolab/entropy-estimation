@@ -1,0 +1,440 @@
+K = 2, N = 10
+MLE: bias <-0.05120290844228073>, rmse <0.15915251846601375>
+Horvitz-Thompson: bias <-0.020069197240441733>, rmse <0.15640066886861326>
+Chao-Shen: bias <-0.006625012923225462>, rmse <0.16318700538421121>
+Miller-Madow: bias <-0.010352908442280692>, rmse <0.16319514573500268>
+Jackknife: bias <0.003603477053447322>, rmse <0.16467804157617474>
+NSB: bias <0.13993954545191656>, rmse <0.2198522589639802>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.03113371120183896>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.044577895519055284>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.04084999999999982>
+MLE vs. Jackknife: greater <1.0>, diff <-0.05480638549572831>
+MLE vs. NSB: greater <1.0>, diff <-0.19114245389419585>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.01344418431721626>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.00971628879816101>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.023672674293889043>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.16000874269235768>
+Chao-Shen vs. Miller-Madow: greater <0.0427>, diff <0.003727895519055222>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.010228489976672773>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.14656455837514132>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.01395638549572816>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.15029245389419607>
+Jackknife vs. NSB: greater <1.0>, diff <-0.13633606839846887>
+K = 2, N = 100
+MLE: bias <-0.0055641162489597955>, rmse <0.04874477168589008>
+Horvitz-Thompson: bias <-0.004750250498847835>, rmse <0.048267997815502894>
+Chao-Shen: bias <-0.004586943509436682>, rmse <0.04825149084856486>
+Miller-Madow: bias <-0.0006841162489597947>, rmse <0.04855490767705003>
+Jackknife: bias <-0.00046969202778279805>, rmse <0.04847182362684338>
+NSB: bias <0.010046993083332564>, rmse <0.04940783865598498>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.0008138657501119631>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.0009771727395231152>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.004879999999999918>
+MLE vs. Jackknife: greater <1.0>, diff <-0.0050944242211769936>
+MLE vs. NSB: greater <1.0>, diff <-0.01561110933229238>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.00016330698941115167>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.004066134249888011>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.004280558471065042>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.014797243582180444>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.003902827260476861>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.004117251481653889>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.014633936592769297>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.000214424221176997>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.01073110933229235>
+Jackknife vs. NSB: greater <1.0>, diff <-0.01051668511111536>
+K = 2, N = 1000
+MLE: bias <-0.0006839017700315706>, rmse <0.01566479771785396>
+Horvitz-Thompson: bias <-0.0006709607725244813>, rmse <0.015657968639199202>
+Chao-Shen: bias <-0.0006689717374423263>, rmse <0.01565662123870622>
+Miller-Madow: bias <-0.00018490177003160322>, rmse <0.015651129200475344>
+Jackknife: bias <-0.00018179932344910237>, rmse <0.015650026811829754>
+NSB: bias <0.0006428319218003729>, rmse <0.0156596951218739>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-1.2940997507088128e-05>
+MLE vs. Chao-Shen: greater <1.0>, diff <-1.4930032589243025e-05>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.000498999999999967>
+MLE vs. Jackknife: greater <1.0>, diff <-0.000502102446582468>
+MLE vs. NSB: greater <1.0>, diff <-0.0013267336918319447>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-1.9890350821548977e-06>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.0004860590024928788>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.0004891614490753796>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.001313792694324856>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.00048406996741072396>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.0004871724139932248>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.0013118036592427004>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-3.1024465825006743e-06>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.0008277336918319765>
+Jackknife vs. NSB: greater <1.0>, diff <-0.0008246312452494751>
+K = 2, N = 10000
+MLE: bias <9.289235346881164e-05>, rmse <0.0047289548508942895>
+Horvitz-Thompson: bias <9.39532882843482e-05>, rmse <0.004728940981491515>
+Chao-Shen: bias <9.40532182005899e-05>, rmse <0.004728947745679618>
+Miller-Madow: bias <0.00014289235346880638>, rmse <0.0047302011814661215>
+Jackknife: bias <0.0001429954826575114>, rmse <0.004730199442063777>
+NSB: bias <0.00022529057969192435>, rmse <0.0047336460561526825>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-1.060934815536486e-06>
+MLE vs. Chao-Shen: greater <1.0>, diff <-1.1608647317781794e-06>
+MLE vs. Miller-Madow: greater <1.0>, diff <-4.999999999999468e-05>
+MLE vs. Jackknife: greater <1.0>, diff <-5.0103129188699754e-05>
+MLE vs. NSB: greater <1.0>, diff <-0.00013239822622311263>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-9.992991624169353e-08>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-4.893906518445818e-05>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-4.904219437316327e-05>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.00013133729140757614>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-4.8839135268216487e-05>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-4.8942264456921565e-05>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.00013123736149133443>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-1.0312918870506783e-07>
+Miller-Madow vs. NSB: greater <1.0>, diff <-8.239822622311796e-05>
+Jackknife vs. NSB: greater <1.0>, diff <-8.229509703441285e-05>
+K = 5, N = 10
+MLE: bias <-0.20566290264672513>, rmse <0.30690833612186286>
+Horvitz-Thompson: bias <-0.030489280107791217>, rmse <0.29128799740112604>
+Chao-Shen: bias <-0.012562575724458448>, rmse <0.28877047547308576>
+Miller-Madow: bias <-0.07701290264672499>, rmse <0.2712930275335911>
+Jackknife: bias <-0.0060184378576783335>, rmse <0.2833701428882977>
+NSB: bias <0.19115649548844468>, rmse <0.37242161370863675>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.175173622538934>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.19310032692226675>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.12865000000000015>
+MLE vs. Jackknife: greater <1.0>, diff <-0.1996444647890466>
+MLE vs. NSB: greater <1.0>, diff <-0.3968193981351692>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.01792670438333264>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.04652362253893379>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.02447084225011292>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.22164577559623522>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.06445032692226631>
+Chao-Shen vs. Jackknife: greater <0.9997>, diff <-0.006544137866780119>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.20371907121290458>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.07099446478904664>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.268169398135169>
+Jackknife vs. NSB: greater <1.0>, diff <-0.19717493334612365>
+K = 5, N = 100
+MLE: bias <-0.024302496557614756>, rmse <0.0726838428166184>
+Horvitz-Thompson: bias <-0.015763971739324825>, rmse <0.06918925443124162>
+Chao-Shen: bias <-0.01592472234259212>, rmse <0.06912364951908798>
+Miller-Madow: bias <-0.005282496557614802>, rmse <0.06926348361827758>
+Jackknife: bias <-0.003500296693450257>, rmse <0.06886641006006206>
+NSB: bias <0.00754685475766385>, rmse <0.06914820928285151>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.008538524818289978>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.008377774215022683>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.019019999999999804>
+MLE vs. Jackknife: greater <1.0>, diff <-0.020802199864164546>
+MLE vs. NSB: greater <1.0>, diff <-0.03184935131527865>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.0001607506032672895>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.01048147518171003>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.012263675045874573>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.023310826496988686>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.010642225784977323>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.01242442564914186>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.023471577100255995>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.0017821998641645424>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.012829351315278665>
+Jackknife vs. NSB: greater <1.0>, diff <-0.011047151451114094>
+K = 5, N = 1000
+MLE: bias <-0.0027154928835194693>, rmse <0.02031919455095034>
+Horvitz-Thompson: bias <-0.0025858509962915824>, rmse <0.020278807036769944>
+Chao-Shen: bias <-0.0025861792484198095>, rmse <0.02027783241743215>
+Miller-Madow: bias <-0.0007249928835194678>, rmse <0.02015304961399379>
+Jackknife: bias <-0.0007006737017514877>, rmse <0.020147318575046206>
+NSB: bias <-7.555073502616205e-05>, rmse <0.020123459030197844>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.00012964188722788535>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.00012931363509965688>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.0019905000000000023>
+MLE vs. Jackknife: greater <1.0>, diff <-0.0020148191817679823>
+MLE vs. NSB: greater <1.0>, diff <-0.0026399421484933068>
+Horvitz-Thompson vs. Chao-Shen: greater <0.3976>, diff <3.2825212822845673e-07>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.0018608581127721167>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.0018851772945400972>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.0025103002612654217>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.0018611863649003449>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.001885505546668325>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.002510628513393651>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-2.4319181767980037e-05>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.0006494421484933057>
+Jackknife vs. NSB: greater <1.0>, diff <-0.0006251229667253256>
+K = 5, N = 10000
+MLE: bias <-7.31441240806454e-05>, rmse <0.006421842887789046>
+Horvitz-Thompson: bias <-6.960276382671271e-05>, rmse <0.006423591691834258>
+Chao-Shen: bias <-6.958824271151209e-05>, rmse <0.006423602318096908>
+Miller-Madow: bias <0.0001266558759193328>, rmse <0.006422483387637836>
+Jackknife: bias <0.00012717258620745925>, rmse <0.006422633022939039>
+NSB: bias <0.00018297270290751921>, rmse <0.006423858900371186>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-3.5413602539327017e-06>
+MLE vs. Chao-Shen: greater <1.0>, diff <-3.555881369133318e-06>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.0001997999999999782>
+MLE vs. Jackknife: greater <1.0>, diff <-0.00020031671028810467>
+MLE vs. NSB: greater <1.0>, diff <-0.0002561168269881646>
+Horvitz-Thompson vs. Chao-Shen: greater <0.639>, diff <-1.4521115200616385e-08>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.00019625863974604552>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.00019677535003417195>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.00025257546673423194>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.0001962441186308449>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.00019676082891897134>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.0002525609456190313>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-5.16710288126443e-07>
+Miller-Madow vs. NSB: greater <1.0>, diff <-5.631682698818641e-05>
+Jackknife vs. NSB: greater <1.0>, diff <-5.580011670005996e-05>
+K = 10, N = 10
+MLE: bias <-0.4200540591237513>, rmse <0.4783040874792965>
+Horvitz-Thompson: bias <-0.02306216594641638>, rmse <0.3572613246799352>
+Chao-Shen: bias <0.0005258055381593454>, rmse <0.374708304161686>
+Miller-Madow: bias <-0.20305405912375135>, rmse <0.3405330614668603>
+Jackknife: bias <-0.046344586003717964>, rmse <0.32548259492163706>
+NSB: bias <0.30788286815287097>, rmse <0.5491033097979535>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.3969918931773344>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.42057986466191155>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.2169999999999995>
+MLE vs. Jackknife: greater <1.0>, diff <-0.3737094731200332>
+MLE vs. NSB: greater <1.0>, diff <-0.7279369272766197>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.023587971484575712>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.1799918931773364>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.023282420057301606>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.3309450340992873>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.2035798646619115>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.046870391541877374>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.3073570626147123>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.15670947312003383>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.51093692727662>
+Jackknife vs. NSB: greater <1.0>, diff <-0.3542274541565891>
+K = 10, N = 100
+MLE: bias <-0.04416643134318672>, rmse <0.0856426373593495>
+Horvitz-Thompson: bias <-0.010494432526293394>, rmse <0.07388936142746837>
+Chao-Shen: bias <-0.016291400809103997>, rmse <0.07409401362152458>
+Miller-Madow: bias <-0.0031514313431867357>, rmse <0.07480558487169062>
+Jackknife: bias <0.003171412102034114>, rmse <0.07451394958465027>
+NSB: bias <0.018205943547506088>, rmse <0.07676197059154906>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.03367199881689339>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.02787503053408271>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.04101500000000002>
+MLE vs. Jackknife: greater <1.0>, diff <-0.047337843445220865>
+MLE vs. NSB: greater <1.0>, diff <-0.062372374890692875>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.005796968282810614>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.007343001183106659>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.013665844628327508>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.028700376073799477>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.01313996946591727>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.019462812911138144>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.0344973443566101>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.006322843445220854>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.021357374890692837>
+Jackknife vs. NSB: greater <1.0>, diff <-0.015034531445471988>
+K = 10, N = 1000
+MLE: bias <-0.004815329848390023>, rmse <0.022783139351331277>
+Horvitz-Thompson: bias <-0.004146710063748855>, rmse <0.02261199612270326>
+Chao-Shen: bias <-0.004224464985385967>, rmse <0.02261625232540469>
+Miller-Madow: bias <-0.00035982984838998954>, rmse <0.02228326561391146>
+Jackknife: bias <-0.00025326418153296326>, rmse <0.02227468710007829>
+NSB: bias <0.00022006350733436996>, rmse <0.022232867728584755>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.0006686197846411679>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.0005908648630040602>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.004455500000000086>
+MLE vs. Jackknife: greater <1.0>, diff <-0.004562065666857069>
+MLE vs. NSB: greater <1.0>, diff <-0.005035393355724386>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <7.775492163710762e-05>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.0037868802153588673>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.0038934458822158895>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.00436677357108322>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.0038646351369959774>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.0039712008038529974>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.004444528492720329>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.00010656566685702628>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.0005798933557243595>
+Jackknife vs. NSB: greater <1.0>, diff <-0.00047332768886733324>
+K = 10, N = 10000
+MLE: bias <-0.0006839873614420726>, rmse <0.007098463871093551>
+Horvitz-Thompson: bias <-0.0006748154664467893>, rmse <0.0070962728074464715>
+Chao-Shen: bias <-0.0006756732622441615>, rmse <0.007096590146519645>
+Miller-Madow: bias <-0.00023448736144209058>, rmse <0.007069231477864423>
+Jackknife: bias <-0.000233043656663938>, rmse <0.007068994070571653>
+NSB: bias <-0.00021240966815356654>, rmse <0.0070675949412961>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-9.171894995283259e-06>
+MLE vs. Chao-Shen: greater <1.0>, diff <-8.314099197911152e-06>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.00044949999999998203>
+MLE vs. Jackknife: greater <1.0>, diff <-0.0004509437047781346>
+MLE vs. NSB: greater <1.0>, diff <-0.0004715776932885061>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0008>, diff <8.577957973721074e-07>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.00044032810500469876>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.0004417718097828514>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.0004624057982932228>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.0004411859008020709>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.00044262960558022344>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.0004632635940905949>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-1.443704778152588e-06>
+Miller-Madow vs. NSB: greater <1.0>, diff <-2.2077693288524048e-05>
+Jackknife vs. NSB: greater <1.0>, diff <-2.063398851037146e-05>
+K = 100, N = 10
+MLE: bias <-2.00071201216065>, rmse <2.004784856776139>
+Horvitz-Thompson: bias <-0.9352225611157946>, rmse <0.9772538748442255>
+Chao-Shen: bias <-0.6427890075889822>, rmse <0.7194026635035676>
+Miller-Madow: bias <-1.59171201216065>, rmse <1.6003014049872304>
+Jackknife: bias <-1.1642039496259031>, rmse <1.1868896630766952>
+NSB: bias <-0.6208484519528865>, rmse <1.2907159480626247>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-1.065489451044854>
+MLE vs. Chao-Shen: greater <1.0>, diff <-1.3579230045716693>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.4089999999999955>
+MLE vs. Jackknife: greater <1.0>, diff <-0.8365080625347399>
+MLE vs. NSB: greater <1.0>, diff <-1.3798635602077716>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.2924335535268122>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.6564894510448515>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.22898138851011318>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.3143741091629082>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.948923004571665>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.5214149420369295>
+Chao-Shen vs. NSB: greater <0.7517>, diff <-0.02194055563609541>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.4275080625347509>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.9708635602077614>
+Jackknife vs. NSB: greater <1.0>, diff <-0.5433554976730132>
+K = 100, N = 100
+MLE: bias <-0.4693783272062704>, rmse <0.4764503340295925>
+Horvitz-Thompson: bias <0.3910476202503412>, rmse <0.42891951808823153>
+Chao-Shen: bias <-0.053165909409845766>, rmse <0.1348248512297311>
+Miller-Madow: bias <-0.22310332720627093>, rmse <0.2430695123177431>
+Jackknife: bias <-0.07662182430774973>, rmse <0.13526820786246774>
+NSB: bias <0.13122541669928225>, rmse <0.19372319919916872>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.8604259474566117>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.4162124177964254>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.24627500000000022>
+MLE vs. Jackknife: greater <1.0>, diff <-0.392756502898521>
+MLE vs. NSB: greater <1.0>, diff <-0.6006037439055527>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.4442135296601866>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.61415094745661>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.46766944455809123>
+Horvitz-Thompson vs. NSB: greater <0.0>, diff <0.25982220355105873>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.16993741779642488>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.023455914897903937>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.18439132610912828>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.14648150289852105>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.3543287439055536>
+Jackknife vs. NSB: greater <1.0>, diff <-0.20784724100703217>
+K = 100, N = 1000
+MLE: bias <-0.050342469576081385>, rmse <0.05650507281483341>
+Horvitz-Thompson: bias <0.007631165249468937>, rmse <0.027488611973250407>
+Chao-Shen: bias <-0.017681920254981064>, rmse <0.031097204205642028>
+Miller-Madow: bias <-0.005335969576081372>, rmse <0.026712919411373905>
+Jackknife: bias <0.0014628598897272363>, rmse <0.026114267699604326>
+NSB: bias <0.01033232435000518>, rmse <0.02811918784221923>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.0579736348255503>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.032660549321100296>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.04500649999999985>
+MLE vs. Jackknife: greater <1.0>, diff <-0.051805329465808625>
+MLE vs. NSB: greater <1.0>, diff <-0.0606747939260865>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.025313085504450022>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.012967134825550307>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.006168305359741701>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.002701159100536236>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.012345950678899676>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.019144780144708266>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.02801424460498628>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.006798829465808609>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.015668293926086558>
+Jackknife vs. NSB: greater <1.0>, diff <-0.008869464460277936>
+K = 100, N = 10000
+MLE: bias <-0.005015968888624618>, rmse <0.009323628143152773>
+Horvitz-Thompson: bias <-0.004014712321220627>, rmse <0.008815426269644936>
+Chao-Shen: bias <-0.0043274418464159655>, rmse <0.008959098059733807>
+Miller-Madow: bias <-0.0001140188886245137>, rmse <0.007863652215443441>
+Jackknife: bias <9.059091812346764e-07>, rmse <0.007860108470089843>
+NSB: bias <-3.781894526029017e-05>, rmse <0.007846241417043057>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.0010012565674039923>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.0006885270422086535>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.0049019500000001045>
+MLE vs. Jackknife: greater <1.0>, diff <-0.005016874797805853>
+MLE vs. NSB: greater <1.0>, diff <-0.004978149943364328>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.0003127295251953388>
+Horvitz-Thompson vs. Miller-Madow: greater <1.0>, diff <-0.0039006934325961124>
+Horvitz-Thompson vs. Jackknife: greater <1.0>, diff <-0.004015618230401861>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.003976893375960335>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.004213422957791451>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.0043283477555972>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.004289622901155675>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.00011492479780574838>
+Miller-Madow vs. NSB: greater <1.0>, diff <-7.619994336422354e-05>
+Jackknife vs. NSB: greater <0.0>, diff <3.872485444152485e-05>
+K = 1000, N = 10
+MLE: bias <-4.198225664038311>, rmse <4.198472245236273>
+Horvitz-Thompson: bias <-2.9866442106437487>, rmse <2.98856681487527>
+Chao-Shen: bias <-2.9255470575953173>, rmse <2.926786857029028>
+Miller-Madow: bias <-3.75332566403831>, rmse <3.753807725133853>
+Jackknife: bias <-3.2640532659865826>, rmse <3.2651961262627074>
+NSB: bias <-3.9388024788413745>, rmse <4.007460537454509>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-1.2115814533945606>
+MLE vs. Chao-Shen: greater <1.0>, diff <-1.27267860644299>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.44489999999999247>
+MLE vs. Jackknife: greater <1.0>, diff <-0.9341723980517146>
+MLE vs. NSB: greater <1.0>, diff <-0.25942318519693836>
+Horvitz-Thompson vs. Chao-Shen: greater <1.0>, diff <-0.06109715304843222>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.7666814533945484>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.27740905534283655>
+Horvitz-Thompson vs. NSB: greater <0.0>, diff <0.9521582681976355>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.8277786064429811>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.33850620839126916>
+Chao-Shen vs. NSB: greater <0.0>, diff <1.0132554212460696>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.4892723980517407>
+Miller-Madow vs. NSB: greater <0.0>, diff <0.185476814803059>
+Jackknife vs. NSB: greater <0.0>, diff <0.6747492128547851>
+K = 1000, N = 100
+MLE: bias <-2.0113169547957277>, rmse <2.0117440186806337>
+Horvitz-Thompson: bias <0.2796016504870688>, rmse <0.31486242481492327>
+Chao-Shen: bias <-0.16963949231005504>, rmse <0.37373493120803575>
+Miller-Madow: bias <-1.5617519547957295>, rmse <1.5626798673819766>
+Jackknife: bias <-1.139576720601403>, rmse <1.1420401023540885>
+NSB: bias <0.4360725056745642>, rmse <0.6025643534051351>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-2.2909186052828>
+MLE vs. Chao-Shen: greater <1.0>, diff <-1.841677462485671>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.4495649999999974>
+MLE vs. Jackknife: greater <1.0>, diff <-0.8717402341943236>
+MLE vs. NSB: greater <1.0>, diff <-2.44738946047029>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.4492411427971232>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <1.8413536052827841>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <1.4191783710884698>
+Horvitz-Thompson vs. NSB: greater <1.0>, diff <-0.15647085518749462>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <1.3921124624856658>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.96993722829135>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.6057119979846183>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.42217523419432323>
+Miller-Madow vs. NSB: greater <1.0>, diff <-1.9978244604702873>
+Jackknife vs. NSB: greater <1.0>, diff <-1.5756492262759676>
+K = 1000, N = 1000
+MLE: bias <-0.4701148890063223>, rmse <0.4708222132557598>
+Horvitz-Thompson: bias <0.8491634173806448>, rmse <0.8521359506616428>
+Chao-Shen: bias <-0.06069946048142576>, rmse <0.07318842323274012>
+Miller-Madow: bias <-0.22060838900632185>, rmse <0.22265960859145167>
+Jackknife: bias <-0.07482000141684482>, rmse <0.08243513736590337>
+NSB: bias <0.12363498531207727>, rmse <0.13111846429598673>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-1.3192783063869695>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.4094154285248967>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.2495064999999999>
+MLE vs. Jackknife: greater <1.0>, diff <-0.39529488758947695>
+MLE vs. NSB: greater <1.0>, diff <-0.5937498743183984>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.9098628778620721>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <1.0697718063869672>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.92398341879749>
+Horvitz-Thompson vs. NSB: greater <0.0>, diff <0.7255284320685688>
+Chao-Shen vs. Miller-Madow: greater <0.0>, diff <0.1599089285248959>
+Chao-Shen vs. Jackknife: greater <0.0>, diff <0.014120540935418978>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.1843344457935031>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.1457883875894771>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.34424337431839913>
+Jackknife vs. NSB: greater <1.0>, diff <-0.1984549867289221>
+K = 1000, N = 10000
+MLE: bias <-0.05160716942655294>, rmse <0.05225122386258936>
+Horvitz-Thompson: bias <0.027075631186256714>, rmse <0.028467568139908608>
+Chao-Shen: bias <-0.016723020315678815>, rmse <0.018665014013993078>
+Miller-Madow: bias <-0.006189669426552959>, rmse <0.010375737636852934>
+Jackknife: bias <0.0005848774006992148>, rmse <0.008323465367114938>
+NSB: bias <0.009111097784948534>, rmse <0.01233408036662715>
+MLE vs. Horvitz-Thompson: greater <1.0>, diff <-0.07868280061280968>
+MLE vs. Chao-Shen: greater <1.0>, diff <-0.034884149110874105>
+MLE vs. Miller-Madow: greater <1.0>, diff <-0.045417500000000076>
+MLE vs. Jackknife: greater <1.0>, diff <-0.05219204682725211>
+MLE vs. NSB: greater <1.0>, diff <-0.06071826721150154>
+Horvitz-Thompson vs. Chao-Shen: greater <0.0>, diff <0.043798651501935515>
+Horvitz-Thompson vs. Miller-Madow: greater <0.0>, diff <0.03326530061280961>
+Horvitz-Thompson vs. Jackknife: greater <0.0>, diff <0.026490753785557507>
+Horvitz-Thompson vs. NSB: greater <0.0>, diff <0.01796453340130818>
+Chao-Shen vs. Miller-Madow: greater <1.0>, diff <-0.010533350889125877>
+Chao-Shen vs. Jackknife: greater <1.0>, diff <-0.01730789771637805>
+Chao-Shen vs. NSB: greater <1.0>, diff <-0.02583411810062733>
+Miller-Madow vs. Jackknife: greater <1.0>, diff <-0.006774546827252173>
+Miller-Madow vs. NSB: greater <1.0>, diff <-0.015300767211501498>
+Jackknife vs. NSB: greater <1.0>, diff <-0.008526220384249326>

@@ -11,6 +11,9 @@ def prob(sample):
     counts = Counter(sample)
     return [counts[x] / len(sample) for x in counts], len(sample), counts
 
+def prob_counts(counts, N):
+    return [counts[x] / N for x in counts]
+
 def mle(S, N, counts):
     return -sum([x * math.log(x) if x else 0 for x in S])
 

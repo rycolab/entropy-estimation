@@ -1,0 +1,260 @@
+K = 2, N = 10
+MLE: bias <-0.05120290844228073>, rmse <0.15915251846601375>
+Horvitz-Thompson: bias <-0.020069197240441733>, rmse <0.15640066886861326>
+Chao-Shen: bias <-0.006625012923225462>, rmse <0.16318700538421121>
+Miller-Madow: bias <-0.010352908442280692>, rmse <0.16319514573500268>
+Jackknife: bias <0.003603477053447322>, rmse <0.16467804157617474>
+NSB: bias <0.13993954545191306>, rmse <0.21985225896397625>
+MLE vs. True: greater <1.0>, diff <-0.05120290844228073>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.020069197240441733>
+Chao-Shen vs. True: greater <0.8948>, diff <-0.006625012923225462>
+Miller-Madow vs. True: greater <0.98>, diff <-0.010352908442280692>
+Jackknife vs. True: greater <0.2445>, diff <0.003603477053447322>
+NSB vs. True: greater <0.0>, diff <0.13993954545191306>
+K = 2, N = 100
+MLE: bias <-0.007114160770217303>, rmse <0.04817688885369349>
+Horvitz-Thompson: bias <-0.006158576893701662>, rmse <0.04804322501163663>
+Chao-Shen: bias <-0.005966451023806188>, rmse <0.048135867488395795>
+Miller-Madow: bias <-0.002214160770217295>, rmse <0.047790673761864216>
+Jackknife: bias <-0.0019759725890332543>, rmse <0.04775557082788944>
+NSB: bias <0.008572822245186693>, rmse <0.048358793460489234>
+MLE vs. True: greater <1.0>, diff <-0.007114160770217303>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.006158576893701662>
+Chao-Shen vs. True: greater <1.0>, diff <-0.005966451023806188>
+Miller-Madow vs. True: greater <0.9286>, diff <-0.002214160770217295>
+Jackknife vs. True: greater <0.9069>, diff <-0.0019759725890332543>
+NSB vs. True: greater <0.0>, diff <0.008572822245186693>
+K = 2, N = 1000
+MLE: bias <-0.00017732689277713496>, rmse <0.014723813991875757>
+Horvitz-Thompson: bias <-0.0001649917925295866>, rmse <0.014714388904989068>
+Chao-Shen: bias <-0.0001649917925295866>, rmse <0.014714388904989068>
+Miller-Madow: bias <0.00032167310722283187>, rmse <0.0147263809442533>
+Jackknife: bias <0.0003241594166280942>, rmse <0.014725719288264806>
+NSB: bias <0.001149684447525232>, rmse <0.014765562087235846>
+MLE vs. True: greater <0.6543>, diff <-0.00017732689277713496>
+Horvitz-Thompson vs. True: greater <0.6345>, diff <-0.0001649917925295866>
+Chao-Shen vs. True: greater <0.6404>, diff <-0.0001649917925295866>
+Miller-Madow vs. True: greater <0.2467>, diff <0.00032167310722283187>
+Jackknife vs. True: greater <0.2475>, diff <0.0003241594166280942>
+NSB vs. True: greater <0.0067>, diff <0.001149684447525232>
+K = 2, N = 10000
+MLE: bias <-3.9805838642013e-05>, rmse <0.004371768919968728>
+Horvitz-Thompson: bias <-3.98050433700662e-05>, rmse <0.0043717683898774696>
+Chao-Shen: bias <-3.98050433700662e-05>, rmse <0.0043717683898774696>
+Miller-Madow: bias <1.0194161357981641e-05>, rmse <0.004371599582045496>
+Jackknife: bias <1.0220475015379042e-05>, rmse <0.004371595731972036>
+NSB: bias <9.254397202181537e-05>, rmse <0.004372459177582212>
+MLE vs. True: greater <0.6083>, diff <-3.9805838642013e-05>
+Horvitz-Thompson vs. True: greater <0.6145>, diff <-3.98050433700662e-05>
+Chao-Shen vs. True: greater <0.6222>, diff <-3.98050433700662e-05>
+Miller-Madow vs. True: greater <0.4758>, diff <1.0194161357981641e-05>
+Jackknife vs. True: greater <0.4792>, diff <1.0220475015379042e-05>
+NSB vs. True: greater <0.2501>, diff <9.254397202181537e-05>
+K = 5, N = 10
+MLE: bias <-0.20949877298847078>, rmse <0.3135295466007849>
+Horvitz-Thompson: bias <-0.03679504742033419>, rmse <0.2951210803686151>
+Chao-Shen: bias <-0.018577065275878574>, rmse <0.29232043910990013>
+Miller-Madow: bias <-0.081298772988471>, rmse <0.27815230692926046>
+Jackknife: bias <-0.011513107520847157>, rmse <0.2883300683162137>
+NSB: bias <0.18542929577528006>, rmse <0.3730383226600047>
+MLE vs. True: greater <1.0>, diff <-0.20949877298847078>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.03679504742033419>
+Chao-Shen vs. True: greater <0.9806>, diff <-0.018577065275878574>
+Miller-Madow vs. True: greater <1.0>, diff <-0.081298772988471>
+Jackknife vs. True: greater <0.9014>, diff <-0.011513107520847157>
+NSB vs. True: greater <0.0>, diff <0.18542929577528006>
+K = 5, N = 100
+MLE: bias <-0.021699280710171628>, rmse <0.07083149126240144>
+Horvitz-Thompson: bias <-0.01296011890131178>, rmse <0.06812935589408226>
+Chao-Shen: bias <-0.013084012768412236>, rmse <0.06802696133252392>
+Miller-Madow: bias <-0.002659280710171633>, rmse <0.06807031793592448>
+Jackknife: bias <-0.0008554936905074697>, rmse <0.06781588248664137>
+NSB: bias <0.010215664936585574>, rmse <0.06843232907499466>
+MLE vs. True: greater <1.0>, diff <-0.021699280710171628>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.01296011890131178>
+Chao-Shen vs. True: greater <1.0>, diff <-0.013084012768412236>
+Miller-Madow vs. True: greater <0.894>, diff <-0.002659280710171633>
+Jackknife vs. True: greater <0.6536>, diff <-0.0008554936905074697>
+NSB vs. True: greater <0.0>, diff <0.010215664936585574>
+K = 5, N = 1000
+MLE: bias <-0.0013209055079010646>, rmse <0.021010150646334706>
+Horvitz-Thompson: bias <-0.0011430755584358509>, rmse <0.020923689098405317>
+Chao-Shen: bias <-0.0011425266400119742>, rmse <0.020921252225370963>
+Miller-Madow: bias <0.0006710944920989375>, rmse <0.02097965227811841>
+Jackknife: bias <0.0006999077836385251>, rmse <0.020970449526026773>
+NSB: bias <0.0013232847926981806>, rmse <0.02099286129645859>
+MLE vs. True: greater <0.9781>, diff <-0.0013209055079010646>
+Horvitz-Thompson vs. True: greater <0.9582>, diff <-0.0011430755584358509>
+Chao-Shen vs. True: greater <0.9543>, diff <-0.0011425266400119742>
+Miller-Madow vs. True: greater <0.1602>, diff <0.0006710944920989375>
+Jackknife vs. True: greater <0.1473>, diff <0.0006999077836385251>
+NSB vs. True: greater <0.0219>, diff <0.0013232847926981806>
+K = 5, N = 10000
+MLE: bias <-0.0002644365451346865>, rmse <0.0066285076894735655>
+Horvitz-Thompson: bias <-0.0002618973347048371>, rmse <0.006626114241142284>
+Chao-Shen: bias <-0.0002618793389629497>, rmse <0.006626074100630253>
+Miller-Madow: bias <-6.448654513470842e-05>, rmse <0.006623560488510984>
+Jackknife: bias <-6.407883747899467e-05>, rmse <0.006623369471172376>
+NSB: bias <-8.249902731908231e-06>, rmse <0.0066222818741036365>
+MLE vs. True: greater <0.8941>, diff <-0.0002644365451346865>
+Horvitz-Thompson vs. True: greater <0.8871>, diff <-0.0002618973347048371>
+Chao-Shen vs. True: greater <0.8946>, diff <-0.0002618793389629497>
+Miller-Madow vs. True: greater <0.6189>, diff <-6.448654513470842e-05>
+Jackknife vs. True: greater <0.6132>, diff <-6.407883747899467e-05>
+NSB vs. True: greater <0.5043>, diff <-8.249902731908231e-06>
+K = 10, N = 10
+MLE: bias <-0.4424455446848285>, rmse <0.5027793432706049>
+Horvitz-Thompson: bias <-0.05915123240731918>, rmse <0.38306626062498167>
+Chao-Shen: bias <-0.0345702602856718>, rmse <0.40400472259102876>
+Miller-Madow: bias <-0.23029554468482877>, rmse <0.36774103161476734>
+Jackknife: bias <-0.07867198485762646>, rmse <0.349093780095744>
+NSB: bias <0.2699501601040055>, rmse <0.5573601789870635>
+MLE vs. True: greater <1.0>, diff <-0.4424455446848285>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.05915123240731918>
+Chao-Shen vs. True: greater <0.9973>, diff <-0.0345702602856718>
+Miller-Madow vs. True: greater <1.0>, diff <-0.23029554468482877>
+Jackknife vs. True: greater <1.0>, diff <-0.07867198485762646>
+NSB vs. True: greater <0.0>, diff <0.2699501601040055>
+K = 10, N = 100
+MLE: bias <-0.04823442283969602>, rmse <0.09009714272928666>
+Horvitz-Thompson: bias <-0.014236156528174419>, rmse <0.07719103926398828>
+Chao-Shen: bias <-0.020170309220005223>, rmse <0.0776173965473184>
+Miller-Madow: bias <-0.007389422839695966>, rmse <0.07798444230757864>
+Jackknife: bias <-0.0009712656844028196>, rmse <0.07737298204809667>
+NSB: bias <0.01401625332284642>, rmse <0.07878731194932652>
+MLE vs. True: greater <1.0>, diff <-0.04823442283969602>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.014236156528174419>
+Chao-Shen vs. True: greater <1.0>, diff <-0.020170309220005223>
+Miller-Madow vs. True: greater <0.9984>, diff <-0.007389422839695966>
+Jackknife vs. True: greater <0.6535>, diff <-0.0009712656844028196>
+NSB vs. True: greater <0.0>, diff <0.01401625332284642>
+K = 10, N = 1000
+MLE: bias <-0.0037083769352086317>, rmse <0.022697402985006165>
+Horvitz-Thompson: bias <-0.002999165379746781>, rmse <0.02247822811259901>
+Chao-Shen: bias <-0.003080144497273081>, rmse <0.022494194188620347>
+Miller-Madow: bias <0.0007421230647913974>, rmse <0.0224179566344521>
+Jackknife: bias <0.0008523807028418167>, rmse <0.022404595849011458>
+NSB: bias <0.0013385733873825338>, rmse <0.02240746743748648>
+MLE vs. True: greater <1.0>, diff <-0.0037083769352086317>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.002999165379746781>
+Chao-Shen vs. True: greater <1.0>, diff <-0.003080144497273081>
+Miller-Madow vs. True: greater <0.1471>, diff <0.0007421230647913974>
+Jackknife vs. True: greater <0.1089>, diff <0.0008523807028418167>
+NSB vs. True: greater <0.0285>, diff <0.0013385733873825338>
+K = 10, N = 10000
+MLE: bias <-0.000721109441320279>, rmse <0.007278939336967282>
+Horvitz-Thompson: bias <-0.0007111838235055177>, rmse <0.007277582978634156>
+Chao-Shen: bias <-0.0007118398861037851>, rmse <0.007277706795571293>
+Miller-Madow: bias <-0.0002717094413202963>, rmse <0.007248263917774792>
+Jackknife: bias <-0.000270296650461201>, rmse <0.007248163117275944>
+NSB: bias <-0.0002495398660564803>, rmse <0.007246348455670581>
+MLE vs. True: greater <0.9986>, diff <-0.000721109441320279>
+Horvitz-Thompson vs. True: greater <0.9985>, diff <-0.0007111838235055177>
+Chao-Shen vs. True: greater <0.9991>, diff <-0.0007118398861037851>
+Miller-Madow vs. True: greater <0.8875>, diff <-0.0002717094413202963>
+Jackknife vs. True: greater <0.8795>, diff <-0.000270296650461201>
+NSB vs. True: greater <0.8682>, diff <-0.0002495398660564803>
+K = 100, N = 10
+MLE: bias <-2.00655224139112>, rmse <2.010839575821016>
+Horvitz-Thompson: bias <-0.9477844967281328>, rmse <0.9914940493569637>
+Chao-Shen: bias <-0.6553232258710423>, rmse <0.7359493999592149>
+Miller-Madow: bias <-1.5992022413911227>, rmse <1.6082262064933488>
+Jackknife: bias <-1.174574129614009>, rmse <1.1983127507826947>
+NSB: bias <-0.6129347259211979>, rmse <1.2768336585946678>
+MLE vs. True: greater <1.0>, diff <-2.00655224139112>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.9477844967281328>
+Chao-Shen vs. True: greater <1.0>, diff <-0.6553232258710423>
+Miller-Madow vs. True: greater <1.0>, diff <-1.5992022413911227>
+Jackknife vs. True: greater <1.0>, diff <-1.174574129614009>
+NSB vs. True: greater <1.0>, diff <-0.6129347259211979>
+K = 100, N = 100
+MLE: bias <-0.46492943817593946>, rmse <0.4720344435162588>
+Horvitz-Thompson: bias <0.3997401833813774>, rmse <0.4372512071281307>
+Chao-Shen: bias <-0.04887292590798327>, rmse <0.13230002421607262>
+Miller-Madow: bias <-0.21821943817593947>, rmse <0.23842028140099322>
+Jackknife: bias <-0.07063938964909232>, rmse <0.1318088575302061>
+NSB: bias <0.13789576340561072>, rmse <0.1984344830925275>
+MLE vs. True: greater <1.0>, diff <-0.46492943817593946>
+Horvitz-Thompson vs. True: greater <0.0>, diff <0.3997401833813774>
+Chao-Shen vs. True: greater <1.0>, diff <-0.04887292590798327>
+Miller-Madow vs. True: greater <1.0>, diff <-0.21821943817593947>
+Jackknife vs. True: greater <1.0>, diff <-0.07063938964909232>
+NSB vs. True: greater <0.0>, diff <0.13789576340561072>
+K = 100, N = 1000
+MLE: bias <-0.050727170375084535>, rmse <0.05660992199823257>
+Horvitz-Thompson: bias <0.006649059521086326>, rmse <0.02721293986913116>
+Chao-Shen: bias <-0.018232283931577324>, rmse <0.03124628654008561>
+Miller-Madow: bias <-0.0057836703750845896>, rmse <0.026244300240969413>
+Jackknife: bias <0.0009423123870388985>, rmse <0.025573542170165414>
+NSB: bias <0.009827786335737379>, rmse <0.027406210156682726>
+MLE vs. True: greater <1.0>, diff <-0.050727170375084535>
+Horvitz-Thompson vs. True: greater <0.0>, diff <0.006649059521086326>
+Chao-Shen vs. True: greater <1.0>, diff <-0.018232283931577324>
+Miller-Madow vs. True: greater <1.0>, diff <-0.0057836703750845896>
+Jackknife vs. True: greater <0.1242>, diff <0.0009423123870388985>
+NSB vs. True: greater <0.0>, diff <0.009827786335737379>
+K = 100, N = 10000
+MLE: bias <-0.004773152645604594>, rmse <0.009088398993200063>
+Horvitz-Thompson: bias <-0.0037944258417678487>, rmse <0.008594645510164945>
+Chao-Shen: bias <-0.0040869134286338985>, rmse <0.008734128573181963>
+Miller-Madow: bias <0.0001263973543955177>, rmse <0.007736820054578955>
+Jackknife: bias <0.00023862103765324427>, rmse <0.00773567021080889>
+NSB: bias <0.00020126936149466256>, rmse <0.007726236206987452>
+MLE vs. True: greater <1.0>, diff <-0.004773152645604594>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-0.0037944258417678487>
+Chao-Shen vs. True: greater <1.0>, diff <-0.0040869134286338985>
+Miller-Madow vs. True: greater <0.301>, diff <0.0001263973543955177>
+Jackknife vs. True: greater <0.1647>, diff <0.00023862103765324427>
+NSB vs. True: greater <0.2026>, diff <0.00020126936149466256>
+K = 1000, N = 10
+MLE: bias <-4.1946180913841>, rmse <4.194837344911003>
+Horvitz-Thompson: bias <-2.9795038133831016>, rmse <2.9811728293739477>
+Chao-Shen: bias <-2.928896554277591>, rmse <2.9299293245928624>
+Miller-Madow: bias <-3.7488680913840904>, rmse <3.7492924161749848>
+Jackknife: bias <-3.2580889929184607>, rmse <3.2590849337865864>
+NSB: bias <-3.979619215676414>, rmse <4.036893074195675>
+MLE vs. True: greater <1.0>, diff <-4.1946180913841>
+Horvitz-Thompson vs. True: greater <1.0>, diff <-2.9795038133831016>
+Chao-Shen vs. True: greater <1.0>, diff <-2.928896554277591>
+Miller-Madow vs. True: greater <1.0>, diff <-3.7488680913840904>
+Jackknife vs. True: greater <1.0>, diff <-3.2580889929184607>
+NSB vs. True: greater <1.0>, diff <-3.979619215676414>
+K = 1000, N = 100
+MLE: bias <-2.0102237010888295>, rmse <2.010696038826295>
+Horvitz-Thompson: bias <0.283422118783154>, rmse <0.32110606359009275>
+Chao-Shen: bias <-0.15699104004381542>, rmse <0.3852962116348227>
+Miller-Madow: bias <-1.56033370108883>, rmse <1.5613567412001246>
+Jackknife: bias <-1.1375704293081235>, rmse <1.1402759964128966>
+NSB: bias <0.4529192325744229>, rmse <0.6290552096549124>
+MLE vs. True: greater <1.0>, diff <-2.0102237010888295>
+Horvitz-Thompson vs. True: greater <0.0>, diff <0.283422118783154>
+Chao-Shen vs. True: greater <1.0>, diff <-0.15699104004381542>
+Miller-Madow vs. True: greater <1.0>, diff <-1.56033370108883>
+Jackknife vs. True: greater <1.0>, diff <-1.1375704293081235>
+NSB vs. True: greater <0.0>, diff <0.4529192325744229>
+K = 1000, N = 1000
+MLE: bias <-0.47044692775734337>, rmse <0.4711867257138351>
+Horvitz-Thompson: bias <0.8486055022800338>, rmse <0.8517615445415002>
+Chao-Shen: bias <-0.061611171861979404>, rmse <0.07472027305922337>
+Miller-Madow: bias <-0.22096192775734297>, rmse <0.2231141713080984>
+Jackknife: bias <-0.07516358673572954>, rmse <0.08318867320571899>
+NSB: bias <0.12318170666061225>, rmse <0.13115347733597463>
+MLE vs. True: greater <1.0>, diff <-0.47044692775734337>
+Horvitz-Thompson vs. True: greater <0.0>, diff <0.8486055022800338>
+Chao-Shen vs. True: greater <1.0>, diff <-0.061611171861979404>
+Miller-Madow vs. True: greater <1.0>, diff <-0.22096192775734297>
+Jackknife vs. True: greater <1.0>, diff <-0.07516358673572954>
+NSB vs. True: greater <0.0>, diff <0.12318170666061225>
+K = 1000, N = 10000
+MLE: bias <-0.05198837895668653>, rmse <0.052607751843830465>
+Horvitz-Thompson: bias <0.026914717303073887>, rmse <0.02825302623378919>
+Chao-Shen: bias <-0.01698133666786768>, rmse <0.018852546931429046>
+Miller-Madow: bias <-0.006578528956686555>, rmse <0.010503288538208514>
+Jackknife: bias <0.00020943790936670225>, rmse <0.008159309372553778>
+NSB: bias <0.008744648479045948>, rmse <0.011954000532942015>
+MLE vs. True: greater <1.0>, diff <-0.05198837895668653>
+Horvitz-Thompson vs. True: greater <0.0>, diff <0.026914717303073887>
+Chao-Shen vs. True: greater <1.0>, diff <-0.01698133666786768>
+Miller-Madow vs. True: greater <1.0>, diff <-0.006578528956686555>
+Jackknife vs. True: greater <0.2129>, diff <0.00020943790936670225>
+NSB vs. True: greater <0.0>, diff <0.008744648479045948>
