@@ -170,7 +170,7 @@ def gigaword(fout):
         for file in tqdm(files):
             file = file.strip()
             os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
-            os.system(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../{file} > ../../gigaword.data.txt')
+            os.system(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter lemmas ../../{file} > ../../gigaword.data.txt')
             # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../cna_eng_200307.xml.gz').read()
             with open('gigaword.data.txt', 'r') as fin:
                 for sentence in fin:
