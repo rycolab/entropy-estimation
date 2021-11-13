@@ -170,22 +170,23 @@ def gigaword(fout):
         for file in tqdm(files):
             file = file.strip()
             os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
-            data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../{file}').read()
+            os.system(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../{file} > ../../gigaword.data.txt')
             # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../cna_eng_200307.xml.gz').read()
-            for sentence in data.split('\n'):
-                for word in sentence.split(' '):
-                    if word == '': continue
-                    counts[word] += 1
-                    N += 1
-                    if N % 1000 == 0:
-                        X.append(N)
-                        S = entropy.prob_counts(counts, N)
-                        for num, func in enumerate(funcs):
-                            calc = func(S, N, counts)
-                            biases[num][N].append(calc)
-                        print(N, biases[0][N])
-                        with open('gigaword/entropies.pickle', 'wb') as handle:
-                            pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            with open('gigaword.data.txt', 'r') as fin:
+                for sentence in fin:
+                    for word in sentence.rstrip().split(' '):
+                        if word == '': continue
+                        counts[word] += 1
+                        N += 1
+                        if N % 1000 == 0:
+                            X.append(N)
+                            S = entropy.prob_counts(counts, N)
+                            for num, func in enumerate(funcs):
+                                calc = func(S, N, counts)
+                                biases[num][N].append(calc)
+                            print(N, biases[0][N])
+                            with open('gigaword/entropies.pickle', 'wb') as handle:
+                                pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
             os.remove(f'{file}')
 
         X.append(N)
