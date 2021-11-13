@@ -111,9 +111,9 @@ def zipf(K=100):
         res.append(1 / (i * s))
     return res
 
-def mle_performance(epochs=10, sample_size=20, distrib_count=10000, K=100, zipf=False):
-    funcs = [entropy.mle]
-    # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
+def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100):
+    # funcs = [entropy.mle]
+    funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     biases = [defaultdict(list) for x in range(len(funcs))]
     distribs = np.random.dirichlet([1] * K, distrib_count)
     # distribs = [zipf(K=K) for i in range(distrib_count)]
@@ -146,13 +146,14 @@ def mle_performance(epochs=10, sample_size=20, distrib_count=10000, K=100, zipf=
         dat.extend(data)
     df = pd.DataFrame(dat, columns=['Samples', 'Bias (nats)', 'Estimator'])
     graph = (p9.ggplot(data=df, mapping=p9.aes(x='Samples', y='Bias (nats)', group='Samples', fill='factor(Estimator)'))
-        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.1)
+        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.0)
         # + p9.geom_violin(width=sample_size * 0.8, show_legend=False)
         + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
-        + p9.labels.ggtitle('MLE bias (Symmetric Dirichlet, $K=100$)'))
+        # + p9.labels.ggtitle('MLE bias (Symmetric Dirichlet, $K=100$)'))
+        + p9.labels.ggtitle('Sample size vs. estimator bias (Sym. Dirichlet, $K=100$)'))
         # + p9.labels.ggtitle('Sample size vs. estimator bias (Zipfian, $K=100$)'))
     graph.draw()
-    graph.save('figures/mle_bias.pdf', width=3.5, height=2.75)
+    graph.save('figures/estimators.pdf', width=6, height=3.5)
     plt.show()
 
 def gigaword(fout):
@@ -177,13 +178,15 @@ def gigaword(fout):
                         if word == '': continue
                         counts[word] += 1
                         N += 1
-                        if N % 10000 == 0:
-                            print(N)
+                        if N % 1000 == 0:
                             X.append(N)
                             S = entropy.prob_counts(counts, N)
                             for num, func in enumerate(funcs):
                                 calc = func(S, N, counts)
                                 biases[num][N].append(calc)
+                            print(N, biases[0][N])
+                            with open('gigaword/entropies.pickle', 'wb') as handle:
+                                pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
                 os.remove(f'{file}')
 
             X.append(N)
@@ -192,22 +195,14 @@ def gigaword(fout):
                 calc = func(S, N, counts)
                 biases[num][N].append(calc)
                 print(estimators[num], calc)
-                
-    except Exception as e:
-        print(e)
-        with open('gigaword/entropies.pickle', 'wb') as handle:
-            pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    with open('gigaword/entropies.pickle', 'wb') as handle:
-        pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 # symmetric dirichlet
 def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, samples=None):
     if not samples:
         samples = [sample_size] * epochs
     funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
-    distribs = np.random.dirichlet([1] * K, distrib_count)
-    # distribs = [zipf(K=K)] * distrib_count
+    # distribs = np.random.dirichlet([1] * K, distrib_count)
+    distribs = [zipf(K=K) for i in range(distrib_count)]
 
     if K == 2 and distrib_count==50:
         plt.xlim(right=1)
@@ -311,9 +306,12 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     # plt.show()
 
 if __name__ == '__main__':
-    # mle_performance()
+    mle_performance()
     # with open('logs/gigaword.txt', 'w') as fout:
     #     gigaword(fout)
-    with open('logs/symmetric.txt', 'w') as fout:
-        for K in [2, 5, 10, 100, 1000]:
-            symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
+    # with open('logs/symmetric.txt', 'w') as fout:
+    #     for K in [2, 5, 10, 100, 1000]:
+    #         symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)
+    # with open('logs/symmetric.txt', 'w') as fout:
+    #     for K in [100, 1000, 10000]:
+    #         symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)

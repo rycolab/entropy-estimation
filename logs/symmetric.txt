@@ -1,10 +1,194 @@
 alpha = 0.0033333333333333335
-N=10, K=2
-MLE: bias <-0.04444322409942374>, mab <-0.04444322409942374, mse <0.026367094740885465>
-Horvitz-Thompson: bias <-0.012289721092048681>, mab <-0.012289721092048681, mse <0.02522997724384085>
-Chao-Shen: bias <0.002158913777603281>, mab <0.002158913777603281, mse <0.027213811447574635>
-Miller-Madow: bias <-0.0029932240994236573>, mab <-0.0029932240994236573, mse <0.028077725193687477>
-Jackknife: bias <0.011514175906576125>, mab <0.011514175906576125, mse <0.02845696800044592>
-NSB: bias <0.14770071160139972>, mab <0.14770071160139972, mse <0.051849647188429125>
-MLE vs. Horvitz-Thompson: greater mab <0.9999> (True), greater mse <0.0161> (False)
-MLE vs. Chao-Shen: greater mab <0.9999> (True), greater mse <0.8438> (False)
+N=10, K=100
+MLE: bias <-1.6929662660538904>, mab <1.6929662660538904, mse <2.9145519504693067>
+Horvitz-Thompson: bias <-0.8420314241280875>, mab <0.8420314241280875, mse <0.8967623578721052>
+Chao-Shen: bias <-0.5817513332592107>, mab <0.6500466695389973, mse <0.6826130449263106>
+Miller-Madow: bias <-1.3434162660539017>, mab <1.3434162660539017, mse <1.8839654177038603>
+Jackknife: bias <-1.0032038642664094>, mab <1.0032038642664094, mse <1.1410822800385614>
+NSB: bias <-0.14563737867302853>, mab <0.7442568172957096, mse <0.8289607825094454>
+MLE vs. Horvitz-Thompson: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0002> (True), greater mse <0.0164> (False)
+Chao-Shen vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Miller-Madow vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Jackknife vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+
+
+N=100, K=100
+MLE: bias <-0.46052863183346743>, mab <0.46052863183346743, mse <0.2307441755558521>
+Horvitz-Thompson: bias <0.29632319522502615>, mab <0.31752217188487775, mse <0.13447592508400363>
+Chao-Shen: bias <-0.06211277334627602>, mab <0.13572371461297525, mse <0.029928730875354366>
+Miller-Madow: bias <-0.2594586318334667>, mab <0.2634670356047765, mse <0.09029486422171873>
+Jackknife: bias <-0.1261889322725426>, mab <0.1639459328686374, mse <0.04291065518763409>
+NSB: bias <0.03608079016262971>, mab <0.14967766187220802, mse <0.03561656042257219>
+MLE vs. Horvitz-Thompson: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Miller-Madow vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Jackknife vs. NSB: greater mab <0.0011> (True), greater mse <0.0001> (True)
+
+
+N=1000, K=100
+MLE: bias <-0.05157573272189236>, mab <0.05746088904031972, mse <0.004780693102633636>
+Horvitz-Thompson: bias <0.03714688640606938>, mab <0.04655089374567346, mse <0.0032412611902297717>
+Chao-Shen: bias <0.010927099553610976>, mab <0.03620380659372556, mse <0.0020521285594072005>
+Miller-Madow: bias <-0.004191232721892398>, mab <0.03702932223191526, mse <0.002170701123549732>
+Jackknife: bias <0.005055866667131878>, mab <0.036924624437636874, mse <0.0021439608112113315>
+NSB: bias <0.027719732503823567>, mab <0.04316463231603175, mse <0.002861556219116023>
+MLE vs. Horvitz-Thompson: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.9552> (False), greater mse <0.9939> (False)
+Chao-Shen vs. Jackknife: greater mab <0.9988> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Miller-Madow vs. Jackknife: greater mab <0.3568> (False), greater mse <0.1656> (False)
+Miller-Madow vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Jackknife vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+
+
+N=10000, K=100
+MLE: bias <-0.004974201789996031>, mab <0.012296068926711555, mse <0.00023999688839940634>
+Horvitz-Thompson: bias <-0.00497386932560379>, mab <0.012295864341471008, mse <0.00023998957296534704>
+Chao-Shen: bias <-0.00497386932560379>, mab <0.012295864341471008, mse <0.00023998957296534704>
+Miller-Madow: bias <-2.420178999602385e-05>, mab <0.011730482082908208, mse <0.00021525479067844588>
+Jackknife: bias <2.2026868286902256e-05>, mab <0.011730331247251223, mse <0.00021523311421187927>
+NSB: bias <0.0010966901666629246>, mab <0.011763123669015647, mse <0.00021564206585743902>
+MLE vs. Horvitz-Thompson: greater mab <0.0003> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0004> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0002> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0019> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.0002> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.0002> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0016> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. NSB: greater mab <0.0016> (True), greater mse <0.0001> (True)
+Miller-Madow vs. Jackknife: greater mab <0.4542> (False), greater mse <0.3104> (False)
+Miller-Madow vs. NSB: greater mab <0.8262> (False), greater mse <0.645> (False)
+Jackknife vs. NSB: greater mab <0.8361> (False), greater mse <0.654> (False)
+
+
+alpha = 0.0033333333333333335
+N=10, K=1000
+MLE: bias <-3.0436348029960896>, mab <3.0436348029960896, mse <9.291458442244128>
+Horvitz-Thompson: bias <-2.008704346307489>, mab <2.008704346307489, mse <4.15519809416977>
+Chao-Shen: bias <-1.7291309948050955>, mab <1.7291309948050955, mse <3.1418811682739936>
+Miller-Madow: bias <-2.644584802996079>, mab <2.644584802996079, mse <7.040507776602104>
+Jackknife: bias <-2.2286662947958638>, mab <2.2286662947958638, mse <5.050650921578046>
+NSB: bias <-1.6884499880851431>, mab <1.6884499880851431, mse <4.002818974792771>
+MLE vs. Horvitz-Thompson: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0001> (True), greater mse <0.1341> (False)
+Chao-Shen vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.0957> (False), greater mse <0.9999> (True)
+Miller-Madow vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Jackknife vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+
+
+N=100, K=1000
+MLE: bias <-1.3971668149106093>, mab <1.3971668149106093, mse <1.970374561457996>
+Horvitz-Thompson: bias <0.03303953093614845>, mab <0.20991864161758075, mse <0.06832792410717457>
+Chao-Shen: bias <-0.6611659069766317>, mab <0.6611659069766317, mse <0.48072205885868663>
+Miller-Madow: bias <-1.0872368149106093>, mab <1.0872368149106093, mse <1.206424104457659>
+Jackknife: bias <-0.825645603478114>, mab <0.825645603478114, mse <0.7133997025933854>
+NSB: bias <-0.4131308066904755>, mab <0.4217329155583083, mse <0.23000294461306703>
+MLE vs. Horvitz-Thompson: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Jackknife vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+
+
+N=1000, K=1000
+MLE: bias <-0.41663471386302975>, mab <0.41663471386302975, mse <0.17744752002369196>
+Horvitz-Thompson: bias <0.565324875468119>, mab <0.565324875468119, mse <0.32861729982224597>
+Chao-Shen: bias <-0.049464951611524935>, mab <0.06622059394108765, mse <0.0068033376524334515>
+Miller-Madow: bias <-0.2501047138630298>, mab <0.2501047138630298, mse <0.06694814704099963>
+Jackknife: bias <-0.13589799162103808>, mab <0.13726217008243188, mse <0.0233028658941791>
+NSB: bias <0.02471387808219678>, mab <0.06289858330443744, mse <0.006146845230684945>
+MLE vs. Horvitz-Thompson: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. Jackknife: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Chao-Shen vs. NSB: greater mab <0.0504> (False), greater mse <0.0244> (False)
+Miller-Madow vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Jackknife vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+
+
+N=10000, K=1000
+MLE: bias <-0.05363092772861885>, mab <0.05373257379261216, mse <0.003363186487136018>
+Horvitz-Thompson: bias <0.11035618856061254>, mab <0.11035618856061254, mse <0.012630017756904774>
+Chao-Shen: bias <0.042745240200586725>, mab <0.04328203841431297, mse <0.002298328565639948>
+Miller-Madow: bias <-0.008263427728618867>, mab <0.018776712907684477, mse <0.0005628547693674727>
+Jackknife: bias <0.004354622756493448>, mab <0.01793473878518175, mse <0.0005081251039475381>
+NSB: bias <0.039288475111421015>, mab <0.04007798274321902, mse <0.0020319682141623514>
+MLE vs. Horvitz-Thompson: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Chao-Shen: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Horvitz-Thompson vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Miller-Madow: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. Jackknife: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Chao-Shen vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+Miller-Madow vs. Jackknife: greater mab <0.0103> (False), greater mse <0.0004> (True)
+Miller-Madow vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+Jackknife vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+
+
