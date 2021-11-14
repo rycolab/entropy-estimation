@@ -13,6 +13,7 @@ import os
 import pickle
 
 estimators = ["MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "NSB"]
+funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
 
 np.random.seed(42)
 
@@ -113,7 +114,7 @@ def zipf(K=100):
 
 def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100):
     # funcs = [entropy.mle]
-    funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
+    # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     biases = [defaultdict(list) for x in range(len(funcs))]
     distribs = np.random.dirichlet([1] * K, distrib_count)
     # distribs = [zipf(K=K) for i in range(distrib_count)]
@@ -157,7 +158,7 @@ def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100):
     plt.show()
 
 def gigaword(fout):
-    funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
+    # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     biases = [defaultdict(list) for x in range(len(funcs))]
 
     X = []
@@ -166,12 +167,12 @@ def gigaword(fout):
     
     # parse gigaword
     os.system('ls')
-    with open('gigaword/gigaword.txt') as files:
+    with open('data/gigaword/gigaword.txt') as files:
         for file in tqdm(files):
             file = file.strip()
             os.system(f'curl https://gigaword.library.arizona.edu/data/xml/{file} -O')
-            os.system(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter lemmas ../../{file} > ../../gigaword.data.txt')
-            # data = os.popen(f'cd gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../cna_eng_200307.xml.gz').read()
+            os.system(f'cd data/gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter lemmas ../../{file} > ../../gigaword.data.txt')
+            # data = os.popen(f'cd data/gigaword/agiga_1.0 && java -cp build/agiga-1.0.jar:lib/* edu.jhu.agiga.AgigaPrinter words ../../cna_eng_200307.xml.gz').read()
             with open('gigaword.data.txt', 'r') as fin:
                 for sentence in fin:
                     for word in sentence.rstrip().split(' '):
@@ -185,7 +186,7 @@ def gigaword(fout):
                                 calc = func(S, N, counts)
                                 biases[num][N].append(calc)
                             print(N, biases[0][N])
-                            with open('gigaword/entropies.pickle', 'wb') as handle:
+                            with open('data/gigaword/entropies.pickle', 'wb') as handle:
                                 pickle.dump(biases, handle, protocol=pickle.HIGHEST_PROTOCOL)
             os.remove(f'{file}')
 
@@ -200,7 +201,7 @@ def gigaword(fout):
 def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, samples=None):
     if not samples:
         samples = [sample_size] * epochs
-    funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
+    # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     # distribs = np.random.dirichlet([1] * K, distrib_count)
     distribs = [zipf(K=K) for i in range(distrib_count)]
 

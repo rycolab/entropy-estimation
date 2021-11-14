@@ -1,0 +1,264 @@
+English, 100
+MLE: bias <-2.6488487923077737>, mab <2.6488487923077737, mse <7.025182606253187>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <-0.8237430627756025>, mab <0.8237430627756025, mse <0.7321011362601646>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-1.5928493786513098>, mab <1.5928493786513098, mse <2.6015893378703465>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-2.2707987923077737>, mab <2.2707987923077737, mse <5.169571023897468>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-1.934717098225145>, mab <1.934717098225145, mse <3.762574222121322>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-1.2362310918499593>, mab <1.2362310918499593, mse <1.6044914879652732>
+English, 1000
+MLE: bias <-1.3061488428297008>, mab <1.3061488428297008, mse <1.709391549142366>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.4079684216365295>, mab <0.4079684216365295, mse <0.17922416175116918>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-0.8180463038936492>, mab <0.8180463038936492, mse <0.6745188286938673>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-1.0546138428297007>, mab <1.0546138428297007, mse <1.116378530552061>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.8476160108634427>, mab <0.8476160108634427, mse <0.7234536404137326>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.5536338658553025>, mab <0.5536338658553025, mse <0.31359580020301697>
+English, 10000
+MLE: bias <-0.507924536563267>, mab <0.507924536563267, mse <0.2585758719017963>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.6716631398174647>, mab <0.6716631398174647, mse <0.4525379904125735>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <-0.18673960262035172>, mab <0.18673960262035172, mse <0.03547131886495738>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-0.3667055365632671>, mab <0.3667055365632671, mse <0.135118420615079>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.2624823615952204>, mab <0.2624823615952204, mse <0.06958944916747735>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.09218888678342008>, mab <0.09218888678342008, mse <0.00927306425237972>
+English, 100000
+MLE: bias <-0.1376925422824087>, mab <0.1376925422824087, mse <0.01903105140809111>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.33936646134850257>, mab <0.33936646134850257, mse <0.1152762714055695>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <0.028995998547295246>, mab <0.028995998547295246, mse <0.0009115714514101137>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-0.08074394228240873>, mab <0.08074394228240873, mse <0.006593654165458971>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.048001081188533926>, mab <0.048001081188533926, mse <0.0023796300813307848>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <0.01814981615390848>, mab <0.018160614091139272, mse <0.0004065505237295068>
+German, 100
+MLE: bias <-3.092512584462024>, mab <3.092512584462024, mse <9.57314765208575>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <-1.1399210593736457>, mab <1.1399210593736457, mse <1.3572020620513143>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-1.8741012809777298>, mab <1.8741012809777298, mse <3.596656420693121>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-2.694962584462025>, mab <2.694962584462025, mse <7.2769652324463925>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-2.3348339659954913>, mab <2.3348339659954913, mse <5.472460329414108>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-1.493753712606595>, mab <1.493753712606595, mse <2.3307282444748165>
+German, 1000
+MLE: bias <-1.609019062119732>, mab <1.609019062119732, mse <2.5913430765638723>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.3330050270278089>, mab <0.3330050270278089, mse <0.12090985467932289>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-1.0748601978941719>, mab <1.0748601978941719, mse <1.1592696196294643>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-1.330234062119732>, mab <1.330234062119732, mse <1.7725184180173736>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-1.0945565577553966>, mab <1.0945565577553966, mse <1.2017225852129656>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.7495683322712275>, mab <0.7495683322712275, mse <0.5672718424794986>
+German, 10000
+MLE: bias <-0.6780760846992874>, mab <0.6780760846992874, mse <0.4603171121151833>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.7919799691404127>, mab <0.7919799691404127, mse <0.6292276575890099>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <-0.32469446552437886>, mab <0.32469446552437886, mse <0.10608006380651142>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-0.5087940846992874>, mab <0.5087940846992874, mse <0.2594868768758093>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.3780926122271505>, mab <0.3780926122271505, mse <0.14365679935638603>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.16241688142984462>, mab <0.16241688142984462, mse <0.027280829109926335>
+German, 100000
+MLE: bias <-0.20319387180631288>, mab <0.20319387180631288, mse <0.04139241556538782>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.485382269494073>, mab <0.485382269494073, mse <0.23579361613607983>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <0.0013705297966024065>, mab <0.008358564930279177, mse <0.00011485283195763582>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MM: bias <-0.12706867180631293>, mab <0.12706867180631293, mse <0.01625745959542938>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.0794659314889844>, mab <0.0794659314889844, mse <0.006430407525320286>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <0.016414416061904982>, mab <0.017612925396031553, mse <0.0003940800981498005>
+Dutch, 100
+MLE: bias <-2.9060441146485503>, mab <2.9060441146485503, mse <8.454135974504515>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <-1.0675252092993621>, mab <1.0675252092993621, mse <1.1928090834613583>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-1.8362308786452524>, mab <1.8362308786452524, mse <3.434899862485837>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-2.5244941146485527>, mab <2.5244941146485527, mse <6.3865282471965665>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-2.1867143628906125>, mab <2.1867143628906125, mse <4.801542099964309>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-1.469087046347133>, mab <1.469087046347133, mse <2.23555265727962>
+Dutch, 1000
+MLE: bias <-1.5176911959772426>, mab <1.5176911959772426, mse <2.307119404462833>
+MLE vs. HT: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.2801645846758356>, mab <0.2801645846758356, mse <0.09195613874462451>
+HT vs. CS: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+HT vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS: bias <-1.0194569219509428>, mab <1.0194569219509428, mse <1.0444084276713175>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-1.2576811959772427>, mab <1.2576811959772427, mse <1.5863505855665574>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-1.0397188617642574>, mab <1.0397188617642574, mse <1.0865164577677289>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.73216728528463>, mab <0.73216728528463, mse <0.5435997296849837>
+Dutch, 10000
+MLE: bias <-0.6668761676766995>, mab <0.6668761676766995, mse <0.4454592159072698>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.6974671355494158>, mab <0.6974671355494158, mse <0.4884827602644625>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <-0.3162370264275212>, mab <0.3162370264275212, mse <0.1007787895761986>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM: bias <-0.510308667676699>, mab <0.510308667676699, mse <0.2612423731878735>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.3885532493224744>, mab <0.3885532493224744, mse <0.151886559144648>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <-0.18618923768792184>, mab <0.18618923768792184, mse <0.03573948339074875>
+Dutch, 100000
+MLE: bias <-0.2176536428904506>, mab <0.2176536428904506, mse <0.0474526962382636>
+MLE vs. HT: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MLE vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MLE vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT: bias <0.4798013296349509>, mab <0.4798013296349509, mse <0.23034718326843115>
+HT vs. CS: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. MM: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+HT vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+CS: bias <0.0031961346123328483>, mab <0.007678395138872425, mse <9.711689786406379e-05>
+CS vs. MM: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. J: greater mab <0.9999> (True), greater mse <0.9999> (True)
+CS vs. NSB: greater mab <0.9999> (True), greater mse <0.9999> (True)
+MM: bias <-0.14368954289045063>, mab <0.14368954289045063, mse <0.020730467481509134>
+MM vs. J: greater mab <0.0001> (True), greater mse <0.0001> (True)
+MM vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+J: bias <-0.09513613552532163>, mab <0.09513613552532163, mse <0.009137116171025288>
+J vs. NSB: greater mab <0.0001> (True), greater mse <0.0001> (True)
+NSB: bias <0.00464860409188228>, mab <0.00852241386267023, mse <0.00011476112708035536>
