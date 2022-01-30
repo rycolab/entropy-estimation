@@ -12,7 +12,7 @@ from collections import Counter
 import os
 import pickle
 
-estimators = ["MLE", "Horvitz-Thompson", "Chao-Shen", "Miller-Madow", "Jackknife", "NSB"]
+estimators = ["MLE", "HT", "CS", "MM", "J", "NSB"]
 funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
 
 np.random.seed(42)
@@ -112,7 +112,7 @@ def zipf(K=100):
         res.append(1 / (i * s))
     return res
 
-def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100):
+def mle_performance(epochs=10, sample_size=20, distrib_count=100, K=100):
     # funcs = [entropy.mle]
     # funcs = [entropy.mle, entropy.horvitz_thompson, entropy.chao_shen, entropy.miller_madow, entropy.jackknife, entropy.nsb]
     biases = [defaultdict(list) for x in range(len(funcs))]
@@ -147,14 +147,15 @@ def mle_performance(epochs=10, sample_size=20, distrib_count=1000, K=100):
         dat.extend(data)
     df = pd.DataFrame(dat, columns=['Samples', 'Bias (nats)', 'Estimator'])
     graph = (p9.ggplot(data=df, mapping=p9.aes(x='Samples', y='Bias (nats)', group='Samples', fill='factor(Estimator)'))
-        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.0)
+        + p9.geom_boxplot(width=sample_size * 0.8, show_legend=False, outlier_alpha=0.0, size=0.2)
         # + p9.geom_violin(width=sample_size * 0.8, show_legend=False)
-        + p9.facet_wrap('~Estimator') + p9.theme(text=p9.themes.element_text(family='serif'))
+        + p9.facet_wrap('~Estimator', nrow=1) + p9.theme(text=p9.themes.element_text(family='serif'))
         # + p9.labels.ggtitle('MLE bias (Symmetric Dirichlet, $K=100$)'))
-        + p9.labels.ggtitle('Sample size vs. estimator bias (Sym. Dirichlet, $K=100$)'))
+        + p9.labels.ggtitle('Estimator bias')
+        + p9.theme(axis_text_x=p9.element_text(rotation=90, hjust=0.5)))
         # + p9.labels.ggtitle('Sample size vs. estimator bias (Zipfian, $K=100$)'))
     graph.draw()
-    graph.save('figures/estimators.pdf', width=6, height=3.5)
+    graph.save('figures/estimators.pdf', width=8, height=1.3)
     plt.show()
 
 def gigaword(fout):
@@ -307,9 +308,9 @@ def symmetric(fout, epochs=1, sample_size=1000, distrib_count=10000, K=2, sample
     # plt.show()
 
 if __name__ == '__main__':
-    # mle_performance()
-    with open('logs/gigaword.txt', 'w') as fout:
-        gigaword(fout)
+    mle_performance()
+    # with open('logs/gigaword.txt', 'w') as fout:
+    #     gigaword(fout)
     # with open('logs/symmetric.txt', 'w') as fout:
     #     for K in [2, 5, 10, 100, 1000]:
     #         symmetric(fout, samples=[10, 90, 900, 9000], distrib_count=1000, K=K)

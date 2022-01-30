@@ -1,0 +1,1 @@
+Put CELEX folder here if you have a license (https://catalog.ldc.upenn.edu/LDC96L14).

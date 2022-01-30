@@ -22,19 +22,23 @@ plt.rcParams.update({
 def main(file, distribs=100, samples=[100, 900, 9000, 90000], perm=True, graph=False):
     fout = open(file, 'w')
     data = []
-    langs = ['english/efw/efw.cd', 'german/gfw/gfw.cd', 'dutch/dfw/dfw.cd']
-    name = ['English', 'German', 'Dutch']
+    langs = ['CELEX_V2/english/efw/efw.cd', 'CELEX_V2/german/gfw/gfw.cd',
+        'CELEX_V2/dutch/dfw/dfw.cd', 'tagalog.txt', 'mongolian.txt']
+    name = ['English', 'German', 'Dutch', 'Tagalog', 'Mongolian']
     for i, lang in enumerate(langs):
         print(lang)
-        file = f'data/LDC96L14/CELEX_V2/{lang}'
+        file = f'data/LDC96L14/{lang}'
         counts = Counter()
         N = 0
         with open(file, 'r') as fin:
             for row in fin:
                 row = row.rstrip()
-                if '\\' not in row:
-                    continue
-                _, word, lemma, freq = row.split('\\')[:4]
+                if 'CELEX_V2' in file:
+                    if '\\' not in row:
+                        continue
+                    _, word, lemma, freq = row.split('\\')[:4]
+                else:
+                    word, freq = row.split()
                 freq = int(freq)
                 if freq == 0:
                     continue
@@ -82,17 +86,17 @@ def main(file, distribs=100, samples=[100, 900, 9000, 90000], perm=True, graph=F
                 fout.write(f'{name[i]}, {n}\n')
                 for num1, name1 in enumerate(estimators):
                     p = [x[1] for x in filter(lambda x: x[2] == name1 and x[0] == n and x[3] == name[i], data)]
-                    bias = sum([(x - true_entropy) for x in p]) / distribs
-                    mab = sum([abs(x - true_entropy) for x in p]) / distribs
-                    mse = sum([abs(x - true_entropy)**2 for x in p]) / distribs
+                    bias = sum([x for x in p]) / distribs
+                    mab = sum([abs(x) for x in p]) / distribs
+                    mse = sum([abs(x)**2 for x in p]) / distribs
                     fout.write(f'{name1}: bias <{bias}>, mab <{mab}, mse <{mse}>\n')
-                    for num2, name2 in enumerate(estimators):
-                        if num2 <= num1: continue
-                        q = [x[1] for x in filter(lambda x: x[2] == name2 and x[0] == n and x[3] == name[i], data)]
-                        print(len(p), len(q))
-                        mab, mse = permutation_test(p, q, true, num1, num2)
-                        fout.write(f'{name1} vs. {name2}: greater mab <{mab}> ({mab < alpha or mab > (1- alpha)}), greater mse <{mse}> ({mse < alpha or mse > (1- alpha)})\n')
-                        print(name1, name2, mab, mse)
+                    # for num2, name2 in enumerate(estimators):
+                    #     if num2 <= num1: continue
+                    #     q = [x[1] for x in filter(lambda x: x[2] == name2 and x[0] == n and x[3] == name[i], data)]
+                    #     print(len(p), len(q))
+                    #     mab, mse = permutation_test(p, q, true, num1, num2)
+                    #     fout.write(f'{name1} vs. {name2}: greater mab <{mab}> ({mab < alpha or mab > (1- alpha)}), greater mse <{mse}> ({mse < alpha or mse > (1- alpha)})\n')
+                    #     print(name1, name2, mab, mse)
     fout.close()
         
     if graph:
@@ -103,17 +107,22 @@ def main(file, distribs=100, samples=[100, 900, 9000, 90000], perm=True, graph=F
             # + p9.geom_boxplot(outlier_alpha=0.1, show_legend=False, width=1000 * 0.8)
             + p9.geom_hline(yintercept=0)
             + p9.geom_line()
-            + p9.facet_wrap('~Language')
+            + p9.facet_wrap('~Language', nrow=2, ncol=3)
             + p9.scales.scale_x_log10()
-            + p9.theme(text=p9.themes.element_text(family='serif'), legend_title = p9.themes.element_text(size = 10), 
-                legend_text = p9.themes.element_text(size = 10), axis_text_x=p9.element_text(rotation=45, hjust=1),
-                legend_key_width=20, legend_key_height=15)
-            + p9.labels.ggtitle(f'Entropy of the unigram distribution'))
+            + p9.scales.scale_y_log10()
+            + p9.theme(legend_title=p9.themes.element_text(size=0, alpha=0), 
+                legend_text=p9.themes.element_text(size=7), axis_text_x=p9.element_text(rotation=90, hjust=0.5),
+                legend_key_width=8, legend_key_height=10, legend_position=(0.8, 0.3))
+            # + p9.labels.ggtitle(f'Entropy on CELEX')
+            + p9.guides(color=p9.guide_legend(ncol=2)))
         graph.draw()
-        graph.save('figures/celex_mse.pdf', width=3, height=2.5)
+        graph.save('figures/celex_mse_big.pdf', width=3, height=2.5)
         plt.show()
 
 if __name__ == '__main__':
     # main(file='logs/celex_2.txt', samples=[100000])
     # main(file='logs/celex_1.txt')
-    main(file='logs/celex_graph.txt', samples=[100] * 10 + [1000] * 9 + [10000] * 9 + [100000] * 9, distribs=1, perm=False, graph=True)
+    #  + [10000] * 9 + [100000] * 9 + [1000000] * 4
+    # 
+    main(file='logs/celex_graph.txt', samples=[100] * 10 + [1000] * 9 + [10000] * 9 + [100000] * 9 + [1000000] * 4, distribs=1, perm=False, graph=True)
+    # main(file='logs/celex_graph.txt', samples=[100, 900, 9000, 90000], distribs=10, perm=True, graph=False)

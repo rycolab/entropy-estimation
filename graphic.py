@@ -505,6 +505,8 @@ data = {"10,2": {
 #     more.append([x[1], x[0], 1 - x[2], x[3], 1 - x[4], x[5]])
 # ex.extend(more)
 
+shorten = {'Horvitz-Thompson': 'HT', 'Chao-Shen': 'CS', 'Miller-Madow': 'MM', 'Jackknife': 'J', 'MLE': 'MLE', 'NSB': 'NSB'} 
+
 mod = []
 for key in data:
     n, k = map(int, key.split(","))
@@ -514,8 +516,8 @@ for key in data:
     mse_true = sum([x[5] for x in data[key]["comps"] if mse in x[:2]])
     print(k, n, mab, mse, mab_true, mse_true)
     for row in data[key]["comps"]:
-        mod.append([n, k, row[0], row[1], row[2], row[3], row[4], row[5]])
-        mod.append([n, k, row[1], row[0], 1 - row[2], row[3], 1 - row[4], row[5]])
+        mod.append([n, k, shorten[row[0]], shorten[row[1]], row[2], row[3], row[4], row[5]])
+        mod.append([n, k, shorten[row[1]], shorten[row[0]], 1 - row[2], row[3], 1 - row[4], row[5]])
 
 df = pd.DataFrame(mod, columns=['N', 'K', 'Estimator 1', 'Estimator 2', 'MAB', 'MAB-Sig', 'MSE', 'MSE-Sig'])
 print(df.head())
@@ -526,31 +528,31 @@ plt.rcParams.update({
     "font.serif": ["Times New Roman"],
 })
 
-chart = (p9.ggplot(df, p9.aes('Estimator 1', 'Estimator 2', fill='MAB', alpha='MAB-Sig'))
+labels = ['MLE', 'NSB', 'MM', 'J', 'HT', 'CS']
+
+chart = (p9.ggplot(df, p9.aes('Estimator 1', 'Estimator 2', fill='MAB'))
     + p9.geom_tile(p9.aes(width=1, height=1))
     # + p9.scale_colour_grey(start=1, end=0)
     + p9.facet_grid('K ~ N', labeller='label_both')
-    + p9.labs(title='Pairwise estimator MAB p-values (Symmetric Dirichlet)')
-    + p9.scale_y_discrete(limits=['MLE', 'NSB', 'Miller-Madow', 'Jackknife', 'Horvitz-Thompson', 'Chao-Shen'])
-    + p9.scale_x_discrete(limits=['MLE', 'NSB', 'Miller-Madow', 'Jackknife', 'Horvitz-Thompson', 'Chao-Shen'])
-    + p9.theme(figure_size=(6, 5),
-            axis_text_x=p9.element_text(rotation=45, hjust=1))
+    + p9.labs(title='Pairwise MAB p-values (Dirichlet)')
+    + p9.scale_y_discrete(limits=labels)
+    + p9.scale_x_discrete(limits=labels)
+    + p9.theme(legend_key_width=2, legend_key_height=10, axis_text_x=p9.element_text(rotation=90, hjust=0.5))
     )
 chart.draw()
-chart.save('figures/mab.pdf', width=6, height=6)
+chart.save('figures/mab.pdf', width=4, height=5)
 plt.clf()
 
-chart = (p9.ggplot(df, p9.aes('Estimator 1', 'Estimator 2', fill='MSE', alpha='MSE-Sig'))
+chart = (p9.ggplot(df, p9.aes('Estimator 1', 'Estimator 2', fill='MSE'))
     + p9.geom_tile(p9.aes(width=1, height=1))
     # + p9.scale_colour_grey(start=1, end=0)
     + p9.facet_grid('K ~ N', labeller='label_both')
-    + p9.labs(title='Pairwise estimator MSE p-values (Symmetric Dirichlet)')
-    + p9.scale_y_discrete(limits=['MLE', 'NSB', 'Miller-Madow', 'Jackknife', 'Horvitz-Thompson', 'Chao-Shen'])
-    + p9.scale_x_discrete(limits=['MLE', 'NSB', 'Miller-Madow', 'Jackknife', 'Horvitz-Thompson', 'Chao-Shen'])
-    + p9.theme(figure_size=(6, 5),
-            axis_text_x=p9.element_text(rotation=45, hjust=1))
+    + p9.labs(title='Pairwise MSE p-values (Dirichlet)')
+    + p9.scale_y_discrete(limits=labels)
+    + p9.scale_x_discrete(limits=labels)
+    + p9.theme(legend_key_width=2, legend_key_height=10, axis_text_x=p9.element_text(rotation=90, hjust=0.5))
     )
 chart.draw()
-chart.save('figures/mse.pdf', width=6, height=6)
+chart.save('figures/mse.pdf', width=4, height=5)
 plt.show()
 

@@ -1,0 +1,69 @@
+,be,bg,bs,ca,cs,de,en,es,fr,hr,it,la,mk,nl,pl,pt,ro,ru,sk,sl,sr,sw,uk
+50,дрэва,дърво,drvo,arbre,strom,Baum,tree,árbol,arbre,drvo,albero,arbor,дрво,boom,drzewo,árvore,"arbore, copac",дерево,strom,drevo,дрво,träd,дерево
+51,лес,шума,gora,bosc,les,Wald,forest,bosque,forêt,gora,foresta,silva,шума,woud,bór,floresta,pădure,лес,les,gozd,гора,skog,ліс
+52,палка,бастун,palica,bastó,pálka,Stock,stick,palo,bâton,palica,bastone,fustis,прачка,stok,pałka,"bastão, vara","băţ, baston",палка,tyč,palica,палица,pinne,палиця
+53,садавіна,овошка,plod,"fruit, fruita",plod,Frucht,fruit,fruta,fruit,plod,frutta,fructus,плод,"fruit, vrucht",owoc,"fruta, fruto",fruct,фрукт,ovocie,plod,плод,frukt,фрукт
+54,насеньне,семе,sjeme,llavor,sémě,Samen,seed,semilla,graine,sjeme,seme,semen,семе,zaad,nasionko,semente,"sămânţă, grăunte",семена,semeno,seme,семе,frö,насіння
+55,ліст,лист,list,fulla,list,Blatt,leaf,hoja,feuille,list,foglia,folium,лист,blad,liść,folha,frunză,лист,list,list,лист,"löv, blad",листок
+56,корань,корен,korijen,arrel,kořen,Wurzel,root,raíz,racine,korijen,radice,radix,корен,wortel,korzeń,raiz,rădăcină,корень,koreň,koren,корен,rot,корінь
+57,кара,кора,kora,escorça,kůra,Rinde,bark (from tree),corteza,écorce,kora,corteccia,cortex,кора,schors,kora,casca,scoarţă,кора,kôra,skorja,кора,bark,кора
+58,кветка,цвете,cvijet,flor,květ,Blume,flower,flor,fleur,cvijet,fiore,flos,цвет,bloem,kwiat,flor,floare,цветок,kvet,cvet,цвет,blomma,квітка
+59,трава,трева,trava,herba,tráva,Gras,grass,"hierba, pasto",herbe,trava,erba,herba,трева,gras,trawa,"grama, erva",iarbă,трава,tráva,trava,трава,gräs,трава
+60,шнур,въже,kanap,corda,šňůra,Seil,rope,cuerda,corde,konop,corda,funis,коноп,"touw, koord",sznur,corda,"sfoară, frânghie, coardă",верёвка,šnúra,vrv,канап,rep,мотузка
+61,скура,кожа,koža,pell,kůže,Haut,skin,piel,peau,koža,pelle,cutis,кожа,huid,skóra,"pele, cútis",piele,шкура,koža,koža,кожа,hud,шкіра
+62,мяса,месо,meso,carn,maso,Fleisch,meat,carne,viande,meso,carne,caro,месо,vlees,mięso,carne,carne,мясо,mäso,meso,месо,kött,м'ясо
+63,кроў,кръв,krv,sang,krev,Blut,blood,sangre,sang,krv,sangue,sanguis,крв,bloed,krew,sangue,sânge,кровь,krv,kri,крв,blod,кров
+64,костка,кокал,kost,os,kost,Knochen,bone,hueso,os,kost,osso,os,коска,"been, bot",kość,osso,os,кость,kosť,kost,кост,ben,кістка
+65,тлушч,мазнина,salo,gras,maz,Fett,fat (noun),grasa,graisse,salo,grasso,adeps,сало,vet,sadło,gordura,grăsime,жир,"tuk,",maščoba,сало,fett,сало
+66,яйка,яйце,jaje,ou,vejce,Ei,egg,huevo,œuf,jaje,uovo,ovum,јајце,ei,jajko,ovo,ou,яйцо,vajce,jajce,јаје,ägg,яйце
+67,рог,рог,rog,banya,roh,Horn,horn,cuerno,corne,rog,corno,cornu,рог,hoorn,róg,"chifre, corno",corn,рог,roh,rog,рог,horn,ріг
+68,хвост,опашка,rep,cua,chvost,Schwanz,tail,cola,queue,rep,coda,cauda,опашка,staart,ogon,"cauda, rabo",coadă,хвост,chvost,rep,реп,svans,хвіст
+69,пяро,перо,pero,ploma,pero,Feder,feather,pluma,plume,pero,piuma,penna,перо,veer,pióro,"pena, pluma","pană, fulg",перо,pero,pero,перо,fjäder,перо
+70,валасы,косъм,vlas,"pèl, cabell",vlasy,Haar,hair,"cabello, pelo",cheveu,vlas,capelli,"capillus, coma, crinis",влакно,haar,włosy,"pelo, cabelo",păr,волосы,vlasy,lasje,влас,hår,волосся
+71,галава,глава,glava,cap,hlava,"Kopf, Haupt",head,cabeza,tête,glava,testa,caput,глава,"hoofd, kop",głowa,cabeça,cap,голова,hlava,glava,глава,huvud,голова
+72,вуха,ухо,uho,orella,ucho,Ohr,ear,oreja,oreille,uho,orecchio,auris,уво,oor,ucho,orelha,ureche,ухо,ucho,uho,уво,öra,вухо
+73,вока,око,oko,ull,oko,Auge,eye,ojo,œil,oko,occhio,oculus,око,oog,oko,olho,ochi,глаз,oko,oko,око,öga,око
+74,нос,нос,nos,nas,nos,Nase,nose,nariz,nez,nos,naso,nasus,нос,neus,nos,nariz,nas,нос,nos,nos,нос,näsa,ніс
+75,вусны,уста,usta,boca,pusa,Mund,mouth,boca,bouche,usta,bocca,os,уста,mond,usta,boca,gură,рот,ústa,usta,уста,mun,рот
+76,зуб,зъб,zub,dent,zub,Zahn,tooth,diente,dent,zub,dente,dens,заб,tand,ząb,dente,dinte,зуб,zub,zob,зуб,tand,зуб
+77,язык,език,jezik,llengua,jazyk,Zunge,tongue,lengua,langue,jezik,lingua,lingua,јазик,tong,język,língua,limbă,язык,jazyk,jezik,језик,tunga,язик
+78,пазногаць,нокът,nokat,ungla,nehet,Fingernagel,fingernail,uña,ongle,nokat,unghia,unguis,нокт,vingernagel,paznokieć,unha,unghie,ноготь,necht na ruke,noht,нокат,nagel,ніготь
+79,ступня,стъпало,stopalo,peu,stopa,Fuß,foot,pie,pied,stopalo,piede,pes,стапало,voet,stopa,pé,laba piciorului,стопа,noha,stopalo,стопало,fot,стопа
+80,нага,крак,noga,cama,noha,Bein,leg,pierna,jambe,noga,gamba,crus,нога,been,noga,perna,picior,нога,noha ,noga,нога,ben,нога
+81,калена,коляно,koljeno,genoll,koleno,Knie,knee,rodilla,genou,koljeno,ginocchio,genu,колено,knie,kolano,joelho,genunchi,колено,koleno,koleno,колено,knä,коліно
+82,рука,ръка,ruka,ma,dlaň,Hand,hand,mano,main,ruka,mano,manus,рака,hand,ręka,mão,mână,ладонь,ruka,roka,рука,hand,рука
+83,крыло,крило,krilo,ala,křídlo,Flügel,wing,ala,aile,krilo,ala,ala,крило,vleugel,skrzydło,asa,aripă,крыло,krídlo,krilo,крило,vinge,крило
+84,жывот,корем,trbuh,panxa,břicho,Bauch,belly,"barriga, vientre, panza",ventre,trbuh,pancia,venter,стомак,buik,brzuch,"barriga, ventre","burtă, vintre, pântece",живот,brucho,trebuh,трбух,mage,живіт
+85,вантробы,вътрешности,utroba,budells,útroby,"Eingeweide, Innereien",guts,"entrañas, tripas",entrailles,utroba,intestino,intestina,црева,ingewanden,wnętrzności,"tripas, entranhas","maţe, măruntaie",кишки,vnútornosti,drobovje,утроба,inälvor,нутрощі
+86,шыя,шия,vrat,coll,šíje,Hals,neck,cuello,cou,vrat,collo,"collum, cervix",шија,nek,szyja,"pescoço, colo",gât,шея,krk,vrat,шија,"hals, nacke",шия
+87,сьпіна,гръб,leđa,esquena,hřbet,Rücken,back,espalda,dos,leđa,schiena,tergum,грб,rug,plecy,"costas, dorso","spate, spinare",спина,chrbát,hrbet,леђа,rygg,спина
+88,грудзі,гръд,prsa,pit,ňadro,Brust,breast,"pecho, seno","sein, poitrine",prsa,petto,"pectus, mamma",града,borst,pierś,"peito, seio",piept,грудь,prsia,prsi,прса,bröst,груди
+89,сэрца,сърце,srce,cor,srdce,Herz,heart,corazón,cœur,srce,cuore,cor,срце,hart,serce,coração,inimă,сердце,srdce,srce,срце,hjärta,серце
+90,печань,черен дроб,jetra,fetge,játra,Leber,liver,hígado,foie,jetra,fegato,iecur,црн дроб,lever,wątroba,fígado,ficat,печень,pečeň,jetra,јетра,lever,печінка
+146,сонца,слънце,sunce,sol,slunce,Sonne,sun,sol,soleil,sunce,sole,sol,сонце,zon,słońce,sol,soare,солнце,slnko,sonce,сунце,sol,сонце
+147,месяц,луна,mjesec,lluna,luna,Mond,moon,luna,lune,mjesec,luna,luna,месечина,maan,miesiąc,lua,lună,месяц,mesiac,luna,месец,måne,місяць
+148,зорка,звезда,zvijezda,"estel, estrella",hvězda,Stern,star,estrella,étoile,zvijezda,stella,stella,ѕвезда,ster,gwiazda,estrela,stea,звезда,hviezda,zvezda,звезда,stjärna,зоря
+149,вада,вода,voda,aigua,voda,Wasser,water,agua,eau,voda,acqua,aqua,вода,water,woda,água,apă,вода,voda,voda,вода,vatten,вода
+150,дождж,дъжд,kiša,pluja,déšť,Regen,rain,lluvia,pluie,dažd,pioggia,pluvia,дожд,regen,deszcz,chuva,ploaie,дождь,dážď,dež,киша,regn,дощ
+151,рака,река,rijeka,riu,řeka,Fluß,river,río,rivière,rijeka,fiume,fluvius,река,rivier,rzeka,rio,"râu, fluviu",река,rieka,reka,река,flod,ріка
+152,возера,езеро,jezero,llac,jezero,See,lake,lago,lac,jezero,lago,lacus,езеро,meer,jezioro,lago,lac,озеро,jazero,jezero,језеро,sjö,озеро
+153,мора,море,more,mar,moře,"Meer, See",sea,mar,mer,more,mare,mare,море,zee,morze,mar,mare,море,more,morje,море,hav,море
+154,соль,сол,sol,sal,sůl,Salz,salt,sal,sel,sol,sale,sal,сол,zout,sól,sal,sare,соль,soľ,sol,сол,salt,сіль
+155,камень,камък,kamen,pedra,kámen,Stein,stone,piedra,pierre,kamen,pietra,"lapis, petra",камен,steen,kamień,pedra,piatră,камень,kameň,kamen,камен,sten,камінь
+156,пясок,пясък,pijesak,sorra,písek,Sand,sand,arena,sable,pijesak,sabbia,arena,песок,zand,piasek,areia,nisip,песок,piesok,pesek,песак,sand,пісок
+157,пыл,прах,prašina,pols,prach,Staub,dust,polvo,poussière,prašina,polvere,pulvis,прашина,stof,kurz,"pó, poeira","praf, pulbere",пыль,prach,prah,прашина,damm,пил
+158,зямля,земя,zemlja,terra,země,Erde,earth,tierra,terre,zemlja,terra,terra,земја,aarde,ziemia,terra,pământ,земля,zem,zemlja,земљa,jord,земля
+159,воблака,облак,oblak,núvol,oblak,Wolke,cloud,nube,nuage,oblak,nuvola,"nimbus, nubes",облак,wolk,obłok,nuvem,nor,облако,mrak,oblak,облак,moln,хмара
+160,туман,мъгла,magla,boira,mlha,Nebel,fog,niebla,brouillard,magla,nebbia,"caligo, nebula",магла,"mist, nevel",mgła,"neblina, névoa, nevoeiro, bruma",ceaţă,туман,hmla,megla,магла,dimma,імла
+161,неба,небе,nebo,cel,nebe,Himmel,sky,cielo,ciel,nebo,cielo,caelum,небо,lucht,niebo,céu,cer,небо,nebo,nebo,небо,himmel,небо
+162,вецер ,вятър,vjetar,vent,vítr,Wind,wind,viento,vent,vjetar,vento,ventus,ветер,wind,wiatr,vento,vânt,ветер,vietor,veter,ветар,vind,вітер
+163,сьнег,сняг,snijeg,neu,sníh,Schnee,snow,nieve,neige,snijeg,neve,nix,снег,sneeuw,śnieg,neve,"zăpadă, nea",снег,sneh,sneg,снег,snö,сніг
+164,лёд,лед,led,"gel, glaç",led#Czech|led,Eis,ice,hielo,glace,led,ghiaccio,glacies,лед,ijs,lód,gelo,gheaţă,лёд,ľad,led,лед,is,лід
+165,дым,дим,dim,fum,dým,Rauch,smoke,humo,fumée,dim,fumo,fumus,чад,rook,dym,fumaça,fum,дым,dym,dim,дим,rök,дим
+166,агонь,огън,oganj,foc,oheň,Feuer,fire,fuego,feu,oganj,fuoco,ignis,оган,vuur,ogień,fogo,foc,огонь,oheň,ogenj,огањ,eld,вогонь
+167,попел,пепел,pepeo,cendres,popel,Asche,ashes,cenizas,cendres,pepeo,ceneri,cineres,пепел,as,popiół,cinzas,"cenuşă, scrum",пепел,popol,pepel,пепео,aska,попіл
+169,шлях,шосе,cesta,carretera,cesta,Straße,road,camino,route,cesta,strada,via,пат,weg,droga,estrada,"drum, cale, stradă",путь,hradská,cesta,цеста,väg,шлях
+170,гара,планина,gora,muntanya,hora,Berg,mountain,montaña,montagne,gora,montagna,mons,планина,berg,góra,montanha,munte,гора,vrch,gora,гора,berg,гора
+177,дзень,ден,dan,dia,den,Tag,day,día,jour,dan,giorno,dies,ден,dag,dzień,dia,zi,день,deň,dan,дан,dag,день
+178,год,година,godina,any,rok,Jahr,year,año,"an, année",godina,anno,annus,година,jaar,rok,ano,an,год,rok,leto,година,år,рік
+206,назва,име,ime,nom,jméno,Name,name,nombre,nom,ime,nome,nomen,име,naam,nazwa,nome,nume,имя,meno,ime,име,namn,назва
