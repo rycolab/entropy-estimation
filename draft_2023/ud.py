@@ -12,7 +12,8 @@ import conllu
 from tqdm import tqdm
 from collections import defaultdict
 
-TERMINAL = '$'
+START = '<SOS>'
+TERMINAL = '<EOS>'
 
 def get_pos_transitions(file):
     """Get observed Markov transitions between POS tags from a conllu treebank."""
@@ -21,7 +22,7 @@ def get_pos_transitions(file):
     with open(file, 'r') as f:
         for sent in tqdm(conllu.parse_incr(f)):
             # filter out multi-word tokens, then collect pos tags
-            pos = [token['upos'] for token in sent if type(token['id']) is int] + [TERMINAL]
+            pos = [START] + [token['upos'] for token in sent if type(token['id']) is int] + [TERMINAL]
             # collect transitions
             for i in range(1, len(pos)):
                 transitions[pos[i - 1]][pos[i]] += 1
@@ -43,8 +44,11 @@ def construct_wfsa(transitions):
         for t in transitions[s]:
             fsa.add_arc(State(conv[s], s), Sym(t), State(conv[t], t), Real(transitions[s][t] / tot))
     
-    return fsa
+    # start/terminal nodes
+    fsa.add_I(State(conv[START], START), Real(1.0))
+    fsa.add_F(State(conv[TERMINAL], TERMINAL), Real(1.0))
     
+    return fsa
 
 def main():
     pos = get_pos_transitions('data/es_ancora-ud-train.conllu')
