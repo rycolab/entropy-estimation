@@ -7,6 +7,9 @@ from rayuela.base.semiring import Boolean, Real, Tropical, \
 from rayuela.base.symbol import Sym, ε
 from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
+from rayuela.fsa.sampler import Sampler
+
+import entropy 
 
 import conllu
 from tqdm import tqdm
@@ -28,7 +31,7 @@ def get_pos_transitions(file):
                 transitions[pos[i - 1]][pos[i]] += 1
     return transitions
 
-def construct_wfsa(transitions):
+def construct_fsa(transitions):
     """Construct the POS-tag WFSA given transition counts"""
 
     # map our states to ints
@@ -50,9 +53,24 @@ def construct_wfsa(transitions):
     
     return fsa
 
+def monte_carlo(fsa: FSA, it=1000):
+    """Calculate MLE entropy using Monte-Carlo sampling"""
+
+    sampler = Sampler(fsa)
+    sample = sampler.ancestral(it)
+
+    S, N, counts = entropy.prob(sample)
+    singletons = len([x for x in counts if counts[x] == 1])
+    mle = entropy.mle(S, N, counts)
+
+    print(f'{mle:.2f} nats')
+    print(f'{singletons} singletons out of {it}')
+    return mle
+
 def main():
     pos = get_pos_transitions('data/es_ancora-ud-train.conllu')
-    wfsa = construct_wfsa(pos)
+    fsa = construct_fsa(pos)
+    monte_carlo(fsa)
 
 if __name__ == '__main__':
     main()
