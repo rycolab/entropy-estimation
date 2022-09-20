@@ -2,6 +2,12 @@
 Experiment on structured entropy prediction using Markov model of POS tags from UD.
 """
 
+from rayuela.base.semiring import Boolean, Real, Tropical, \
+    String, Integer, Rational
+from rayuela.base.symbol import Sym, ε
+from rayuela.fsa.fsa import FSA
+from rayuela.fsa.state import State
+
 import conllu
 from tqdm import tqdm
 from collections import defaultdict
@@ -21,9 +27,28 @@ def get_pos_transitions(file):
                 transitions[pos[i - 1]][pos[i]] += 1
     return transitions
 
+def construct_wfsa(transitions):
+    """Construct the POS-tag WFSA given transition counts"""
+
+    # map our states to ints
+    conv = {TERMINAL: 1}
+    for state in transitions:
+        if state not in conv:
+            conv[state] = len(conv) + 1
+    
+    # build actual WFSA
+    fsa = FSA(Real)
+    for s in transitions:
+        tot = sum([transitions[s][t] for t in transitions[s]])
+        for t in transitions[s]:
+            fsa.add_arc(State(conv[s], s), Sym(t), State(conv[t], t), Real(transitions[s][t] / tot))
+    
+    return fsa
+    
+
 def main():
     pos = get_pos_transitions('data/es_ancora-ud-train.conllu')
-    print(pos)
+    wfsa = construct_wfsa(pos)
 
 if __name__ == '__main__':
     main()
