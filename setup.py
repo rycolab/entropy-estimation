@@ -7,7 +7,8 @@ install_requires = [
     "plotnine",
     "scikit-misc",
     "scipy",
-    "matplotlib"
+    "matplotlib",
+	"conllu"
 ]
 
 
