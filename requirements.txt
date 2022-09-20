@@ -1,4 +1,0 @@
-pandas
-ndd
-plotnine
-scikit-misc

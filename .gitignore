@@ -1,4 +1,6 @@
-__pycache__/*
+__pycache__
 gigaword/cna_eng_200307.xml.gz
 .DS_Store
 data/LDC96L14/CELEX_V2
+.vscode
+entropy.egg-info
