@@ -2,6 +2,7 @@
 Experiment on structured entropy prediction using Markov model of POS tags from UD.
 """
 
+from os import stat
 from rayuela.base.semiring import Boolean, Real, Tropical, \
     String, Integer, Rational
 from rayuela.base.symbol import Sym, ε
@@ -10,6 +11,8 @@ from rayuela.fsa.state import State
 from rayuela.fsa.sampler import Sampler
 
 import entropy 
+
+import matplotlib.pyplot as plt
 
 import conllu
 from tqdm import tqdm
@@ -57,21 +60,25 @@ def construct_fsa(transitions):
     
     return fsa
 
-def monte_carlo(fsa: FSA, it=100):
+def monte_carlo(fsa: FSA, it: list = [100], ent=entropy.mle):
     """Calculate MLE entropy using Monte-Carlo sampling"""
 
     sampler = Sampler(fsa)
-    sample = sampler.ancestral(it)
+    sample = []
+    res = []
 
-    S, N, counts = entropy.prob(sample)
-    singletons = len([x for x in counts if counts[x] == 1])
-    mle = entropy.mle(S, N, counts)
+    for ct in tqdm(it):
+        sample.extend(sampler.ancestral(ct))
+        S, N, counts = entropy.prob(sample)
+        singletons = len([x for x in counts if counts[x] == 1])
+        mle = ent(S, N, counts)
+        res.append(mle)
 
     print(f'MC: {mle:.3f} nats')
-    print(f'{singletons} singletons out of {it}')
-    return mle
+    print(f'{singletons} singletons out of {sum(it)}')
+    return res
 
-def _state_nsb_iter(fsa: FSA, sampler: Sampler, samp=100):
+def _state_estimator_iter(fsa: FSA, sampler: Sampler, samp=100, ent=entropy.mle):
     sample = sampler.ancestral(samp)
 
     # store raw data to pass up
@@ -92,12 +99,12 @@ def _state_nsb_iter(fsa: FSA, sampler: Sampler, samp=100):
     
     # calculate sub-sample stats
     p_q = {x: count[x] / samp for x in count}
-    H_q = {x: entropy.mle(*entropy.prob(samples[x])) for x in samples}
+    H_q = {x: ent(*entropy.prob(samples[x])) if samples[x] else 0.0 for x in samples}
 
     return count, samples, p_q, H_q
 
 
-def state_nsb(fsa: FSA, it=100, samp=100):
+def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
 
     sampler = Sampler(fsa)
 
@@ -107,7 +114,7 @@ def state_nsb(fsa: FSA, it=100, samp=100):
 
     # get subsamples to calculate covariance
     for _ in tqdm(range(it)):
-        count, samples, p_q, H_q = _state_nsb_iter(fsa, sampler, samp)
+        count, samples, p_q, H_q = _state_estimator_iter(fsa, sampler, samp, ent=ent)
         for q in count:
             count_q[q] += count[q]
             samples_q[q].extend(samples[q])
@@ -115,7 +122,7 @@ def state_nsb(fsa: FSA, it=100, samp=100):
 
     # global vals over all samples
     exp_p_q = {x: count_q[x] / (samp * it) for x in count_q}
-    exp_H_q = {x: entropy.mle(*entropy.prob(samples_q[x])) for x in samples_q}
+    exp_H_q = {x: ent(*entropy.prob(samples_q[x])) if samples_q[x] else 0.0 for x in samples_q}
     exp_covar_q = {}
     
     # calculate covariances over subsamples
@@ -139,17 +146,47 @@ def state_nsb(fsa: FSA, it=100, samp=100):
 
     print(f'Smart way: {res:.3f} nats')
     return res
-            
 
-def main():
+def graph_monte_carlo():
     pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
     fsa = construct_fsa(pos)
 
     ground_truth = entropy.mle(*entropy.prob(seqs))
     print(f'Ground truth: {ground_truth:.3f} nats')
 
-    monte_carlo(fsa)
-    state_nsb(fsa)
+    x = [10] * 10 + [100] * 9 + [1000] * 9 + [10000] * 4
+    x_p = x[:]
+    for i in range(1, len(x)):
+        x[i] += x[i - 1]
+        
+    for ent in entropy.funcs:
+        y = monte_carlo(fsa, it=x_p, ent=ent)
+        plt.plot(x, y, label=ent.__name__)
+
+    plt.legend()
+    plt.show()
+
+def graph_state_estimator():
+    pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
+    fsa = construct_fsa(pos)
+
+    ground_truth = entropy.mle(*entropy.prob(seqs))
+    print(f'Ground truth: {ground_truth:.3f} nats')
+
+    x = [1, 10, 20, 50]
+        
+    for ent in entropy.funcs:
+        z = []
+        for i in tqdm(x):
+            if i != 0: z.append(state_estimator(fsa, it=i, ent=ent))
+            else: z.append(0)
+        plt.plot([a * 100 for a in x], z, label=ent.__name__)
+
+    plt.legend()
+    plt.show()
+
+def main():
+    graph_monte_carlo()
 
 if __name__ == '__main__':
     main()

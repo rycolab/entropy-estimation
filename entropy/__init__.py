@@ -67,3 +67,5 @@ def wolpert_wolf(S, N, counts, α=1):
 
 def nsb(S, N, counts):
     return ndd.entropy(counts)
+
+funcs = [mle, miller_madow, jackknife, horvitz_thompson, chao_shen, wolpert_wolf, nsb]
