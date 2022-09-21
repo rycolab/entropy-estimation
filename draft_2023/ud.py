@@ -169,7 +169,7 @@ def exp_semiring(old_fsa: FSA, ent=entropy.mle):
     # print entropy
     print(Pathsum(fsa).pathsum(strategy=Strategy.LEHMANN))
     print(Pathsum(fsa).pathsum(strategy=Strategy.FIXPOINT))
-    print(Pathsum(fsa).pathsum(strategy=Strategy.DECOMPOSED_LEHMANN))
+    return fsa
 
 def graph_monte_carlo():
     pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
