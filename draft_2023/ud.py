@@ -2,13 +2,15 @@
 Experiment on structured entropy prediction using Markov model of POS tags from UD.
 """
 
+import math
 from os import stat
 from rayuela.base.semiring import Boolean, Real, Tropical, \
-    String, Integer, Rational
+    String, Integer, Rational, expectation_semiring_builder
 from rayuela.base.symbol import Sym, ε
 from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
 from rayuela.fsa.sampler import Sampler
+from rayuela.fsa.pathsum import Pathsum, Strategy
 
 import entropy 
 
@@ -103,7 +105,6 @@ def _state_estimator_iter(fsa: FSA, sampler: Sampler, samp=100, ent=entropy.mle)
 
     return count, samples, p_q, H_q
 
-
 def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
 
     sampler = Sampler(fsa)
@@ -147,6 +148,29 @@ def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
     print(f'Smart way: {res:.3f} nats')
     return res
 
+def exp_semiring(old_fsa: FSA, ent=entropy.mle):
+
+    # init semiring
+    exp = expectation_semiring_builder(Real, Real)
+    def lift(w: Real):
+        w = float(w)
+        return exp(Real(w), Real(-w * math.log(w)))
+
+    # lift our old fsa onto the expectation semiring
+    fsa = FSA(exp)
+    for p, w in old_fsa.I:
+        fsa.set_I(p, w=exp.one)
+    for p, w in old_fsa.F:
+        fsa.set_F(p, w=exp.one)
+    for p in old_fsa.Q:
+        for a, q, w in old_fsa.arcs(p):
+            fsa.add_arc(p, a, q, w=lift(w))
+
+    # print entropy
+    print(Pathsum(fsa).pathsum(strategy=Strategy.LEHMANN))
+    print(Pathsum(fsa).pathsum(strategy=Strategy.FIXPOINT))
+    print(Pathsum(fsa).pathsum(strategy=Strategy.DECOMPOSED_LEHMANN))
+
 def graph_monte_carlo():
     pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
     fsa = construct_fsa(pos)
@@ -186,7 +210,9 @@ def graph_state_estimator():
     plt.show()
 
 def main():
-    graph_monte_carlo()
+    pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
+    fsa = construct_fsa(pos)
+    exp_semiring(fsa)
 
 if __name__ == '__main__':
     main()
