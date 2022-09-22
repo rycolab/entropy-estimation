@@ -5,12 +5,13 @@ Experiment on structured entropy prediction using Markov model of POS tags from 
 import math
 from os import stat
 from rayuela.base.semiring import Boolean, Real, Tropical, \
-    String, Integer, Rational, expectation_semiring_builder
+    String, Integer, Rational, Semiring, expectation_semiring_builder
 from rayuela.base.symbol import Sym, ε
 from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
 from rayuela.fsa.sampler import Sampler
 from rayuela.fsa.pathsum import Pathsum, Strategy
+from pprint import pprint
 
 import entropy 
 
@@ -148,6 +149,38 @@ def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
     print(f'Smart way: {res:.3f} nats')
     return res
 
+def state_elim_pathsum(fsa: FSA):
+
+    # get start, end
+    s, e = [], []
+    for p, w in fsa.I:
+        s.append(p)
+    for p, w in fsa.F:
+        e.append(p)
+    ig = s + e
+
+    # eliminate states
+    d = set()
+    elim = set()
+    for q in fsa.Q:
+        if q in ig: continue
+        loop = fsa.δ[q][Sym(str(q))][q]
+
+        elim.add(q)
+
+        for pr in fsa.Q:
+            if pr in elim: continue
+            incoming = fsa.δ[pr][Sym(str(q))][q]
+
+            for su in fsa.Q:
+                if su in elim: continue
+                outgoing = fsa.δ[q][Sym(str(su))][su]
+                comb = incoming * loop.star() * outgoing
+                fsa.δ[pr][Sym(str(su))][su] += comb
+    
+    print(fsa.δ[s[0]][Sym(str(e[0]))][e[0]])
+
+
 def exp_semiring(old_fsa: FSA, ent=entropy.mle):
 
     # init semiring
@@ -158,18 +191,22 @@ def exp_semiring(old_fsa: FSA, ent=entropy.mle):
 
     # lift our old fsa onto the expectation semiring
     fsa = FSA(exp)
+    s, e = None, None
     for p, w in old_fsa.I:
+        s = p
         fsa.set_I(p, w=exp.one)
     for p, w in old_fsa.F:
+        e = p
         fsa.set_F(p, w=exp.one)
     for p in old_fsa.Q:
         for a, q, w in old_fsa.arcs(p):
             fsa.add_arc(p, a, q, w=lift(w))
 
     # print entropy
-    print(Pathsum(fsa).pathsum(strategy=Strategy.LEHMANN))
-    print(Pathsum(fsa).pathsum(strategy=Strategy.FIXPOINT))
-    return fsa
+    true = state_elim_pathsum(fsa)
+    print(true)
+    
+    return fsa, true
 
 def graph_monte_carlo():
     pos, seqs = get_pos_transitions('data/es_ancora-ud-train.conllu')
