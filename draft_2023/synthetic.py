@@ -45,9 +45,14 @@ def make_cyclic_machine(states=3):
 
     return fsa
 
-def sample_fsa(orig: FSA, samples=1000):
+def get_samples(fsa: FSA, samples):
+    s = [Sampler(fsa)._ancestral(fsa) for _ in range(samples)]
+    return s
+
+def sample_fsa(orig: FSA, s=None, samples=1000):
     """Generate MLE structure of FSA based on sampling x values"""
-    s = [Sampler(orig)._ancestral(orig) for _ in range(samples)]
+    if not s:
+        s = get_samples(orig, samples)
     delta = defaultdict(lambda: defaultdict(int))
     tot = defaultdict(int)
 
@@ -93,7 +98,7 @@ def estimate_covariance(samps, state: State, P_q: float, H_q: float, partition=1
     covariance /= ct
     return covariance
 
-def run_iter(orig: FSA, num_samps=1000):
+def run_iter(orig: FSA, samples=None, num_samps=1000):
     """Generate a random FSA and get true + estimated entropies"""
     res = defaultdict(float)
 
@@ -101,7 +106,7 @@ def run_iter(orig: FSA, num_samps=1000):
     fsa = lift(orig, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     # get new fsa
-    orig_samp, samps, delta, ct = sample_fsa(orig, samples=num_samps)
+    orig_samp, samps, delta, ct = sample_fsa(orig, samples, samples=num_samps)
     fsa_samp = lift(orig_samp, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     res['Unstructured MLE'] = entropy.mle(*entropy.prob(samps))
@@ -123,7 +128,7 @@ def run_iter(orig: FSA, num_samps=1000):
     # entropy pathsum
     return res
 
-def graph_convergence(states, cyclic=False):
+def graph_convergence(states, cyclic=False, resample=True):
     """Graph convergence of MLE to true"""
     # make FSA and get true entropy
     fsa = make_cyclic_machine(states=states) if cyclic else make_acyclic_machine(states=states)
@@ -133,8 +138,11 @@ def graph_convergence(states, cyclic=False):
     # run sampling for various # of samples
     X = list(range(1, 200, 2))
     Ys = defaultdict(list)
+    s = None
+    if not resample:
+        s = get_samples(fsa, 200)
     for i in tqdm(X):
-        res = run_iter(fsa, num_samps=i)
+        res = run_iter(fsa, samples=s[:i] if s else None, num_samps=i)
         for i in res:
             Ys[i].append(res[i])
     
