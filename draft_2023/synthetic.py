@@ -56,6 +56,7 @@ def sample_fsa(orig: FSA, samples=1000):
 
 def run_iter(orig: FSA, samples=1000):
     """Generate a random FSA and get true + estimated entropies"""
+    res = defaultdict(float)
 
     # lift the acyclic random FSA to expectation semiring
     fsa = lift(orig, lambda x: (x, Real(-float(x) * math.log(float(x)))))
@@ -64,17 +65,17 @@ def run_iter(orig: FSA, samples=1000):
     orig_samp, samps, delta, ct = sample_fsa(orig, samples=samples)
     fsa_samp = lift(orig_samp, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
-    # dumb_mle
-    mle_dumb = entropy.mle(*entropy.prob(samps))
+    res['Unstructured MLE'] = entropy.mle(*entropy.prob(samps))
+    res['Structured MLE'] = float(fsa_samp.pathsum().score[1])
+    res['Unstructured NSB'] = entropy.nsb(*entropy.prob(samps))
 
     # smart structured estimator
-    res = 0.0
     for state in ct:
         N = sum(delta[state].values())
-        res += (ct[state] / samples) * entropy.nsb([x / N for x in delta[state].values()], N, delta[state])
+        res['Structured NSB'] += (ct[state] / samples) * entropy.nsb([x / N for x in delta[state].values()], N, delta[state])
 
     # entropy pathsum
-    return {'mle on FSA': float(fsa_samp.pathsum().score[1]), 'mle on samples': mle_dumb, 'structured nsb': res}
+    return res
 
 def graph_convergence(states=20):
     """Graph convergence of MLE to true"""
