@@ -11,9 +11,9 @@ from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
 from rayuela.fsa.sampler import Sampler
 from rayuela.fsa.pathsum import Pathsum, Strategy
-from pprint import pprint
 
 import entropy 
+from utils import lift
 
 import matplotlib.pyplot as plt
 
@@ -106,7 +106,7 @@ def _state_estimator_iter(fsa: FSA, sampler: Sampler, samp=100, ent=entropy.mle)
 
     return count, samples, p_q, H_q
 
-def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
+def state_estimator(fsa: FSA, it=100, samp=10, ent=entropy.mle):
 
     sampler = Sampler(fsa)
 
@@ -151,6 +151,8 @@ def state_estimator(fsa: FSA, it=100, samp=100, ent=entropy.mle):
 
 def state_elim_pathsum(fsa: FSA):
 
+    print(len(fsa.Q))
+
     # get start, end
     s, e = [], []
     for p, w in fsa.I:
@@ -183,24 +185,8 @@ def state_elim_pathsum(fsa: FSA):
 
 def exp_semiring(old_fsa: FSA, ent=entropy.mle):
 
-    # init semiring
-    exp = expectation_semiring_builder(Real, Real)
-    def lift(w: Real):
-        w = float(w)
-        return exp(Real(w), Real(-w * math.log(w)))
-
-    # lift our old fsa onto the expectation semiring
-    fsa = FSA(exp)
-    s, e = None, None
-    for p, w in old_fsa.I:
-        s = p
-        fsa.set_I(p, w=exp.one)
-    for p, w in old_fsa.F:
-        e = p
-        fsa.set_F(p, w=exp.one)
-    for p in old_fsa.Q:
-        for a, q, w in old_fsa.arcs(p):
-            fsa.add_arc(p, a, q, w=lift(w))
+    # lift to expectation semiring
+    fsa = lift(old_fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     # print entropy
     true = state_elim_pathsum(fsa)
