@@ -55,9 +55,13 @@ def sample_fsa(orig: FSA, s=None, samples=1000):
         s = get_samples(orig, samples)
     delta = defaultdict(lambda: defaultdict(int))
     tot = defaultdict(int)
+    any = defaultdict(int)
 
     # construct new transition function
     for samp in s:
+        unique = set(samp)
+        for i in unique:
+            any[i] += 1
         for i in range(len(samp)):
             l = samp[i - 1] if i > 0 else 0
             delta[l][samp[i]] += 1
@@ -71,7 +75,7 @@ def sample_fsa(orig: FSA, s=None, samples=1000):
     fsa.set_I(State(0), Real(1.0))
     fsa.set_F(State(s[0][-1]), Real(1.0))
 
-    return fsa, s, delta, tot
+    return fsa, s, delta, tot, any
 
 def estimate_covariance(samps, state: State, P_q: float, H_q: float, partition=100):
     """Estimate the covariance based on a given partition size."""
@@ -106,7 +110,7 @@ def run_iter(orig: FSA, samples=None, num_samps=1000):
     fsa = lift(orig, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     # get new fsa
-    orig_samp, samps, delta, ct = sample_fsa(orig, samples, samples=num_samps)
+    orig_samp, samps, delta, ct, prob = sample_fsa(orig, samples, samples=num_samps)
     fsa_samp = lift(orig_samp, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     res['Unstructured MLE'] = entropy.mle(*entropy.prob(samps))
@@ -116,14 +120,16 @@ def run_iter(orig: FSA, samples=None, num_samps=1000):
     # structured estimator
     for state in ct:
         N = sum(delta[state].values())
-        P_q = ct[state] / num_samps
+        ct_q = ct[state] / num_samps
+        P_q = prob[state] / num_samps
         H_q = entropy.nsb([x / N for x in delta[state].values()], N, delta[state])
 
         # calculate covariance
-        covariance = 0.0 if fsa.acyclic else estimate_covariance(samps, state, P_q, H_q, partition=100)
+        covariance = estimate_covariance(samps, state, P_q, H_q, partition=100)
             
-        res['Structured NSB'] += P_q * H_q
-        res['Structured NSB (+Covariance)'] += P_q * H_q + covariance
+        res['Structured NSB (ct)'] += ct_q * H_q
+        res['Structured NSB (p)'] += P_q * H_q
+        res['Structured NSB (p, +Covariance)'] += P_q * H_q + covariance
 
     # entropy pathsum
     return res
@@ -136,7 +142,7 @@ def graph_convergence(states, cyclic=False, resample=True):
     true = float(lifted.pathsum().score[1])
 
     # run sampling for various # of samples
-    X = list(range(1, 200, 2))
+    X = list(range(1, 1000, 100))
     Ys = defaultdict(list)
     s = None
     if not resample:
@@ -157,7 +163,7 @@ def graph_convergence(states, cyclic=False, resample=True):
     plt.show()
 
 def main():
-    graph_convergence(states=100, cyclic=True)
+    graph_convergence(states=10, cyclic=True)
 
 if __name__ == "__main__":
     main()
