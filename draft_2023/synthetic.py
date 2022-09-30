@@ -73,7 +73,7 @@ def sample_fsa(orig: FSA, s=None, samples=1000):
 
     return fsa, s, delta, tot
 
-def run_iter(orig: FSA, samples=None, num_samps=1000):
+def run_iter(orig: FSA, samples=None, num_samps=1000, more=False):
     """Generate a random FSA and get true + estimated entropies"""
     res = defaultdict(float)
 
@@ -81,7 +81,7 @@ def run_iter(orig: FSA, samples=None, num_samps=1000):
     fsa = lift(orig, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     # get new fsa
-    orig_samp, samps, delta, ct, prob = sample_fsa(orig, samples, samples=num_samps)
+    orig_samp, samps, delta, ct = sample_fsa(orig, samples, samples=num_samps)
     fsa_samp = lift(orig_samp, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     res['Unstructured MLE'] = entropy.mle(*entropy.prob(samps))
@@ -92,9 +92,12 @@ def run_iter(orig: FSA, samples=None, num_samps=1000):
     for state in ct:
         N = sum(delta[state].values())
         ct_q = ct[state] / num_samps
-        P_q = prob[state] / num_samps
-        H_q = entropy.nsb([x / N for x in delta[state].values()], N, delta[state])
-        res['Structured NSB'] += ct_q * H_q
+        dist_q = [x / N for x in delta[state].values()], N, delta[state]
+        if more:
+            for func in entropy.funcs:
+                res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
+        else:
+            res['Structured NSB'] += ct_q * entropy.nsb(*dist_q)
 
     # entropy pathsum
     return res
@@ -107,7 +110,7 @@ def graph_convergence(states, cyclic=False, resample=True):
     true = float(lifted.pathsum().score[1])
 
     # run sampling for various # of samples
-    X = list(range(1, 200, 2))
+    X = list(range(1, 100, 1))
     Ys = defaultdict(list)
     s = None
     if not resample:

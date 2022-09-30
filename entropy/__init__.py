@@ -36,7 +36,7 @@ def miller_madow(S, N, counts):
 #     return res
 
 def jackknife(S, N, counts):
-    if N == 0: return 0.0
+    if N <= 1: return 0.0
     res = N * mle(S, N, counts)
     S = [counts[x] / (N - 1) for x in counts]
     mle_less = -sum([x * math.log(x) if x else 0 for x in S])
