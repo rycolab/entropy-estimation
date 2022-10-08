@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-from utils import lift
+from utils import lift, fsa_from_samples, estimate_entropy
 import entropy
 
 def make_acyclic_machine(states=3):
@@ -32,7 +32,7 @@ def make_acyclic_machine(states=3):
     return fsa
 
 def make_cyclic_machine(states=3):
-    """Make an cyclic FSA (homomorphic to a complete directed graph) with outgoing weights from a node summing to 1"""
+    """Make a cyclic FSA (homomorphic to a complete directed graph) with outgoing weights from a node summing to 1"""
     fsa = FSA(Real)
     for i in range(states - 1):
         # use Dirichlet to generate outgoing weights
@@ -49,61 +49,14 @@ def get_samples(fsa: FSA, samples):
     s = [Sampler(fsa)._ancestral(fsa) for _ in range(samples)]
     return s
 
-def sample_fsa(orig: FSA, s=None, samples=1000):
-    """Generate MLE structure of FSA based on sampling x values"""
-    if not s:
-        s = get_samples(orig, samples)
-    delta = defaultdict(lambda: defaultdict(int))
-    tot = defaultdict(int)
-
-    # construct new transition function
-    for samp in s:
-        for i in range(len(samp)):
-            l = samp[i - 1] if i > 0 else 0
-            delta[l][samp[i]] += 1
-            tot[l] += 1
-    
-    # make FSA
-    fsa = FSA(Real)
-    for i in delta:
-        for j in delta[i]:
-            fsa.add_arc(State(i), Sym(str(j)), State(j), Real(delta[i][j] / tot[i]))
-    fsa.set_I(State(0), Real(1.0))
-    fsa.set_F(State(s[0][-1]), Real(1.0))
-
-    return fsa, s, delta, tot
-
-def run_iter(orig: FSA, samples=None, num_samps=1000, more=False):
-    """Generate a random FSA and get true + estimated entropies"""
-    res = defaultdict(float)
-
-    # lift the acyclic random FSA to expectation semiring
-    fsa = lift(orig, lambda x: (x, Real(-float(x) * math.log(float(x)))))
-
-    # get new fsa
-    orig_samp, samps, delta, ct = sample_fsa(orig, samples, samples=num_samps)
-    fsa_samp = lift(orig_samp, lambda x: (x, Real(-float(x) * math.log(float(x)))))
-
-    res['Unstructured MLE'] = entropy.mle(*entropy.prob(samps))
-    res['Structured MLE'] = float(fsa_samp.pathsum().score[1])
-    res['Unstructured NSB'] = entropy.nsb(*entropy.prob(samps))
-
-    # structured estimator
-    for state in ct:
-        N = sum(delta[state].values())
-        ct_q = ct[state] / num_samps
-        dist_q = [x / N for x in delta[state].values()], N, delta[state]
-        if more:
-            for func in entropy.funcs:
-                res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
-        else:
-            res['Structured NSB'] += ct_q * entropy.nsb(*dist_q)
-
-    # entropy pathsum
-    return res
+def run_iter(fsa: FSA, samples=None, num_samps=1000, more=False):
+    """Estimate structured and unstructured entropy given a true FSA and number of samples to get"""
+    if not samples:
+        samples = get_samples(fsa, num_samps)
+    return estimate_entropy(*fsa_from_samples(samples), more=more)
 
 def graph_convergence(states, cyclic=False, resample=True):
-    """Graph convergence of MLE to true"""
+    """Graph convergence of entropy estimates to true value over sample size"""
     # make FSA and get true entropy
     fsa = make_cyclic_machine(states=states) if cyclic else make_acyclic_machine(states=states)
     lifted = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
@@ -112,9 +65,10 @@ def graph_convergence(states, cyclic=False, resample=True):
     # run sampling for various # of samples
     X = list(range(1, 100, 1))
     Ys = defaultdict(list)
-    s = None
-    if not resample:
-        s = get_samples(fsa, 200)
+
+    # if resample is True, then we generate a new sample every time, otherwise we keep one throughout
+    s = None if resample else get_samples(fsa, 200)
+
     for i in tqdm(X):
         res = run_iter(fsa, samples=s[:i] if s else None, num_samps=i)
         for i in res:
@@ -131,7 +85,7 @@ def graph_convergence(states, cyclic=False, resample=True):
     plt.show()
 
 def main():
-    graph_convergence(states=50, cyclic=False)
+    graph_convergence(states=10, cyclic=False, resample=True)
 
 if __name__ == "__main__":
     main()
