@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-from utils import lift, fsa_from_samples, estimate_entropy
+from utils import lift, fsa_from_samples, estimate_entropy, get_samples
 import entropy
 
 def make_acyclic_machine(states=3):
@@ -44,10 +44,6 @@ def make_cyclic_machine(states=3):
     fsa.set_F(State(states - 1), Real(1.0))
 
     return fsa
-
-def get_samples(fsa: FSA, samples):
-    s = [Sampler(fsa)._ancestral(fsa) for _ in range(samples)]
-    return s
 
 def run_iter(fsa: FSA, samples=None, num_samps=1000, more=False):
     """Estimate structured and unstructured entropy given a true FSA and number of samples to get"""

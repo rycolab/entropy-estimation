@@ -10,6 +10,9 @@ from collections import defaultdict
 import entropy
 import math
 
+def get_samples(fsa: FSA, samples):
+    s = [Sampler(fsa)._ancestral(fsa) for _ in range(samples)]
+    return s
 
 def lift(old_fsa: FSA, func):
     # init semiring
@@ -61,7 +64,7 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
 
     # simple estimates to get
     res['Unstructured MLE'] = entropy.mle(*entropy.prob(samples))
-    res['Structured MLE'] = float(entropy_fsa.pathsum().score[1])
+    res['Structured MLE (pathsum)'] = float(entropy_fsa.pathsum().score[1])
     res['Unstructured NSB'] = entropy.nsb(*entropy.prob(samples))
 
     # structured NSB (or other) estimator
