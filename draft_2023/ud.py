@@ -40,7 +40,7 @@ def graph_convergence(file):
     true = estimate_entropy(*fsa_from_samples(seqs))['Structured MLE (pathsum)']
 
     # run sampling for various # of samples
-    X = list(range(10, 500, 10))
+    X = list(range(1, 100, 1))
     Ys = defaultdict(list)
 
     # estimate
