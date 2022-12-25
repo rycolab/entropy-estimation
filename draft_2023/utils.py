@@ -56,7 +56,12 @@ def fsa_from_samples(samples):
     return fsa, samples, delta, tot
 
 def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
-    """Calculate the entropy estimates, given the samples and the correspondingly constructed MLE FSA"""
+    """Calculate the entropy estimates, given the samples and the correspondingly constructed MLE FSA
+    - fsa: the FSA whose entropy is being estimated
+    - samples: the samples from which the estimation is done
+    - delta: transition function
+    - more: whether to use only NSB or other estimators too
+    """
     res = defaultdict(float)
 
     # lift to expectation semiring

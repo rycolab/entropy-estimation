@@ -1,6 +1,7 @@
 from collections import defaultdict
 import math
 from os import stat
+
 from rayuela.base.semiring import Boolean, Real, Tropical, \
     String, Integer, Rational, Semiring, expectation_semiring_builder
 from rayuela.base.symbol import Sym, ε
@@ -15,7 +16,6 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from utils import lift, fsa_from_samples, estimate_entropy, get_samples
-import entropy
 
 def make_acyclic_machine(states=3):
     """Make an acyclic FSA (homomorphic to a DAG) with outgoing weights from a node summing to 1"""

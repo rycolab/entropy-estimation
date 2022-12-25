@@ -5,3 +5,4 @@ data/LDC96L14/CELEX_V2
 .vscode
 entropy.egg-info
 .ipynb_checkpoints
+build/
