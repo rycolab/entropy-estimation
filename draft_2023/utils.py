@@ -10,8 +10,23 @@ from collections import defaultdict
 import entropy
 import math
 
+def sample(pfsa, sampler):
+    """Sample a path from the PFSA, including symbols on the arcs (for trajectory entropy)."""
+    cur = sampler._draw({p : w for p, w in pfsa.I})
+    output = [(None, cur)]
+
+    while cur:
+        D = {(a, j) : w for a, j, w in pfsa.arcs(cur)}
+        D[(0, 0)] = pfsa.ρ[cur]
+
+        (a, cur) = sampler._draw(D)
+        if a != 0: output.append((a, cur))
+
+    return tuple(output)
+
 def get_samples(fsa: FSA, samples):
-    s = [Sampler(fsa)._ancestral(fsa) for _ in range(samples)]
+    sampler = Sampler(fsa)
+    s = [sample(fsa, sampler) for _ in range(samples)]
     return s
 
 def lift(old_fsa: FSA, func):
@@ -38,20 +53,25 @@ def fsa_from_samples(samples):
     delta = defaultdict(lambda: defaultdict(int))
     tot = defaultdict(int)
 
-    # construct new transition function
+    # construct new transition function, add dummy nodes to start and end
     for samp in samples:
-        for i in range(len(samp)):
-            l = samp[i - 1] if i > 0 else 0
-            delta[l][samp[i]] += 1
-            tot[l] += 1
+        last = None
+        tot[None] += 1
+        for (symbol, state) in samp:
+            delta[last][(symbol, state)] += 1
+            tot[state] += 1
+            last = state
+        delta[last][(None, None)] += 1
     
     # make FSA
     fsa = FSA(Real)
     for i in delta:
-        for j in delta[i]:
-            fsa.add_arc(State(i), Sym(str(j)), State(j), Real(delta[i][j] / tot[i]))
-    fsa.set_I(State(0), Real(1.0))
-    fsa.set_F(State(samples[0][-1]), Real(1.0))
+        for (symbol, j) in delta[i]:
+            # initials and finals (dummy Nones)
+            if j is None: fsa.set_F(State(i), Real(1.0))
+            elif i is None: fsa.set_I(State(j), Real(delta[i][(symbol, j)] / tot[i]))
+            # actual transitions
+            else: fsa.add_arc(State(i), Sym(symbol), State(j), Real(delta[i][(symbol, j)] / tot[i]))
 
     return fsa, samples, delta, tot
 

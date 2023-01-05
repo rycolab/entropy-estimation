@@ -81,7 +81,7 @@ def graph_convergence(states, cyclic=False, resample=True):
     plt.show()
 
 def main():
-    graph_convergence(states=10, cyclic=False, resample=True)
+    graph_convergence(states=3, cyclic=True, resample=True)
 
 if __name__ == "__main__":
     main()
