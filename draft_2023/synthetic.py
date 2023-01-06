@@ -51,37 +51,40 @@ def run_iter(fsa: FSA, samples=None, num_samps=1000, more=False):
         samples = get_samples(fsa, num_samps)
     return estimate_entropy(*fsa_from_samples(samples), more=more)
 
-def graph_convergence(states, cyclic=False, resample=True):
+def graph_convergence(states, cyclic, resample, fsas=10):
     """Graph convergence of entropy estimates to true value over sample size"""
-    # make FSA and get true entropy
-    fsa = make_cyclic_machine(states=states) if cyclic else make_acyclic_machine(states=states)
-    lifted = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
-    true = float(lifted.pathsum().score[1])
-
     # run sampling for various # of samples
     X = list(range(1, 100, 1))
-    Ys = defaultdict(list)
+    mse, mab = defaultdict(lambda: np.zeros((100, fsas))), defaultdict(lambda: np.zeros((100, fsas)))
 
-    # if resample is True, then we generate a new sample every time, otherwise we keep one throughout
-    s = None if resample else get_samples(fsa, 200)
+    for f in range(fsas):
+        # make FSA and get true entropy
+        fsa = make_cyclic_machine(states=states) if cyclic else make_acyclic_machine(states=states)
+        lifted = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+        true = float(lifted.pathsum().score[1])
 
-    for i in tqdm(X):
-        res = run_iter(fsa, samples=s[:i] if s else None, num_samps=i)
-        for i in res:
-            Ys[i].append(res[i])
+        # if resample is True, then we generate a new sample every time, otherwise we keep one throughout
+        s = None if resample else get_samples(fsa, 200)
+
+        for i in tqdm(X):
+            res = run_iter(fsa, samples=s[:i] if s else None, num_samps=i)
+            for key in res:
+                mse[key][i][f] = ((res[key] - true)**2)
+                mab[key][i][f] = (abs(res[key] - true))
     
     # plot
-    for Y in Ys:
-        plt.plot(X, Ys[Y], label=Y)
-    plt.axhline(y=true, color='r', label='True')
+    for key in mse:
+        print(mse[key])
+        plt.plot(np.mean(mse[key], axis=1), label=key)
     plt.xlabel('# Paths Sampled')
-    plt.ylabel('Entropy (nats)')
+    plt.ylabel('Entropy (nats$^2$)')
+    plt.yscale('log')
     plt.title(f'# Samples vs. Entropy for random {"" if cyclic else "a"}cyclic FSA with {states} states')
     plt.legend()
     plt.show()
 
 def main():
-    graph_convergence(states=3, cyclic=True, resample=True)
+    graph_convergence(states=10, cyclic=True, resample=True)
 
 if __name__ == "__main__":
     main()

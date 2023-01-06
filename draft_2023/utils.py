@@ -102,5 +102,6 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
             res['Structured NSB'] += ct_q * entropy.nsb(*dist_q)
+            res['Structured MLE'] += ct_q * entropy.mle(*dist_q)
     
     return res

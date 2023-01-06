@@ -31,7 +31,7 @@ def get_pos_sequences(file):
     with open(file, 'r') as f:
         for sent in tqdm(conllu.parse_incr(f)):
             # filter out multi-word tokens, then collect pos tags
-            pos = [token['upos'] for token in sent if type(token['id']) is int] + [TERMINAL]
+            pos = [(None, START)] + [(token['upos'], token['upos']) for token in sent if type(token['id']) is int] + [(TERMINAL, TERMINAL)]
             seqs.append(tuple(pos))
     return seqs
 
