@@ -12,10 +12,20 @@ from rayuela.fsa.pathsum import Pathsum, Strategy
 from rayuela.fsa.random import random_machine
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from utils import lift, fsa_from_samples, estimate_entropy, get_samples
+
+from plotnine import ggplot, geom_line, geom_point, aes, stat_smooth, facet_wrap
+from plotnine.scales import scale_y_log10
+
+from scipy.stats import tukey_hsd
+
+import logging
+logger = logging.getLogger()
+logger.disabled = True
 
 def make_acyclic_machine(states=3):
     """Make an acyclic FSA (homomorphic to a DAG) with outgoing weights from a node summing to 1"""
@@ -51,40 +61,72 @@ def run_iter(fsa: FSA, samples=None, num_samps=1000, more=False):
         samples = get_samples(fsa, num_samps)
     return estimate_entropy(*fsa_from_samples(samples), more=more)
 
-def graph_convergence(states, cyclic, resample, fsas=10):
-    """Graph convergence of entropy estimates to true value over sample size"""
+def measure_convergence(states, sampling, cyclic, resample, fsas, prog=True):
+    """Measure convergence of entropy estimates to true value over sample size for a single FSA"""
     # run sampling for various # of samples
-    X = list(range(1, 100, 1))
-    mse, mab = defaultdict(lambda: np.zeros((100, fsas))), defaultdict(lambda: np.zeros((100, fsas)))
+    X = sampling
+    results = []
 
-    for f in range(fsas):
+    for f in tqdm(range(fsas)):
         # make FSA and get true entropy
         fsa = make_cyclic_machine(states=states) if cyclic else make_acyclic_machine(states=states)
         lifted = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
         true = float(lifted.pathsum().score[1])
 
         # if resample is True, then we generate a new sample every time, otherwise we keep one throughout
-        s = None if resample else get_samples(fsa, 200)
+        s = None if resample else get_samples(fsa, X[-1])
 
-        for i in tqdm(X):
-            res = run_iter(fsa, samples=s[:i] if s else None, num_samps=i)
+        for samp in (tqdm(X) if prog else X):
+            res = run_iter(fsa, samples=s[:samp] if s else None, num_samps=samp)
             for key in res:
-                mse[key][i][f] = ((res[key] - true)**2)
-                mab[key][i][f] = (abs(res[key] - true))
+                results.append({
+                    'samples': samp,
+                    'method': key,
+                    'mse': ((res[key] - true)**2),
+                    'mab': (abs(res[key] - true)),
+                    'cyclic': cyclic,
+                    'states': states
+                })
     
-    # plot
-    for key in mse:
-        print(mse[key])
-        plt.plot(np.mean(mse[key], axis=1), label=key)
-    plt.xlabel('# Paths Sampled')
-    plt.ylabel('Entropy (nats$^2$)')
-    plt.yscale('log')
-    plt.title(f'# Samples vs. Entropy for random {"" if cyclic else "a"}cyclic FSA with {states} states')
-    plt.legend()
-    plt.show()
+    return results
+    
+def graph_convergence(states: list[int], sampling: list[int], cyclic: bool, resample: bool, fsas: int, tukey: bool = False, graph: bool = False):
+
+    # get results
+    results = []
+    sampling = sampling
+    for state in states:
+        results.extend(measure_convergence(state, sampling, cyclic, resample, fsas, prog=False))
+
+    # significance test
+    if tukey:
+        grouped = defaultdict(lambda: defaultdict(list))
+        for res in results:
+            grouped[(res['states'], res['cyclic'], res['samples'])][res['method']].append(res)
+        for group in grouped:
+            arrs = [np.array([y['mse'] for y in x]) for x in grouped[group].values()]
+            test = tukey_hsd(*arrs)
+            print('===========================')
+            print(group)
+            print(list(grouped[group].keys()))
+            for arr in arrs:
+                print(arr.mean(), arr.std())
+            print(test)
+    
+    # make graph
+    if graph:
+        df = pd.DataFrame(results)
+        print(df)
+        plot = (ggplot(df, aes(x='samples', y='mse', color='factor(method)'))
+            + geom_line(stat='summary')
+            + scale_y_log10())
+        plot.draw(show=True)
+        plot.save(filename='plots/synthetic.pdf', height=3, width=3)
+
 
 def main():
-    graph_convergence(states=10, cyclic=True, resample=True)
+    # graph_convergence(states=[2, 5, 10], sampling=[10, 100], cyclic=True, resample=False, fsas=200, tukey=True)
+    graph_convergence(states=[5, 10, 50], sampling=[10, 100], cyclic=False, resample=False, fsas=200, tukey=True)
 
 if __name__ == "__main__":
     main()

@@ -88,9 +88,9 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
     entropy_fsa = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
 
     # simple estimates to get
-    res['Unstructured MLE'] = entropy.mle(*entropy.prob(samples))
-    res['Structured MLE (pathsum)'] = float(entropy_fsa.pathsum().score[1])
-    res['Unstructured NSB'] = entropy.nsb(*entropy.prob(samples))
+    res['uMLE'] = entropy.mle(*entropy.prob(samples))
+    res['sMLE'] = float(entropy_fsa.pathsum().score[1])
+    res['uNSB'] = entropy.nsb(*entropy.prob(samples))
 
     # structured NSB (or other) estimator
     for state in ct:
@@ -101,7 +101,6 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
             for func in entropy.funcs:
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
-            res['Structured NSB'] += ct_q * entropy.nsb(*dist_q)
-            res['Structured MLE'] += ct_q * entropy.mle(*dist_q)
+            res['sNSB'] += ct_q * entropy.nsb(*dist_q)
     
     return res
