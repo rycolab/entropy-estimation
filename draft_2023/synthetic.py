@@ -19,13 +19,9 @@ from tqdm import tqdm
 from utils import lift, fsa_from_samples, estimate_entropy, get_samples
 
 from plotnine import ggplot, geom_line, geom_point, aes, stat_smooth, facet_wrap
-from plotnine.scales import scale_y_log10
+from plotnine.scales import scale_y_log10, scale_x_log10
 
 from scipy.stats import tukey_hsd
-
-import logging
-logger = logging.getLogger()
-logger.disabled = True
 
 def make_acyclic_machine(states=3):
     """Make an acyclic FSA (homomorphic to a DAG) with outgoing weights from a node summing to 1"""
@@ -126,7 +122,11 @@ def graph_convergence(states: list[int], sampling: list[int], cyclic: bool, resa
 
 def main():
     # graph_convergence(states=[2, 5, 10], sampling=[10, 100], cyclic=True, resample=False, fsas=200, tukey=True)
-    graph_convergence(states=[5, 10, 50], sampling=[10, 100], cyclic=False, resample=False, fsas=200, tukey=True)
+    # graph_convergence(states=[5, 10, 50], sampling=[10, 100], cyclic=False, resample=False, fsas=200, tukey=True)
+
+    X = []
+    for t in range(3): X.extend(list(range(2 * 10**t, 11 * 10**t, max(1, 10**t))))
+    graph_convergence(states=[10], sampling=X, cyclic=True, resample=False, fsas=10, graph=True)
 
 if __name__ == "__main__":
     main()

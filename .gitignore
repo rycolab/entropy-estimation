@@ -6,3 +6,4 @@ data/LDC96L14/CELEX_V2
 entropy.egg-info
 .ipynb_checkpoints
 build/
+*.conllu

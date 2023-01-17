@@ -10,6 +10,19 @@ from collections import defaultdict
 import entropy
 import math
 
+# plotting settings (for latex)
+import matplotlib.pyplot as plt
+plt.rcParams.update({
+    # "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Times New Roman"],
+})
+
+# make the NSB estimator shut up
+import logging
+logger = logging.getLogger()
+logger.disabled = True
+
 def sample(pfsa, sampler):
     """Sample a path from the PFSA, including symbols on the arcs (for trajectory entropy)."""
     cur = sampler._draw({p : w for p, w in pfsa.I})
@@ -24,12 +37,15 @@ def sample(pfsa, sampler):
 
     return tuple(output)
 
-def get_samples(fsa: FSA, samples):
+def get_samples(fsa: FSA, samples: list[tuple]):
     sampler = Sampler(fsa)
     s = [sample(fsa, sampler) for _ in range(samples)]
     return s
 
 def lift(old_fsa: FSA, func):
+    """Lift an FSA to the expectation semiring, from p -> <p, val(p)>
+    - old_fsa: the original FSA, whose copy will be returned
+    - func: arbitrary function for which we want the expectation over paths"""
     # init semiring
     exp = expectation_semiring_builder(Real, Real)
 
@@ -48,8 +64,10 @@ def lift(old_fsa: FSA, func):
             fsa.add_arc(p, a, q, w=exp(l[0], l[1]))
     return fsa
 
-def fsa_from_samples(samples):
-    """Generate MLE structure of FSA based on sampling x values"""
+def fsa_from_samples(samples: list[tuple]):
+    """Generate MLE structure of FSA based on sampling x values
+    - samples: a list of trajectories from which the transitions in the PFSA will be created
+    """
     delta = defaultdict(lambda: defaultdict(int))
     tot = defaultdict(int)
 

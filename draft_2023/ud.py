@@ -2,28 +2,24 @@
 Experiment on structured entropy prediction using Markov model of POS tags from UD.
 """
 
-import math
 from os import stat
-from rayuela.base.semiring import Boolean, Real, Tropical, \
-    String, Integer, Rational, Semiring, expectation_semiring_builder
+import glob
 from rayuela.base.symbol import Sym, ε
 from rayuela.fsa.fsa import FSA
-from rayuela.fsa.state import State
-from rayuela.fsa.sampler import Sampler
-from rayuela.fsa.pathsum import Pathsum, Strategy
 
-import entropy 
 from utils import lift, fsa_from_samples, estimate_entropy, get_samples
-
-import matplotlib.pyplot as plt
 
 import conllu
 from tqdm import tqdm
-from collections import defaultdict
 import random
+import pandas as pd
 
-START = '<SOS>'
-TERMINAL = '<EOS>'
+from plotnine import ggplot, geom_line, geom_point, aes, stat_smooth, facet_wrap, theme, element_text
+from plotnine.scales import scale_y_log10, scale_x_log10
+from plotnine.guides import guide_legend, guides
+
+SOS = Sym('<SOS>')
+EOS = Sym('<EOS>')
 
 def get_pos_sequences(file):
     """Get POS tag sequences from a conllu treebank."""
@@ -31,36 +27,60 @@ def get_pos_sequences(file):
     with open(file, 'r') as f:
         for sent in tqdm(conllu.parse_incr(f)):
             # filter out multi-word tokens, then collect pos tags
-            pos = [(None, START)] + [(token['upos'], token['upos']) for token in sent if type(token['id']) is int] + [(TERMINAL, TERMINAL)]
+            pos = [(None, SOS)] + [(Sym(token['upos']), Sym(token['upos'])) for token in sent if type(token['id']) is int] + [(EOS, EOS)]
             seqs.append(tuple(pos))
     return seqs
 
-def graph_convergence(file):
+def run_convergence(file: str, fsas: int = 10):
+    print(file)
+    language = file.split('/')[1][:-7].capitalize()
     seqs = get_pos_sequences(file)
-    true = estimate_entropy(*fsa_from_samples(seqs))['Structured MLE (pathsum)']
+    fsa, samples, delta, tot = fsa_from_samples(seqs)
+    true = estimate_entropy(fsa, samples, delta, tot)['sMLE']
 
     # run sampling for various # of samples
-    X = list(range(1, 100, 1))
-    Ys = defaultdict(list)
+    X = []
+    for t in range(3): X.extend(list(range(2 * 10**t, 11 * 10**t, max(1, 10**t))))
+    res = []
 
-    # estimate
-    for num in tqdm(X):
-        random.shuffle(seqs)
-        fsa, samples, delta, tot = fsa_from_samples(seqs[:num])
-        samples = get_samples(fsa, num)
-        for estimator, val in estimate_entropy(fsa, samples, delta, tot, more=False).items():
-            print(f'{estimator:<30}: {val:>7.4f} nats')
-            Ys[estimator].append(val)
+    # estimate across f FSAs
+    for f in tqdm(range(fsas)):
+        samples = []
+        for num in X:
+            random.shuffle(seqs)
+            fsa, samples, delta, tot = fsa_from_samples(seqs[:num])
+            samples += get_samples(fsa, num - len(samples))
+            # print(f'{"True":<30}: {true:>7.4f} nats')
+            for estimator, val in estimate_entropy(fsa, samples, delta, tot, more=False).items():
+                # print(f'{estimator:<30}: {val:>7.4f} nats')
+                res.append({
+                    'samples': num,
+                    'method': estimator,
+                    'entropy': val,
+                    'mse': (val - true)**2,
+                    'lang': language
+                })
     
+    return res
+
+
+def graph_convergence(file):
+    res = []
+    for file in glob.glob('data/*.conllu'):
+        res += run_convergence(file, 10)
+
     # plot
-    for Y in Ys:
-        plt.plot(X, Ys[Y], label=Y)
-    plt.axhline(y=true, color='r', label='True')
-    plt.xlabel('# Sentences')
-    plt.ylabel('Entropy (nats)')
-    plt.title(f'# Samples vs. Entropy')
-    plt.legend()
-    plt.show()
+    df = pd.DataFrame(res)
+    plot = (ggplot(df, aes(x='samples', y='mse', color='method',))
+        + geom_line(stat='summary')
+        + facet_wrap('~lang', nrow=2, ncol=3)
+        + scale_y_log10()
+        + scale_x_log10()
+        + theme(legend_title=element_text(size=0, alpha=0),
+            axis_text_x=element_text(rotation=45), legend_position=(0.8, 0.2))
+        + guides(color=guide_legend(ncol=1)))
+    plot.draw(show=True)
+    plot.save(filename='plots/ud.pdf', height=3, width=4)
 
 def calc(file):
     seqs = get_pos_sequences(file)
