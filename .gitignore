@@ -7,3 +7,4 @@ entropy.egg-info
 .ipynb_checkpoints
 build/
 *.conllu
+*.code-workspace
