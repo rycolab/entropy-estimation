@@ -12,7 +12,21 @@ import logging
 logger = logging.getLogger()
 logger.disabled = True
 
+def simple_cfgs():
+    """Make some simple cfgs with known entropy to test on"""
+    cfgs = []
+
+    # 0.69 nats
+    cfgs.append(CFG.from_string("""
+    S → A:1.0
+    A → a:0.5
+    A → b:0.5
+    """.strip(), Real))
+
+    return cfgs
+
 def load_cfg(file: str):
+    """Get Moore-type cfg from file and normalise it"""
     # load
     cfg = CFG.get_moore_cfg(file, R=Real)
     
@@ -85,18 +99,18 @@ def cfg_from_samples(samples: list[tuple[Production, list]]):
     
     return cfg, samples, delta, tot
 
-def estimate_entropy(cfg: CFG, samples, delta, ct, more=False, baseline=True):
+def estimate_entropy(cfg: CFG, samples, delta, ct, more=False):
     """Estimate the entropy of a CFG"""
     # TODO: Lehmann style pathsum for cfg possible?
     res = defaultdict(float)
 
     # simple estimates to get
-    strs = [tuple(s[-1][1]) for s in samples]
+    strs = [tuple(s[0] for s in sample) for sample in samples]
     res['uMLE'] = entropy.mle(*entropy.prob(strs))
     res['uNSB'] = entropy.nsb(*entropy.prob(strs))
 
     # structured NSB (or other) estimator
-    for (head, body), w in cfg.P:
+    for head in delta:
         N = sum(delta[head].values())
         ct_q = ct[head] / len(samples)
         dist_q = [x / N for x in delta[head].values()], N, delta[head]
@@ -105,8 +119,7 @@ def estimate_entropy(cfg: CFG, samples, delta, ct, more=False, baseline=True):
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
             res['sNSB'] += ct_q * entropy.nsb(*dist_q)
-            if not baseline:
-                res['sMLE'] += ct_q * entropy.mle(*dist_q)
+            res['sMLE'] += ct_q * entropy.mle(*dist_q)
     
     return res
 
@@ -122,6 +135,8 @@ def estimate_from_file(files: list[str]):
 
 def main():
     estimate_from_file(list(glob.glob("data/pcfg/*")))
+    # for cfg in simple_cfgs():
+    #     graph_convergence(cfg)
 
 if __name__ == "__main__":
     main()
