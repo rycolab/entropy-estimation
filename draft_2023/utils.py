@@ -93,12 +93,13 @@ def fsa_from_samples(samples: list[tuple]):
 
     return fsa, samples, delta, tot
 
-def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
+def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=True):
     """Calculate the entropy estimates, given the samples and the correspondingly constructed MLE FSA
     - fsa: the FSA whose entropy is being estimated
     - samples: the samples from which the estimation is done
     - delta: transition function
     - more: whether to use only NSB or other estimators too
+    - baseline: whether to calculate sMLE with pathsum or use decomposed method
     """
     res = defaultdict(float)
 
@@ -107,7 +108,8 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
 
     # simple estimates to get
     res['uMLE'] = entropy.mle(*entropy.prob(samples))
-    res['sMLE'] = float(entropy_fsa.pathsum().score[1])
+    if baseline: 
+        res['sMLE'] = float(entropy_fsa.pathsum().score[1])
     res['uNSB'] = entropy.nsb(*entropy.prob(samples))
 
     # structured NSB (or other) estimator
@@ -120,5 +122,7 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False):
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
             res['sNSB'] += ct_q * entropy.nsb(*dist_q)
+            if not baseline:
+                res['sMLE'] += ct_q * entropy.mle(*dist_q)
     
     return res
