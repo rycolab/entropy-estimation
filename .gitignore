@@ -8,4 +8,4 @@ entropy.egg-info
 build/
 *.conllu
 *.code-workspace
-draft_2023/data/gpt2
+draft_2023/data/

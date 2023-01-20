@@ -23,7 +23,7 @@ import logging
 logger = logging.getLogger()
 logger.disabled = True
 
-def sample(pfsa, sampler):
+def sample(pfsa: FSA, sampler: Sampler):
     """Sample a path from the PFSA, including symbols on the arcs (for trajectory entropy)."""
     cur = sampler._draw({p : w for p, w in pfsa.I})
     output = [(None, cur)]
