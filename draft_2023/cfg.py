@@ -1,7 +1,12 @@
 import glob
 import entropy
-from collections import defaultdict
+import pandas as pd
 import numpy as np
+from collections import defaultdict
+
+from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text
+from plotnine.scales import scale_y_log10, scale_x_log10
+from plotnine.guides import guide_legend, guides
 
 from rayuela.cfg.cfg import CFG, Production
 from rayuela.base.semiring import Real
@@ -17,11 +22,32 @@ def simple_cfgs():
     cfgs = []
 
     # 0.69 nats
-    cfgs.append(CFG.from_string("""
-    S → A:1.0
-    A → a:0.5
-    A → b:0.5
-    """.strip(), Real))
+    # cfgs.append(CFG.from_string("""
+    # S → A:1.0
+    # A → a:0.5
+    # A → b:0.5
+    # """.strip(), Real))
+
+    # cfgs.append(CFG.from_string("""
+    # S → A:1.0
+    # A → A:0.5
+    # A → a:0.5
+    # """.strip(), Real))
+
+    # cfgs.append(CFG.from_string("""
+    # S → B:1.0
+    # B → A:1.0
+    # A → A:0.5
+    # A → a:0.5
+    # """.strip(), Real))
+
+    # cfgs.append(CFG.from_string("""
+    # S → C:1.0
+    # C → B:1.0
+    # B → A:1.0
+    # A → A:0.5
+    # A → a:0.5
+    # """.strip(), Real))
 
     return cfgs
 
@@ -123,20 +149,37 @@ def estimate_entropy(cfg: CFG, samples, delta, ct, more=False):
     
     return res
 
-def graph_convergence(cfg: CFG):
-    for i in [10, 100, 1000, 10000]:
-        s = [sample_cfg(cfg, keep_str=False) for _ in tqdm(range(i))]
-        print(estimate_entropy(*cfg_from_samples(s)))
+def graph_convergence():
+    """Graph estimator convergence"""
+    X = []
+    for t in range(4): X.extend(list(range(2 * 10**t, 11 * 10**t, max(1, 10**t))))
+    res = []
 
-def estimate_from_file(files: list[str]):
-    for file in files:
-        cfg = load_cfg(file)
-        graph_convergence(cfg)
+    cfgs = [load_cfg(file) for file in glob.glob("data/pcfg/*")]
+    # cfgs = simple_cfgs()
+    for cfg in cfgs:
+        s = []
+        for num in tqdm(X):
+            s.extend([sample_cfg(cfg, keep_str=False) for _ in range(num - len(s))])
+            for estimator, val in estimate_entropy(*cfg_from_samples(s)).items():
+                print(f'{estimator:<30}: {val:>7.4f} nats')
+                res.append({
+                    'samples': num,
+                    'method': estimator,
+                    'entropy': val
+                })
+
+    df = pd.DataFrame(res)
+    plot = (ggplot(df, aes(x='samples', y='entropy', color='method',))
+        + geom_line(stat='summary')
+        # + facet_wrap('~lang', nrow=2, ncol=3)
+        + scale_x_log10()
+        + theme(axis_text_x=element_text(rotation=45)))
+    plot.draw(show=True)
+    plot.save(filename='plots/cfg.pdf', height=3, width=4)
 
 def main():
-    estimate_from_file(list(glob.glob("data/pcfg/*")))
-    # for cfg in simple_cfgs():
-    #     graph_convergence(cfg)
+    graph_convergence()
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 
-from plotnine import ggplot, geom_line, geom_point, aes, stat_smooth, facet_wrap, theme, element_text
+from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text
 from plotnine.scales import scale_y_log10, scale_x_log10
 from plotnine.guides import guide_legend, guides
 
