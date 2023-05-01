@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 from collections import defaultdict
 
-from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text
+from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text, geom_ribbon
 from plotnine.scales import scale_y_log10, scale_x_log10
 from plotnine.guides import guide_legend, guides
 
@@ -93,11 +93,23 @@ def graph_convergence(tukey=False, graph=False):
 
         res = []
         for file in glob.glob('data/*.conllu'):
-            res += estimate_conllu(file, X, 10)
-
+            res += estimate_conllu(file, X, 20)
         df = pd.DataFrame(res)
-        plot = (ggplot(df, aes(x='samples', y='mse', color='method',))
-            + geom_line(stat='summary')
+
+        # group by #samples, method, and language
+        # calculate mean and standard error of mse
+        df = df.groupby(['samples', 'method', 'lang']).agg(
+            mse=('mse', 'mean'),
+            mse_se=('mse', lambda x: float(np.std(x, ddof=1) / np.sqrt(len(x))))
+        )
+
+        df['mse_lower'] = df['mse'] - 1.96 * df['mse_se'] - 1e-4
+        df['mse_upper'] = df['mse'] + 1.96 * df['mse_se'] + 1e-4
+        df = df.reset_index()
+
+        plot = (ggplot(df, aes(x='samples', y='mse', ymin='mse_lower', ymax='mse_upper'))
+            + geom_line(aes(color='method'))
+            + geom_ribbon(aes(fill='method'), alpha=0.2)
             + facet_wrap('~lang', nrow=2, ncol=3)
             + scale_y_log10()
             + scale_x_log10()
@@ -113,7 +125,8 @@ def calc(file):
         print(f'{estimator:<30}: {val:>7.4f} nats')
 
 def main():
-    graph_convergence(tukey=True)
+    graph_convergence(graph=True)
+    # graph_convergence(tukey=True)
 
 if __name__ == '__main__':
     main()
