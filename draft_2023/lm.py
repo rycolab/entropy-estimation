@@ -54,6 +54,7 @@ def plot_convergence():
             r = estimate_entropy(*fsa_from_lm(tokens[:num], gram=1), baseline=False)
             for estimator, val in r.items():
                 print(f'{estimator:<30}: {val:>7.4f} nats')
+                if estimator[0] == 'u': continue
                 res.append({
                     'samples': num,
                     'method': estimator,
@@ -62,14 +63,12 @@ def plot_convergence():
                 })
 
     df = pd.DataFrame(res)
-    plot = (ggplot(df, aes(x='samples', y='entropy', color='method',))
+    plot = (ggplot(df, aes(x='samples', y='entropy', color='dataset',))
         + geom_line(stat='summary')
-        + facet_wrap('~dataset', nrow=2, ncol=3)
+        + facet_wrap('~method', nrow=2, ncol=2)
         # + scale_y_log10()
         + scale_x_log10()
-        + theme(legend_title=element_text(size=0, alpha=0),
-            axis_text_x=element_text(rotation=45), legend_position=(0.8, 0.2))
-        + guides(color=guide_legend(ncol=1)))
+        + theme(axis_text_x=element_text(rotation=45)))
     plot.draw(show=True)
     plot.save(filename='plots/gpt.pdf', height=3, width=4)
 

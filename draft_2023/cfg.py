@@ -69,7 +69,8 @@ def load_cfg(file: str):
 def sample_cfg(cfg: CFG, keep_str=True):
     """Sample a leftmost derivation from the cfg."""
     sample = [(None, [cfg.S])]
-    cur = [cfg.S]
+    buffer = [cfg.S]
+    done = []
 
     # precompute transitions
     rhs = defaultdict(list)
@@ -77,32 +78,33 @@ def sample_cfg(cfg: CFG, keep_str=True):
     for (head, body), w in cfg.P:
         rhs[head].append(body)
         weight[head].append(w)
+    rands = defaultdict(list)
 
     # terminate if all are terminals
-    while any([x in cfg.V for x in cur]):
-        new_cur = []
+    # trying to optimise this: start only at the leftmost non-terminal each time (pos)
+    pos = 0
+    while buffer:
+        # pop terminals
+        if buffer[-1] not in cfg.V:
+            done.append(buffer.pop())
+            continue
 
         # expand leftmost nonterminal
-        done = False
         rule = None
-        for i, sym in enumerate(cur):
-            if done:
-                new_cur.append(sym)
-            elif sym in cfg.V:
-                # choose per probability
-                index = np.random.choice(len(weight[sym]), p=weight[sym])
-                for out in rhs[sym][index]:
-                    new_cur.append(out)
-                rule = Production(sym, rhs[sym][index])
-                done = True
-            else:
-                new_cur.append(sym)
-        
-        sample.append((rule, new_cur if keep_str else None))
-        cur = new_cur
+        sym = buffer.pop()
+
+        # choose per probability
+        if len(rands[sym]) == 0:
+            rands[sym] = np.random.choice(len(weight[sym]), size=100, p=weight[sym]).tolist()
+        index = rands[sym].pop()
+        for out in rhs[sym][index][::-1]:
+            buffer.append(out)
+
+        rule = Production(sym, rhs[sym][index])
+        sample.append((rule, None))
     
     # keep last str
-    sample[-1] = (sample[-1][0], new_cur)
+    sample[-1] = (sample[-1][0], done)
     return sample
 
 def cfg_from_samples(samples: list[tuple[Production, list]]):
@@ -152,12 +154,14 @@ def estimate_entropy(cfg: CFG, samples, delta, ct, more=False):
 def graph_convergence():
     """Graph estimator convergence"""
     X = []
-    for t in range(4): X.extend(list(range(2 * 10**t, 11 * 10**t, max(1, 10**t))))
+    for t in range(5): X.extend(list(range(2 * 10**t, 11 * 10**t, max(1, 10**t))))
     res = []
 
-    cfgs = [load_cfg(file) for file in glob.glob("data/pcfg/*")]
+    # estimate cfg entropies
+    cfgs = [(load_cfg(file), file.split('/')[-1].split('-')[0]) for file in glob.glob("data/pcfg/*")]
     # cfgs = simple_cfgs()
-    for cfg in cfgs:
+    for cfg, name in cfgs:
+        print(name)
         s = []
         for num in tqdm(X):
             s.extend([sample_cfg(cfg, keep_str=False) for _ in range(num - len(s))])
@@ -166,13 +170,14 @@ def graph_convergence():
                 res.append({
                     'samples': num,
                     'method': estimator,
-                    'entropy': val
+                    'entropy': val,
+                    'cfg': name
                 })
 
     df = pd.DataFrame(res)
     plot = (ggplot(df, aes(x='samples', y='entropy', color='method',))
         + geom_line(stat='summary')
-        # + facet_wrap('~lang', nrow=2, ncol=3)
+        # + facet_wrap('~cfg', nrow=1, ncol=3)
         + scale_x_log10()
         + theme(axis_text_x=element_text(rotation=45)))
     plot.draw(show=True)
