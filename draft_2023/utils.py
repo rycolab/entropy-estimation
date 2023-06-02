@@ -9,6 +9,8 @@ from rayuela.fsa.pathsum import Pathsum, Strategy
 from collections import defaultdict
 import entropy
 import math
+import numpy as np
+from copy import deepcopy
 
 # plotting settings (for latex)
 import matplotlib.pyplot as plt
@@ -23,23 +25,37 @@ import logging
 logger = logging.getLogger()
 logger.disabled = True
 
-def sample(pfsa: FSA, sampler: Sampler):
+def sample(pfsa: FSA, sampler: Sampler, memo={}, return_memo=False):
     """Sample a path from the PFSA, including symbols on the arcs (for trajectory entropy)."""
     cur = sampler._draw({p : w for p, w in pfsa.I})
     output = [(None, cur)]
 
     while cur:
-        D = {(a, j) : w for a, j, w in pfsa.arcs(cur)}
-        D[(0, 0)] = pfsa.ρ[cur]
-
-        (a, cur) = sampler._draw(D)
+        if cur not in memo:
+            D = {(a, j) : w for a, j, w in pfsa.arcs(cur)}
+            D[(0, 0)] = pfsa.ρ[cur]
+            vec, store = np.zeros((len(D))), {}
+            for p, w in D.items(): 
+                vec[len(store)] = float(w)
+                store[len(store)] = p
+            vec /= vec.sum()
+            memo[cur] = (vec, store)
+        
+        (a, cur) = memo[cur][1][np.random.choice(len(memo[cur][1]), p=memo[cur][0])]
         if a != 0: output.append((a, cur))
 
+    if return_memo:
+        return tuple(output), memo
     return tuple(output)
 
-def get_samples(fsa: FSA, samples: list[tuple]):
+def get_samples(fsa: FSA, samples: int):
     sampler = Sampler(fsa)
-    s = [sample(fsa, sampler) for _ in range(samples)]
+    memo = {}
+    s = []
+    for _ in range(samples):
+        res, memo = sample(fsa, sampler, memo, return_memo=True)
+        s.append(res)
+    del memo
     return s
 
 def lift(old_fsa: FSA, func):
@@ -93,7 +109,7 @@ def fsa_from_samples(samples: list[tuple]):
 
     return fsa, samples, delta, tot
 
-def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=True):
+def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=False):
     """Calculate the entropy estimates, given the samples and the correspondingly constructed MLE FSA
     - fsa: the FSA whose entropy is being estimated
     - samples: the samples from which the estimation is done
@@ -104,13 +120,18 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=True):
     res = defaultdict(float)
 
     # lift to expectation semiring
-    entropy_fsa = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+    if baseline:
+        entropy_fsa = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+        res['sMLE (pathsum)'] = float(entropy_fsa.pathsum().score[1])
+        res['sMLE (state-elim)'] = float(exp_semiring(fsa)[1].score[1])
 
     # simple estimates to get
-    res['uMLE'] = entropy.mle(*entropy.prob(samples))
-    if baseline: 
-        res['sMLE'] = float(entropy_fsa.pathsum().score[1])
-    res['uNSB'] = entropy.nsb(*entropy.prob(samples))
+    counts = entropy.prob(samples)
+    res['uMLE'] = entropy.mle(*counts)
+    try:
+        res['uNSB'] = entropy.nsb(*counts)
+    except:
+        res['uNSB'] = res['uMLE']
 
     # structured NSB (or other) estimator
     for state in ct:
@@ -121,8 +142,61 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=True):
             for func in entropy.funcs:
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
-            res['sNSB'] += ct_q * entropy.nsb(*dist_q)
-            if not baseline:
-                res['sMLE'] += ct_q * entropy.mle(*dist_q)
+            diff = ct_q * entropy.mle(*dist_q)
+            res['sMLE'] += diff
+            try:
+                res['sNSB'] += ct_q * entropy.nsb(*dist_q)
+            except:
+                res['sNSB'] += diff
+
     
     return res
+
+def state_elim_pathsum(fsa: FSA):
+    print(len(fsa.Q))
+
+    # get start, end
+    s, e = [], []
+    for p, w in fsa.I:
+        s.append(p)
+    for p, w in fsa.F:
+        e.append(p)
+    ig = s + e
+
+    state2symbol = {}
+    for q in fsa.Q:
+        for sym in fsa.δ[q]:
+            corresp = list(fsa.δ[q][sym].keys())[0]
+            state2symbol[corresp] = sym
+    # eliminate states
+    d = set()
+    elim = set()
+    for q in fsa.Q:
+        if q in ig or q not in state2symbol: continue
+        loop = fsa.δ[q][state2symbol[q]][q]
+
+        elim.add(q)
+
+        for pr in fsa.Q:
+            if pr in elim: continue
+            incoming = fsa.δ[pr][state2symbol[q]][q]
+
+            for su in fsa.Q:
+                if su in elim or su not in state2symbol: continue
+                outgoing = fsa.δ[q][state2symbol[su]][su]
+                comb = incoming * loop.star() * outgoing
+                fsa.δ[pr][state2symbol[su]][su] += comb
+
+    return fsa.δ[s[0]][state2symbol[e[0]]][e[0]]
+
+
+def exp_semiring(old_fsa: FSA):
+
+    # lift to expectation semiring
+    fsa = lift(old_fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+
+    # print entropy
+    true = state_elim_pathsum(fsa)
+    print(true)
+    
+    return fsa, true

@@ -73,6 +73,11 @@ def wolpert_wolf(S, N, counts, α=1):
 
 def nsb(S, N, counts):
     if N == 0: return 0.0
-    return ndd.entropy(counts)
+    try:
+        res = ndd.entropy(counts)
+        return res
+    except:
+        print("NDD failed, using MLE")
+        return mle(S, N, counts)
 
 funcs = [mle, miller_madow, jackknife, horvitz_thompson, chao_shen, wolpert_wolf, nsb]

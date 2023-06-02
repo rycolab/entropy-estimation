@@ -3,8 +3,9 @@ import entropy
 import pandas as pd
 import numpy as np
 from collections import defaultdict
+import sys
 
-from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text
+from plotnine import ggplot, geom_line, aes, facet_wrap, theme, element_text, geom_ribbon
 from plotnine.scales import scale_y_log10, scale_x_log10
 from plotnine.guides import guide_legend, guides
 
@@ -66,18 +67,19 @@ def load_cfg(file: str):
 
     return cfg
 
-def sample_cfg(cfg: CFG, keep_str=True):
+def _sample_cfg(cfg: CFG, keep_str=True, rhs=None, weight=None):
     """Sample a leftmost derivation from the cfg."""
     sample = [(None, [cfg.S])]
     buffer = [cfg.S]
     done = []
 
-    # precompute transitions
-    rhs = defaultdict(list)
-    weight = defaultdict(list)
-    for (head, body), w in cfg.P:
-        rhs[head].append(body)
-        weight[head].append(w)
+    if not rhs:
+        # precompute transitions
+        rhs = defaultdict(list)
+        weight = defaultdict(list)
+        for (head, body), w in cfg.P:
+            rhs[head].append(body)
+            weight[head].append(w)
     rands = defaultdict(list)
 
     # terminate if all are terminals
@@ -97,8 +99,8 @@ def sample_cfg(cfg: CFG, keep_str=True):
         if len(rands[sym]) == 0:
             rands[sym] = np.random.choice(len(weight[sym]), size=100, p=weight[sym]).tolist()
         index = rands[sym].pop()
-        for out in rhs[sym][index][::-1]:
-            buffer.append(out)
+        for i in range(len(rhs[sym][index]) - 1, -1, -1):
+            buffer.append(rhs[sym][index][i])
 
         rule = Production(sym, rhs[sym][index])
         sample.append((rule, None))
@@ -106,6 +108,20 @@ def sample_cfg(cfg: CFG, keep_str=True):
     # keep last str
     sample[-1] = (sample[-1][0], done)
     return sample
+
+def sample_cfg(cfg: CFG, n: int, keep_str=True):
+    """Sample n leftmost derivations from the cfg."""
+
+    # precompute transitions
+    rhs = defaultdict(list)
+    weight = defaultdict(list)
+    for (head, body), w in cfg.P:
+        rhs[head].append(body)
+        weight[head].append(w)
+    
+    # sample
+    samples = [_sample_cfg(cfg, keep_str, rhs, weight) for _ in range(n)]
+    return samples
 
 def cfg_from_samples(samples: list[tuple[Production, list]]):
     """Construct a CFG from some samples"""
@@ -134,20 +150,28 @@ def estimate_entropy(cfg: CFG, samples, delta, ct, more=False):
 
     # simple estimates to get
     strs = [tuple(s[0] for s in sample) for sample in samples]
-    res['uMLE'] = entropy.mle(*entropy.prob(strs))
-    res['uNSB'] = entropy.nsb(*entropy.prob(strs))
+    probs = entropy.prob(strs)
+    res['uMLE'] = entropy.mle(*probs)
+    try:
+        res['uNSB'] = entropy.nsb(*probs)
+    except:
+        res['uNSB'] = res['uMLE']
 
     # structured NSB (or other) estimator
     for head in delta:
-        N = sum(delta[head].values())
+        N = ct[head]
         ct_q = ct[head] / len(samples)
-        dist_q = [x / N for x in delta[head].values()], N, delta[head]
+        dist_q = [x / N for x in delta[head].values()], N, list(delta[head].values())
         if more:
             for func in entropy.funcs:
                 res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
         else:
-            res['sNSB'] += ct_q * entropy.nsb(*dist_q)
-            res['sMLE'] += ct_q * entropy.mle(*dist_q)
+            diff = ct_q * entropy.mle(*dist_q)
+            res['sMLE'] += diff
+            try:
+                res['sNSB'] += ct_q * entropy.nsb(*dist_q)
+            except:
+                res['sNSB'] += diff
     
     return res
 
@@ -161,30 +185,62 @@ def graph_convergence():
     cfgs = [(load_cfg(file), file.split('/')[-1].split('-')[0]) for file in glob.glob("data/pcfg/*")]
     # cfgs = simple_cfgs()
     for cfg, name in cfgs:
-        print(name)
-        s = []
-        for num in tqdm(X):
-            s.extend([sample_cfg(cfg, keep_str=False) for _ in range(num - len(s))])
-            for estimator, val in estimate_entropy(*cfg_from_samples(s)).items():
-                print(f'{estimator:<30}: {val:>7.4f} nats')
-                res.append({
-                    'samples': num,
-                    'method': estimator,
-                    'entropy': val,
-                    'cfg': name
-                })
+        for run in tqdm(range(20)):
+            s = sample_cfg(cfg, keep_str=False, n=X[-1])
+            for num in X:
+                inputs = cfg_from_samples(s[:num])
+                for estimator, val in estimate_entropy(*inputs).items():
+                    # print(f'{estimator:<30}: {val:>7.4f} nats')
+                    res.append({
+                        'samples': num,
+                        'method': estimator,
+                        'entropy': val,
+                        'cfg': name
+                    })
 
     df = pd.DataFrame(res)
-    plot = (ggplot(df, aes(x='samples', y='entropy', color='method',))
-        + geom_line(stat='summary')
-        # + facet_wrap('~cfg', nrow=1, ncol=3)
+
+    # group by #samples, method, and language
+    # calculate mean and standard error of mse
+    df = df.groupby(['samples', 'method']).agg(
+        entropy=('entropy', 'mean'),
+        entropy_se=('entropy', lambda x: float(np.std(x, ddof=1) / np.sqrt(len(x))))
+    )
+
+    df['entropy_lower'] = df['entropy'] - 1.96 * df['entropy_se']
+    df['entropy_upper'] = df['entropy'] + 1.96 * df['entropy_se']
+    df = df.reset_index()
+    df = df.rename(columns={'entropy': 'Entropy estimate (nats)', 'samples': '$|\\mathcal{D}|$', 'method': 'Method'})
+
+    plot = (ggplot(df, aes(x='$|\\mathcal{D}|$', y='Entropy estimate (nats)', ymin='entropy_lower', ymax='entropy_upper'))
+        + geom_line(aes(color='Method'))
+        + geom_ribbon(aes(fill='Method'), alpha=0.2)
         + scale_x_log10()
-        + theme(axis_text_x=element_text(rotation=45)))
+        + theme(
+            legend_title=element_text(size=0, alpha=0),
+            axis_text_x=element_text(rotation=45),
+            text=element_text(family='Times'),
+        )
+    )
+    
     plot.draw(show=True)
-    plot.save(filename='plots/cfg.pdf', height=3, width=4)
+    plot.save(filename='plots/cfg.pdf', height=2, width=3)
+
+def stats():
+    cfgs: list[tuple[CFG, str]] = [(load_cfg(file), file.split('/')[-1].split('-')[0]) for file in glob.glob("data/pcfg/*")]
+    for cfg, name in cfgs:
+        print(f"Alphabet: {len(cfg.Sigma)}")
+        print(f"Nonterminals: {len(cfg.V)}")
+        print(f"Productions: {len(cfg._P)}")
 
 def main():
-    graph_convergence()
+    assert len(sys.argv) == 2, "Usage: python3 cfg.py <graph|stats>"
+    if sys.argv[1] == 'graph':
+        graph_convergence()
+    elif sys.argv[1] == 'stats':
+        stats()
+    else:
+        raise ValueError("Usage: python3 cfg.py <graph|stats>")
 
 if __name__ == "__main__":
     main()
