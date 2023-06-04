@@ -5,6 +5,7 @@ from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
 from rayuela.fsa.sampler import Sampler
 from rayuela.fsa.pathsum import Pathsum, Strategy
+from tqdm import tqdm
 
 from collections import defaultdict
 import entropy
@@ -48,11 +49,11 @@ def sample(pfsa: FSA, sampler: Sampler, memo={}, return_memo=False):
         return tuple(output), memo
     return tuple(output)
 
-def get_samples(fsa: FSA, samples: int):
+def get_samples(fsa: FSA, samples: int, prog=False):
     sampler = Sampler(fsa)
     memo = {}
     s = []
-    for _ in range(samples):
+    for _ in range(samples) if not prog else tqdm(range(samples)):
         res, memo = sample(fsa, sampler, memo, return_memo=True)
         s.append(res)
     del memo
@@ -109,7 +110,13 @@ def fsa_from_samples(samples: list[tuple]):
 
     return fsa, samples, delta, tot
 
-def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=False):
+def exact_entropy(fsa: FSA):
+    """Calculate the exact entropy of an FSA, using the pathsum algorithm"""
+    # lift to expectation semiring
+    entropy_fsa = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+    return float(entropy_fsa.pathsum().score[1])
+
+def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, less=False, baseline=False):
     """Calculate the entropy estimates, given the samples and the correspondingly constructed MLE FSA
     - fsa: the FSA whose entropy is being estimated
     - samples: the samples from which the estimation is done
@@ -128,26 +135,34 @@ def estimate_entropy(fsa: FSA, samples, delta, ct, more=False, baseline=False):
     # simple estimates to get
     counts = entropy.prob(samples)
     res['uMLE'] = entropy.mle(*counts)
-    try:
-        res['uNSB'] = entropy.nsb(*counts)
-    except:
-        res['uNSB'] = res['uMLE']
+    if not less:
+        try:
+            res['uNSB'] = entropy.nsb(*counts)
+        except:
+            res['uNSB'] = res['uMLE']
 
     # structured NSB (or other) estimator
-    for state in ct:
-        N = sum(delta[state].values())
-        ct_q = ct[state] / len(samples)
-        dist_q = [x / N for x in delta[state].values()], N, delta[state]
-        if more:
-            for func in entropy.funcs:
-                res[f'Structured {func.__name__}'] += ct_q * func(*dist_q)
-        else:
+    if not less:
+        for state in ct:
+            N = sum(delta[state].values())
+            ct_q = ct[state] / len(samples)
+            dist_q = [x / N for x in delta[state].values()], N, delta[state]
             diff = ct_q * entropy.mle(*dist_q)
-            res['sMLE'] += diff
-            try:
-                res['sNSB'] += ct_q * entropy.nsb(*dist_q)
-            except:
-                res['sNSB'] += diff
+            if more:
+                for func in entropy.funcs:
+                    if func == entropy.mle:
+                        res['sMLE'] += diff
+                        continue
+                    try:
+                        res[f's{str(func.__name__).capitalize()}'] += ct_q * func(*dist_q)
+                    except:
+                        res[f's{str(func.__name__).capitalize()}'] += diff
+            else:
+                res['sMLE'] += diff
+                try:
+                    res['sNSB'] += ct_q * entropy.nsb(*dist_q)
+                except:
+                    res['sNSB'] += diff
 
     
     return res
