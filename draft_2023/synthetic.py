@@ -7,6 +7,7 @@ from rayuela.base.symbol import Sym, ε
 from rayuela.fsa.fsa import FSA
 from rayuela.fsa.state import State
 
+from scipy.special import digamma, polygamma
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -21,7 +22,8 @@ from plotnine import (
     theme,
     element_text,
     facet_wrap,
-    facet_grid
+    facet_grid,
+    geom_histogram
 )
 from plotnine.scales import scale_y_log10, scale_x_log10
 
@@ -62,7 +64,6 @@ def run_iter(fsa: FSA, samples=None, num_samps=1000, more=False):
     if not samples:
         samples = get_samples(fsa, num_samps)
     return estimate_entropy(*fsa_from_samples(samples), more=more)
-
 
 def measure_convergence(states, sampling, cyclic, resample, fsas, prog=True):
     """Measure convergence of entropy estimates to true value over sample size for a single FSA"""
@@ -189,6 +190,39 @@ def graph_convergence(
             width=5,
         )
 
+def diff_distrib(states: int=10):
+    diffs = []
+    for i in tqdm(range(1000)):
+        fsa = make_acyclic_machine(states=states)
+        lifted = lift(fsa, lambda x: (x, Real(-float(x) * math.log(float(x)))))
+        true = float(lifted.pathsum().score[1])
+        res = run_iter(fsa, num_samps=10)
+        diff = (res["sMLE"] - true)**2 - (res["uMLE"] - true)**2
+        diffs.append(diff)
+    
+    # plot histogram of differences
+    df = pd.DataFrame(diffs, columns=["diff"])
+    plot = (
+        ggplot(df, aes(x="diff"))
+        + geom_histogram(bins=20)
+        + theme(
+            legend_title=element_text(size=0, alpha=0),
+            axis_text_x=element_text(rotation=45),
+            axis_title_y=element_text(size=0, alpha=0),
+            legend_position="top",
+            text=element_text(family='Times New Roman'),
+        )
+    )
+    plot.draw(show=True)
+
+def var_ent(K: int=2):
+    """Variance of entropy for a uniform Dirichlet distribution with K classes, per Archer (2014)"""
+    A = K
+    res = 0.0
+    if A != 0:
+        res += K * (2 / ((A + 1) * A)) * ((digamma(3) - digamma(A + 2))**2 + polygamma(1, 3) - polygamma(1, A + 2))
+        res += (((K * (K - 1)) / 2 - 1) / ((A + 1) * A)) * ((digamma(2) - digamma(A + 2)) * (digamma(2) - digamma(A + 2)) - polygamma(1, A + 2))
+    return res
 
 def main():
     assert len(sys.argv) == 3, "Usage: python synthetic.py <tukey|graph> <cylic|acyclic>"
@@ -229,4 +263,5 @@ def main():
         raise ValueError("Usage: python synthetic.py <tukey|graph> <cylic|acyclic>")
 
 if __name__ == "__main__":
-    main()
+    for i in range(100):
+        print(i, var_ent(i))
