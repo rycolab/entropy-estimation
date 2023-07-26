@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from utils import lift, fsa_from_samples, estimate_entropy, get_samples
+from utils import lift, fsa_from_samples, estimate_entropy, get_samples, exact_entropy
 
 from plotnine import (
     ggplot,
@@ -215,15 +215,6 @@ def diff_distrib(states: int=10):
     )
     plot.draw(show=True)
 
-def var_ent(K: int=2):
-    """Variance of entropy for a uniform Dirichlet distribution with K classes, per Archer (2014)"""
-    A = K
-    res = 0.0
-    if A != 0:
-        res += K * (2 / ((A + 1) * A)) * ((digamma(3) - digamma(A + 2))**2 + polygamma(1, 3) - polygamma(1, A + 2))
-        res += (((K * (K - 1)) / 2 - 1) / ((A + 1) * A)) * ((digamma(2) - digamma(A + 2)) * (digamma(2) - digamma(A + 2)) - polygamma(1, A + 2))
-    return res
-
 def main():
     assert len(sys.argv) == 3, "Usage: python synthetic.py <tukey|graph> <cylic|acyclic>"
 
@@ -263,5 +254,7 @@ def main():
         raise ValueError("Usage: python synthetic.py <tukey|graph> <cylic|acyclic>")
 
 if __name__ == "__main__":
-    for i in range(100):
-        print(i, var_ent(i))
+    for i in range(10):
+        acyclic_entropy_variance_monte_carlo(i)
+    # for i in range(10):
+    #     print(acyclic_entropy(i))
